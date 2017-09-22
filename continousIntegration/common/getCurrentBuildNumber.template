@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo ${current_build_number}

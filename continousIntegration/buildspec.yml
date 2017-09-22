@@ -1,0 +1,31 @@
+version: 0.2
+
+env:
+  variables:
+    key: "buildVersion"
+    key: "1"
+#   parameter-store:
+#     key: "value"
+#     key: "value"
+            
+phases:
+  install:
+    commands:
+      - ll
+  pre_build:
+    # commands:
+    #   - command
+    #   - command
+  build:
+    commands:
+      - bash "continousIntegration/site/buildInJenkins.sh ${buildVersion}"
+  # post_build:
+  #   commands:
+  #     - command
+  #     - command
+# artifacts:
+#   files:
+#     - location
+#     - location
+#   discard-paths: yes
+#   base-directory: location
