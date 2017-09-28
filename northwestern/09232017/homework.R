@@ -113,3 +113,30 @@ temp<-as.vector(nhtemp)
 plot(1912:1971,temp, main="Section 8, #4, Graph#1")
 plot(1912:1971,temp,type="l", main="Section 8, #4, Graph#2")
 plot(1912:1971,temp,type="b", main="Section 8, #4, Graph#3")
+
+
+##Other exercises
+
+##5. Consider the following data set...
+x<-c(97, 82, 85, 61, 14, 22, 51, 16, 55, 44, 70)
+summary(x)
+## About the different method to Q1 and Q3: the median is included as the part of "half" 
+## while calcualting the Q1 and Q3
+boxplot(x, main="Other exercises #5")
+## IRQ equlas Q3-Q1=43;
+## nothing is more than (Q3+1.3*IRQ)
+## nothing is less than (Q1-1.3*IRQ)
+## so there is no outliner
+
+
+
+##6. Textbook Exercise 1.128
+x<-c(97, 82, 85, 61, 14, 22, 51, 16, 55, 44, 70)
+summary(x)
+## About the different method to Q1 and Q3: the median is included as the part of "half" 
+## while calcualting the Q1 and Q3
+boxplot(x, main="Other exercises #5")
+## IRQ equlas Q3-Q1=43;
+## nothing is more than (Q3+1.3*IRQ)
+## nothing is less than (Q1-1.3*IRQ)
+## so there is no outliner
