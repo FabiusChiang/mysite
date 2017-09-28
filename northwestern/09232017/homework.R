@@ -91,7 +91,7 @@ mean(mpg)
 
 ##Section 8, #1 ----------------------------------------------------
 x<-rnorm(100)
-hist(x, main="this is main title", xlab="title of x", ylab="title of y", breaks=9)
+hist(x, main="Section 8, #1", xlab="title of x", ylab="title of y", breaks=9)
 boxplot(x)
 
 
@@ -99,5 +99,17 @@ boxplot(x)
 x<- (-10):10
 n<-length(x)
 y<-rnorm(n,x,4)
-plot(x,y)
+plot(x,y, main="Section 8, #2")
 abline(0,1)
+
+
+##Section 8, #3 ----------------------------------------------------
+data(nhtemp)
+plot(nhtemp, main="Section 8, #3")
+
+
+##Section 8, #4 ----------------------------------------------------
+temp<-as.vector(nhtemp)
+plot(1912:1971,temp, main="Section 8, #4, Graph#1")
+plot(1912:1971,temp,type="l", main="Section 8, #4, Graph#2")
+plot(1912:1971,temp,type="b", main="Section 8, #4, Graph#3")
