@@ -63,6 +63,7 @@ x[c(1:5,10:12)]
 
 x[-(10:12)]
 
+
 ##Section 3, #2 ----------------------------------------------------
 y<-c(33,44,29,16,25,45,33,19,54,22,21,49,11,24,56)
 
@@ -73,3 +74,30 @@ apply(summaryMatrix, 2, sum)
 summaryMatrix<-matrix(y, nr=5, by=T)
 #summary of each shop
 apply(summaryMatrix, 2, sum)
+
+
+##Section 5, #1 ----------------------------------------------------
+attach(quakes)
+summary(quakes[,3:4])
+
+
+##Section 5, #2 ----------------------------------------------------
+attach(mtcars)
+#the mean weight
+mean(wt)
+#the mean of fuel consumption
+mean(mpg)
+
+
+##Section 8, #1 ----------------------------------------------------
+x<-rnorm(100)
+hist(x, main="this is main title", xlab="title of x", ylab="title of y", breaks=9)
+boxplot(x)
+
+
+##Section 8, #2 ----------------------------------------------------
+x<- (-10):10
+n<-length(x)
+y<-rnorm(n,x,4)
+plot(x,y)
+abline(0,1)
