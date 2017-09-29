@@ -131,12 +131,23 @@ boxplot(x, main="Other exercises #5")
 
 
 ##6. Textbook Exercise 1.128
-x<-c(97, 82, 85, 61, 14, 22, 51, 16, 55, 44, 70)
-summary(x)
-## About the different method to Q1 and Q3: the median is included as the part of "half" 
-## while calcualting the Q1 and Q3
-boxplot(x, main="Other exercises #5")
-## IRQ equlas Q3-Q1=43;
-## nothing is more than (Q3+1.3*IRQ)
-## nothing is less than (Q1-1.3*IRQ)
-## so there is no outliner
+## To get "what is his percentile", just need to know "how many people get less than 2050 in pencentage"
+## The distrubtion of SAT matches N(1498, 316) according to the declaration
+## As z=(2050-1498)/316=1.746835
+## By query the table of standard normal distribution, we get:
+## P(x<1.746835) = 0.9599 = 95.99%
+## So his percentile is 96%
+
+
+##7. Textbook Exercise 1.162
+id<-c("AA", "EE", "II", "BB", "FF", "JJ", "CC", "GG", "KK", "DD", "HH", "LL", "Other")
+spamCount<-c(1818, 399, 251, 1358, 389, 178, 442, 304, 158, 416, 251, 103)
+## How many did the others receive in total:
+othersInTotal<-6693-sum(spamCount)
+spamCountWithOther<-c(spamCount, othersInTotal)
+
+allData<-data.frame(id, spamCountWithOther)
+allData<-allData[ order(-allData[,2]), ]
+pie.spamCount <- allData[,2]
+names(pie.spamCount) <- allData[,1]
+pie(pie.spamCount, main="Other exercises #7. Textbook Exercise 1.162")
