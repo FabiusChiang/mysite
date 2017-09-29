@@ -17,6 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+[Previously saved workspace restored]
+
 > ##Section 2, #1 ----------------------------------------------------
 > 
 > x<-c(4,2,6)
@@ -146,8 +148,8 @@ Type 'q()' to quit R.
 > 
 > ##Section 8, #1 ----------------------------------------------------
 > x<-rnorm(100)
-> hist(x, main="Section 8, #1", xlab="title of x", ylab="title of y", breaks=9)
-> boxplot(x)
+> hist(x, main="Section 8, #1 Graph#1", xlab="title of x", ylab="title of y", breaks=9)
+> boxplot(x, main="Section 8, #1 Graph#2")
 > 
 > 
 > ##Section 8, #2 ----------------------------------------------------
@@ -201,6 +203,8 @@ Type 'q()' to quit R.
 > spamCount<-c(1818, 399, 251, 1358, 389, 178, 442, 304, 158, 416, 251, 103)
 > ## How many did the others receive in total:
 > othersInTotal<-6693-sum(spamCount)
+> othersInTotal
+[1] 626
 > spamCountWithOther<-c(spamCount, othersInTotal)
 > 
 > allData<-data.frame(id, spamCountWithOther)
@@ -211,4 +215,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.176   0.008   0.300 
+  0.176   0.000   0.228 

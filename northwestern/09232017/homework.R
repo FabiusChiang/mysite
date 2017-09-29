@@ -91,8 +91,8 @@ mean(mpg)
 
 ##Section 8, #1 ----------------------------------------------------
 x<-rnorm(100)
-hist(x, main="Section 8, #1", xlab="title of x", ylab="title of y", breaks=9)
-boxplot(x)
+hist(x, main="Section 8, #1 Graph#1", xlab="title of x", ylab="title of y", breaks=9)
+boxplot(x, main="Section 8, #1 Graph#2")
 
 
 ##Section 8, #2 ----------------------------------------------------
@@ -144,6 +144,7 @@ id<-c("AA", "EE", "II", "BB", "FF", "JJ", "CC", "GG", "KK", "DD", "HH", "LL", "O
 spamCount<-c(1818, 399, 251, 1358, 389, 178, 442, 304, 158, 416, 251, 103)
 ## How many did the others receive in total:
 othersInTotal<-6693-sum(spamCount)
+othersInTotal
 spamCountWithOther<-c(spamCount, othersInTotal)
 
 allData<-data.frame(id, spamCountWithOther)
