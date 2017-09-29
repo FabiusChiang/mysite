@@ -97,8 +97,11 @@ boxplot(x, main="Section 8, #1 Graph#2")
 
 ##Section 8, #2 ----------------------------------------------------
 x<- (-10):10
+x
 n<-length(x)
+n
 y<-rnorm(n,x,4)
+y
 plot(x,y, main="Section 8, #2")
 abline(0,1)
 
