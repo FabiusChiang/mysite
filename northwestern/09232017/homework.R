@@ -130,6 +130,7 @@ boxplot(x, main="Other exercises #5")
 ## nothing is more than (Q3+1.3*IRQ)
 ## nothing is less than (Q1-1.3*IRQ)
 ## so there is no outliner
+sd(x)
 
 
 
