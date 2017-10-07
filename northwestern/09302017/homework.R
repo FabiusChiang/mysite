@@ -61,7 +61,7 @@ pnorm(70, 100, 15)
 
 ##Exercise 2.34 ----------------------------------------------------
 ## Question (a)
-## From the numerical value, the 2 variables are negative association; the association is absolute but not every strong.
+## From the numerical value, the 2 variables are negative association; the association is absolute but not very strong.
 
 ## Question (b)
 ## Suppose having birth is event B and surfing Internet is event C; if there is a lurk factor which affects
