@@ -82,5 +82,74 @@ cor(BirthRate2011, Users)
 
 
 ##Exercise 2.75 ----------------------------------------------------
+studentsOfStates<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 2/EX02-075COLLEGE.csv")
+attach(studentsOfStates)
+dataForScatterplot<-data.frame(Population, Undergrads)
+
+## Question (a)
+plot(dataForScatterplot, main="Exercise 2.75 (a)")
+## see below graph
+
+## Question (b)
+lm(Population~Undergrads)
+modelPU<-lm(Undergrads~Population)
+yfit<-modelPU$fitted.values
+lines(Population, yfit)
+## from the the graph, there is an outlier in the top-right
+
+## Question (c)
+meanX<-5955551
+sdX<-6620733
+meanY<-302136
+sdY<-358460
+r<-0.98367
+
+b1<-(r*sdY/sdX)
+b0<-(meanY-b1*meanX)
+
+b0
+b1
+## So the equation of regression line is y=-15044.15+0.0532579*x (y is undergrads and x is population)
 
 
+##Exercise 2.76 ----------------------------------------------------
+nMeanX<-4367448
+nSdX<-3310957
+nMeanY<-220134
+nSdy<-165270
+nr<-0.97081
+
+nb1<-(nr*nSdy/nSdX)
+nb0<-(nMeanY-b1*nMeanX)
+
+nb0
+nb1
+
+## Reuse the "dataForScatterplot" variable from exercise 2.75
+plot(dataForScatterplot, main="Exercise 2.76")
+## Draw the least-squares regression line based on all data
+abline(b0, b1, col="blue")
+## Draw the least-squares regression line eliminating the for largest states
+abline(nb0, nb1, col="gray")
+
+
+##Exercise 2.77 ----------------------------------------------------
+## Question (a)
+## Per excercise 2.75 (c) -- the equation of regression line is y=-15044.15+0.0532579*x (y is undergrads and x is population)
+x<-4000000
+predictedGraduats<-(-15044.15+0.0532579*x)
+## The predicted number of undergraduate students is: 
+predictedGraduats
+
+## Question (b)
+predictedGraduats<-(nb0+nb1*x)
+## The predicted number of undergraduate students based on statistic of 46 states is: 
+predictedGraduats
+
+## Question (c)
+## From the graph "Exercise 2.76", we can see the main outlier is the largest state
+## The largets state is much higher than the blue line
+## The other 3 states with more than 15 million population are under the blue line, but they are closer to the blue line comparing 
+## with the largest state
+## So we get the gray by eliminate the 4 large state; the x-coordinate of crossing of the gray line and blue line is about 1.0e+6
+## So we get lower predicted value when using gray line to predict when x-coordinate is 4.0e+6, comparing with the result predicted by gray line.
