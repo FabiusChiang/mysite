@@ -87,7 +87,7 @@ Type 'q()' to quit R.
 > 
 > ##Exercise 2.34 ----------------------------------------------------
 > ## Question (a)
-> ## From the numerical value, the 2 variables are negative association; the association is absolute but not every strong.
+> ## From the numerical value, the 2 variables are negative association; the association is absolute but not very strong.
 > 
 > ## Question (b)
 > ## Suppose having birth is event B and surfing Internet is event C; if there is a lurk factor which affects
@@ -152,10 +152,10 @@ Type 'q()' to quit R.
 > nr<-0.97081
 > 
 > nb1<-(nr*nSdy/nSdX)
-> nb0<-(nMeanY-b1*nMeanX)
+> nb0<-(nMeanY-nb1*nMeanX)
 > 
 > nb0
-[1] -12467.12
+[1] 8491.701
 > nb1
 [1] 0.04845903
 > 
@@ -180,7 +180,7 @@ Type 'q()' to quit R.
 > predictedGraduats<-(nb0+nb1*x)
 > ## The predicted number of undergraduate students based on statistic of 46 states is: 
 > predictedGraduats
-[1] 181369
+[1] 202327.8
 > 
 > ## Question (c)
 > ## From the graph "Exercise 2.76", we can see the main outlier is the largest state
@@ -245,4 +245,4 @@ hospitalA hospitalB
 > 
 > proc.time()
    user  system elapsed 
-  0.172   0.024   0.272 
+  0.212   0.004   0.345 

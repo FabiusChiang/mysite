@@ -123,7 +123,7 @@ nSdy<-165270
 nr<-0.97081
 
 nb1<-(nr*nSdy/nSdX)
-nb0<-(nMeanY-b1*nMeanX)
+nb0<-(nMeanY-nb1*nMeanX)
 
 nb0
 nb1
