@@ -191,3 +191,15 @@ apply(casesOfOverrallCondition, 2, calculateDeathRate)
 ## It's because hospital A accepts much more "poor" patients comparing with hospital B; at the same time the quantity of poor patients in hospital A is much more than the good
 ## thus absolute quantity of died patients in hospital A is much higher than hospital B and the quantity contributes considerably to the death count in the overrall statistics of
 ## hospital A, though the relative death rate in lower in hospital A.
+
+## If suppose all other data is fixed and the rate of death rate of poor patients in hospital A is fixed as 57/1443=0.038;
+## set the number of poor patients in hospital A is the independent variable and the overrall death rate of hospital A is the dependent variable;
+## we can use below function to calculate the dependent variable from independent variable:
+
+calculateDeathRateOfHospitalA <- function (totalPoorPatientInA) {
+    (6+totalPoorPatientInA*57/1443)/(600+totalPoorPatientInA)
+}
+
+curve(calculateDeathRateOfHospitalA, 0, 8000,main="Exercise 2.128", xlab="Total poor patients in A", ylab="Overrall death rate of A") 
+
+## The curve shows the more poor patients accepted by hospital A, the higher the death rate of hospital A is. But the death rate is in [0.01, 0.038)
