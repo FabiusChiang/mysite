@@ -10,22 +10,26 @@ drawShadeInNorm <- function(begin, end, title) {
 
 ## Z > 1.75
 p<-(1-pnorm(1.75))
-p
+## The portion is 
+p*100
 drawShadeInNorm(1.75, 6, "Exercise 1.118  Z > 1.75")
 
 ## Z < 1.75
 p<-pnorm(1.75)
-p
+## The portion is 
+p*100
 drawShadeInNorm(-6, 1.75, "Exercise 1.118  Z < 1.75")
 
 ## Z > -0.80
 p<-(1-pnorm(-0.80))
-p
+## The portion is 
+p*100
 drawShadeInNorm(-0.8, 6, "Exercise 1.118  Z > -0.80")
 
 ## -0.80 < Z < 1.75
 p<-(pnorm(1.75) - pnorm(-0.80))
-p
+## The portion is 
+p*100
 drawShadeInNorm(-0.8, 1.75, "Exercise 1.118  -0.80 < Z < 1.75")
 
 
@@ -63,7 +67,7 @@ pnorm(70, 100, 15)
 ## Suppose having birth is event B and surfing Internet is event C; if there is a lurk factor which affects
 ## event B and event C at the same time, we can see the statistic of B and C are accociation in numerical value.
 ## However we cannot prove B and C are related logically because they are related in numerical value.
-## In fact, the lurk factor is the development level: 
+## In fact, the lurk factor might be the development level: 
 ## The more devloped the country is, the lower birth ratio the country; at the same time the higher Internet user ratio the country owns.
 
 
@@ -77,7 +81,7 @@ plot(dataForScatterplot, xlab="Internet users", ylab="Birth", main="Exercise 2.5
 cor(BirthRate2011, Users)
 
 ## Question (b)
-## Yes, it's a good numerical summary. Genernally the more devloped the country is, the lower birth ratio the country 
+## No, it's not a numerical summary -- there is a trend but the trend is not strong or the trend is not linear. Genernally the more devloped the country is, the lower birth ratio the country 
 ## owns. The users of Internet could be one of index to reflect the how developed a country is.
 
 
@@ -91,7 +95,6 @@ plot(dataForScatterplot, main="Exercise 2.75 (a)")
 ## see below graph
 
 ## Question (b)
-lm(Population~Undergrads)
 modelPU<-lm(Undergrads~Population)
 yfit<-modelPU$fitted.values
 lines(Population, yfit)
@@ -153,3 +156,38 @@ predictedGraduats
 ## with the largest state
 ## So we get the gray by eliminate the 4 large state; the x-coordinate of crossing of the gray line and blue line is about 1.0e+6
 ## So we get lower predicted value when using gray line to predict when x-coordinate is 4.0e+6, comparing with the result predicted by gray line.
+
+
+##Exercise 2.128 ----------------------------------------------------
+hospitalA<-c(6, 594)
+hospitalB<-c(8, 592)
+casesOfGoodCondition<-data.frame( hospitalA, hospitalB);
+
+hospitalA<-c(57, 1443)
+hospitalB<-c(8, 192)
+casesOfPoorCondition<-data.frame( hospitalA, hospitalB);
+
+calculateDeathRate <- function (data, ...) {
+    data[1]/sum(data)
+}
+
+## Question (a)
+## The death rate under poor condition of 2 hospitals
+apply(casesOfPoorCondition, 2, calculateDeathRate)
+
+## Question (b)
+## The death rate under good condition of 2 hospitals
+apply(casesOfGoodCondition, 2, calculateDeathRate)
+
+## Question (c)
+## No matter under good conditions or poor conditions, the death rate in hospital A is lower;
+## So I trust in hospital A more than hospital B based on the statistics of died/survived statistic under good conditions and poor conditions.
+
+## Question (d)
+casesOfOverrallCondition<-casesOfGoodCondition + casesOfPoorCondition
+## The overrall death rate of 2 hospitals
+apply(casesOfOverrallCondition, 2, calculateDeathRate)
+## From the overrall result, we can see the death rate is higher in hospital A.
+## It's because hospital A accepts much more "poor" patients comparing with hospital B; at the same time the quantity of poor patients in hospital A is much more than the good
+## thus absolute quantity of died patients in hospital A is much higher than hospital B and the quantity contributes considerably to the death count in the overrall statistics of
+## hospital A, though the relative death rate in lower in hospital A.
