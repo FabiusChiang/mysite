@@ -13,8 +13,8 @@ drawShadeInEquallyLikely <- function(begin, end, title) {
     cord.x <- c(begin,seqX,end) 
     seqY <- rep(0.5, length(seqX))
     cord.y <- c(0,seqY,0) 
-    h<-Vectorize(density0To2)
-    curve(h,xlim=c(-2,4),main=title,n=10000) 
+    P<-Vectorize(density0To2)
+    curve(P,xlim=c(-2,4),main=title,n=10000) 
     polygon(cord.x,cord.y,col='skyblue')
     abline(0,0)
 }
