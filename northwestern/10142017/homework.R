@@ -33,3 +33,13 @@ drawShadeInEquallyLikely(0.5, 1.7, "Exercise 4.59 (a) Density curve 0~2 and shad
 
 ## (d)
 drawShadeInEquallyLikely(0.95, 2, "Exercise 4.59 (d) Density curve 0~2 and shade for 0.95-2")
+
+##Exercise 4.62 ----------------------------------------------------
+## (a) 
+## The P(0.52 ≤ ṗ ≤ 0.60) is
+pnorm(0.60, 0.56, 0.019) - pnorm(0.52, 0.56, 0.019)
+pnorm((0.60-0.56)/0.019, 0, 1) - pnorm((0.52-0.56)/0.019, 0, 1)
+
+## P(ṗ ≥ 0.72) is 
+pnorm(0.72, 0.56, 0.019, lower.tail=F)
+pnorm(0.4, 0.56, 0.019)
