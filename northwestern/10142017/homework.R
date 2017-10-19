@@ -43,3 +43,14 @@ pnorm((0.60-0.56)/0.019, 0, 1) - pnorm((0.52-0.56)/0.019, 0, 1)
 ## P(ṗ ≥ 0.72) is 
 pnorm(0.72, 0.56, 0.019, lower.tail=F)
 pnorm(0.4, 0.56, 0.019)
+
+##Exercise 4.71 ----------------------------------------------------
+x <- c(-1, 0, 1, 2)
+p <- c(0.3, 0.2, 0.3, 0.2)
+weighted.mean(x, p)
+# weighted.var(x, p)
+
+# library(SDMTools)
+# wt.sd(x,p)
+# ??weighted
+

@@ -69,6 +69,18 @@ Type 'q()' to quit R.
 > pnorm(0.4, 0.56, 0.019)
 [1] 1.865583e-17
 > 
+> ##Exercise 4.71 ----------------------------------------------------
+> x <- c(-1, 0, 1, 2)
+> p <- c(0.3, 0.2, 0.3, 0.2)
+> weighted.mean(x, p)
+[1] 0.4
+> # weighted.var(x, p)
+> 
+> # library(SDMTools)
+> # wt.sd(x,p)
+> # ??weighted
+> 
+> 
 > proc.time()
    user  system elapsed 
-  0.260   0.004   0.359 
+  0.260   0.012   0.353 
