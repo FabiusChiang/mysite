@@ -13,8 +13,8 @@ drawShadeInEquallyLikely <- function(begin, end, title) {
     cord.x <- c(begin,seqX,end) 
     seqY <- rep(0.5, length(seqX))
     cord.y <- c(0,seqY,0) 
-    h<-Vectorize(density0To2)
-    curve(h,xlim=c(-2,4),main=title,n=10000) 
+    P<-Vectorize(density0To2)
+    curve(P,xlim=c(-2,4),main=title,n=10000) 
     polygon(cord.x,cord.y,col='skyblue')
     abline(0,0)
 }
@@ -33,3 +33,24 @@ drawShadeInEquallyLikely(0.5, 1.7, "Exercise 4.59 (a) Density curve 0~2 and shad
 
 ## (d)
 drawShadeInEquallyLikely(0.95, 2, "Exercise 4.59 (d) Density curve 0~2 and shade for 0.95-2")
+
+##Exercise 4.62 ----------------------------------------------------
+## (a) 
+## The P(0.52 ≤ ṗ ≤ 0.60) is
+pnorm(0.60, 0.56, 0.019) - pnorm(0.52, 0.56, 0.019)
+pnorm((0.60-0.56)/0.019, 0, 1) - pnorm((0.52-0.56)/0.019, 0, 1)
+
+## P(ṗ ≥ 0.72) is 
+pnorm(0.72, 0.56, 0.019, lower.tail=F)
+pnorm(0.4, 0.56, 0.019)
+
+##Exercise 4.71 ----------------------------------------------------
+x <- c(-1, 0, 1, 2)
+p <- c(0.3, 0.2, 0.3, 0.2)
+weighted.mean(x, p)
+# weighted.var(x, p)
+
+# library(SDMTools)
+# wt.sd(x,p)
+# ??weighted
+

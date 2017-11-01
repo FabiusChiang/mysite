@@ -34,8 +34,8 @@ Type 'q()' to quit R.
 +     cord.x <- c(begin,seqX,end) 
 +     seqY <- rep(0.5, length(seqX))
 +     cord.y <- c(0,seqY,0) 
-+     h<-Vectorize(density0To2)
-+     curve(h,xlim=c(-2,4),main=title,n=10000) 
++     P<-Vectorize(density0To2)
++     curve(P,xlim=c(-2,4),main=title,n=10000) 
 +     polygon(cord.x,cord.y,col='skyblue')
 +     abline(0,0)
 + }
@@ -55,6 +55,32 @@ Type 'q()' to quit R.
 > ## (d)
 > drawShadeInEquallyLikely(0.95, 2, "Exercise 4.59 (d) Density curve 0~2 and shade for 0.95-2")
 > 
+> ##Exercise 4.62 ----------------------------------------------------
+> ## (a) 
+> ## The P(0.52 ≤ ṗ ≤ 0.60) is
+> pnorm(0.60, 0.56, 0.019) - pnorm(0.52, 0.56, 0.019)
+[1] 0.9647316
+> pnorm((0.60-0.56)/0.019, 0, 1) - pnorm((0.52-0.56)/0.019, 0, 1)
+[1] 0.9647316
+> 
+> ## P(ṗ ≥ 0.72) is 
+> pnorm(0.72, 0.56, 0.019, lower.tail=F)
+[1] 1.865583e-17
+> pnorm(0.4, 0.56, 0.019)
+[1] 1.865583e-17
+> 
+> ##Exercise 4.71 ----------------------------------------------------
+> x <- c(-1, 0, 1, 2)
+> p <- c(0.3, 0.2, 0.3, 0.2)
+> weighted.mean(x, p)
+[1] 0.4
+> # weighted.var(x, p)
+> 
+> # library(SDMTools)
+> # wt.sd(x,p)
+> # ??weighted
+> 
+> 
 > proc.time()
    user  system elapsed 
-  0.232   0.004   0.287 
+  0.260   0.012   0.353 
