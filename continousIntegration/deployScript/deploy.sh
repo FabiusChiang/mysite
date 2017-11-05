@@ -47,4 +47,4 @@ docker pull ${webImageName}
 
 #3. Launch images per sequence
 port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
-docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
+docker run --link mywordpress:${wordPressContainerName} -p ${port}:80 --name ${webContainerName} -d ${webImageName}
