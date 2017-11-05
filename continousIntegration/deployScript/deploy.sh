@@ -1,6 +1,7 @@
 #!/bin/bash
 
 currentVersion=$1
+appEnv=$2
 
 ############Make enter the root folder of all script
 folderOfCurrentScript="$(dirname "${BASH_SOURCE}")"
@@ -18,7 +19,7 @@ fi
 baseImagesurl="fabius/"${appName}":"
 
 #1. Stop original
-webContainerName=${appName}_web
+webContainerName=${appName}_web_${appEnv}
 
 docker stop ${webContainerName}
 docker rm ${webContainerName}
