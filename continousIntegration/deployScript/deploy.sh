@@ -42,7 +42,7 @@ docker rm ${webContainerName}
 
 #2. Get all new images
 webImageName=${baseImagesurl}web_${currentVersion}
-docker rmi webImageName
+docker rmi ${webImageName}
 docker pull ${webImageName}
 
 #3. Launch images per sequence
