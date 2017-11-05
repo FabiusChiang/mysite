@@ -18,5 +18,18 @@ if [ "web" = "${componentName}" ]; then
     esac
 fi
 
+if [ "wordpress" = "${componentName}" ]; then
+    case "${appEnv}" in
+        prod)
+            port=8090
+            ;;
+        qa)
+            port=8091
+            ;;
+        *)
+            exit 1
+    esac
+fi
+
 
 echo ${port}
