@@ -1,7 +1,7 @@
 #!/bin/bash
 
-currentVersion=$1
-appEnv=$2
+appEnv=$1
+currentVersion=$2
 
 ############Make enter the root folder of all script
 folderOfCurrentScript="$(dirname "${BASH_SOURCE}")"
