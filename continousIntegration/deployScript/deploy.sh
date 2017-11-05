@@ -36,7 +36,7 @@ docker run -p ${port}:80 --name ${wordPressContainerName} --link mysql:mysql -e 
 ##Web component
 
 #1. Stop original
-webContainerName=${appName}_web_${appEnv}
+webContainerName=${appName}_web
 
 docker stop ${webContainerName}
 docker rm ${webContainerName}
@@ -47,5 +47,7 @@ docker rmi ${webImageName}
 docker pull ${webImageName}
 
 #3. Launch images per sequence
-port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
-docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
+# port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
+# docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
+
+docker run -p 80:80 --name ${webContainerName} -d ${webImageName}
