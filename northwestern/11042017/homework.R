@@ -1,5 +1,4 @@
 ##Exercise 6.137 ----------------------------------------------------
-##Exercise 6.137----------------------------------------------------
 
 drawShadeInNorm <- function(begin, end, title, sigma) {
     begin <- begin * sigma
@@ -14,3 +13,6 @@ drawShadeInNorm <- function(begin, end, title, sigma) {
 drawShadeInNorm(6.9/(55/sqrt(104)), 6, "Exercise 6.137 (a)", 55/sqrt(104))
 
 
+##Exercise 6.141 ----------------------------------------------------
+x<-rnorm(15, 20, 5)
+x

@@ -20,7 +20,6 @@ Type 'q()' to quit R.
 [Previously saved workspace restored]
 
 > ##Exercise 6.137 ----------------------------------------------------
-> ##Exercise 6.137----------------------------------------------------
 > 
 > drawShadeInNorm <- function(begin, end, title, sigma) {
 +     begin <- begin * sigma
@@ -35,7 +34,12 @@ Type 'q()' to quit R.
 > drawShadeInNorm(6.9/(55/sqrt(104)), 6, "Exercise 6.137 (a)", 55/sqrt(104))
 > 
 > 
+> ##Exercise 6.141 ----------------------------------------------------
+> x<-rnorm(15, 20, 5)
+> x
+ [1] 22.80705 16.81069 18.87459 27.79480 27.02384 28.02635 15.76091 27.36267
+ [9] 21.21022 16.20087 21.45252 22.56844 21.81907 19.01793 28.94731
 > 
 > proc.time()
    user  system elapsed 
-  0.144   0.008   0.180 
+  0.152   0.004   0.178 
