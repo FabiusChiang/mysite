@@ -56,5 +56,9 @@ sd(Earnings)/sqrt(length(Earnings))
 length(Earnings)-1
 
 
-# pt(2.447, 6)
-# qt(0.95, 6)
+## (c)
+earningsPerYear=Earnings*40*52
+sd(earningsPerYear)
+mean(earningsPerYear)
+sd(earningsPerYear)/sqrt(length(earningsPerYear))
+length(earningsPerYear)-1
