@@ -37,9 +37,38 @@ Type 'q()' to quit R.
 > ##Exercise 6.141 ----------------------------------------------------
 > x<-rnorm(15, 20, 5)
 > x
- [1] 22.80705 16.81069 18.87459 27.79480 27.02384 28.02635 15.76091 27.36267
- [9] 21.21022 16.20087 21.45252 22.56844 21.81907 19.01793 28.94731
+ [1] 31.57413 15.72438 22.22969 14.14441 21.72538 18.46364 27.41583 22.35075
+ [9] 20.61726 25.37056 18.43048 23.08744 21.26127 14.80938 12.73105
+> miu=mean(x)
+> sigma=5/sqrt(15)
+> startOfConfidenceInterval=miu-1.96*sigma
+> startOfConfidenceInterval
+[1] 18.13203
+> endOfConfidenceInterval=miu+1.96*sigma
+> endOfConfidenceInterval
+[1] 23.19273
+> 
+> count<-0
+> sigma=5/sqrt(15)
+> for (i in 1:100) {
++     x<-rnorm(15, 20, 5)
++     miu=mean(x)
++     startOfConfidenceInterval=miu-1.96*sigma
++     
++     endOfConfidenceInterval=miu+1.96*sigma
++     # startOfConfidenceInterval
++     # endOfConfidenceInterval
++ 
++     if (startOfConfidenceInterval<20 && endOfConfidenceInterval>20){
++         count <- count +1
++     }
++     i
++     count
++ }
+> 
+> count
+[1] 94
 > 
 > proc.time()
    user  system elapsed 
-  0.152   0.004   0.178 
+  0.208   0.016   1.087 

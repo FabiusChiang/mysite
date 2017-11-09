@@ -16,3 +16,26 @@ drawShadeInNorm(6.9/(55/sqrt(104)), 6, "Exercise 6.137 (a)", 55/sqrt(104))
 ##Exercise 6.141 ----------------------------------------------------
 x<-rnorm(15, 20, 5)
 x
+miu=mean(x)
+sigma=5/sqrt(15)
+startOfConfidenceInterval=miu-1.96*sigma
+startOfConfidenceInterval
+endOfConfidenceInterval=miu+1.96*sigma
+endOfConfidenceInterval
+
+count<-0
+sigma=5/sqrt(15)
+for (i in 1:100) {
+    x<-rnorm(15, 20, 5)
+    miu=mean(x)
+    startOfConfidenceInterval=miu-1.96*sigma
+    
+    endOfConfidenceInterval=miu+1.96*sigma
+    if (startOfConfidenceInterval<20 && endOfConfidenceInterval>20){
+        count <- count +1
+    }
+    i
+    count
+}
+##During the 100 repeating, the miu appears in confidence interval for following times:
+count
