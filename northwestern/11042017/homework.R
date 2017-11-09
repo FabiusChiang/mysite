@@ -39,3 +39,22 @@ for (i in 1:100) {
 }
 ##During the 100 repeating, the miu appears in confidence interval for following times:
 count
+
+
+##Exercise 7.27 ----------------------------------------------------
+## (a)
+importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-027UBERX.csv")
+attach(importedData)
+hist(Earnings, bre=6, main="7.27 (a).1 histogram")
+boxplot(Earnings, main="7.27 (a).2 boxplot")
+qqnorm(Earnings, main="7.27 (a).3 normal quantile")
+
+## (b)
+sd(Earnings)
+mean(Earnings)
+sd(Earnings)/sqrt(length(Earnings))
+length(Earnings)-1
+
+
+# pt(2.447, 6)
+# qt(0.95, 6)

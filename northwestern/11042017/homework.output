@@ -37,16 +37,16 @@ Type 'q()' to quit R.
 > ##Exercise 6.141 ----------------------------------------------------
 > x<-rnorm(15, 20, 5)
 > x
- [1] 18.78932 15.68784 14.61162 21.79870 21.15260 18.01615 14.43450 35.60989
- [9] 11.97760 20.35667 18.38820 24.74211 14.23268 26.13684 20.43921
+ [1] 19.52937 24.67777 19.30498 17.15904 27.56544 17.40720 14.11204 13.48144
+ [9] 21.91079 17.54935 18.68158 30.00179 15.49821 16.05944 18.68482
 > miu=mean(x)
 > sigma=5/sqrt(15)
 > startOfConfidenceInterval=miu-1.96*sigma
 > startOfConfidenceInterval
-[1] 17.22791
+[1] 16.9112
 > endOfConfidenceInterval=miu+1.96*sigma
 > endOfConfidenceInterval
-[1] 22.28861
+[1] 21.9719
 > 
 > count<-0
 > sigma <- 5/sqrt(15)
@@ -64,8 +64,29 @@ Type 'q()' to quit R.
 + }
 > ##During the 100 repeating, the miu appears in confidence interval for following times:
 > count
-[1] 94
+[1] 95
+> 
+> 
+> ##Exercise 7.27 ----------------------------------------------------
+> ## (a)
+> importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-027UBERX.csv")
+> attach(importedData)
+> hist(Earnings, bre=6, main="7.27 (a).1 histogram")
+> boxplot(Earnings, main="7.27 (a).2 boxplot")
+> qqnorm(Earnings, main="7.27 (a).3 normal quantile")
+> 
+> ## (b)
+> sd(Earnings)
+[1] 6.579523
+> mean(Earnings)
+[1] 36.15704
+> sd(Earnings)/sqrt(length(Earnings))
+[1] 1.26623
+> 
+> 
+> # pt(2.447, 6)
+> # qt(0.95, 6)
 > 
 > proc.time()
    user  system elapsed 
-  0.176   0.000   0.198 
+  0.176   0.012   0.218 
