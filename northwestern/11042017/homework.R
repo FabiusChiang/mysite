@@ -24,13 +24,13 @@ endOfConfidenceInterval=miu+1.96*sigma
 endOfConfidenceInterval
 
 count<-0
-sigma=5/sqrt(15)
+sigma <- 5/sqrt(15)
 for (i in 1:100) {
     x<-rnorm(15, 20, 5)
-    miu=mean(x)
-    startOfConfidenceInterval=miu-1.96*sigma
+    miu<-mean(x)
+    startOfConfidenceInterval <- miu-1.96*sigma
     
-    endOfConfidenceInterval=miu+1.96*sigma
+    endOfConfidenceInterval <- miu+1.96*sigma
     if (startOfConfidenceInterval<20 && endOfConfidenceInterval>20){
         count <- count +1
     }
