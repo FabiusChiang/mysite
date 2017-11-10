@@ -70,7 +70,7 @@ importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 
 attach(importedData)
 
 importedData
-diff<-Other-Jocko
+diff<-Jocko-Other
 diff
 
 ## a)
