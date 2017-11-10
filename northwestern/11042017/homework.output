@@ -37,16 +37,17 @@ Type 'q()' to quit R.
 > ##Exercise 6.141 ----------------------------------------------------
 > x<-rnorm(15, 20, 5)
 > x
- [1] 28.88978 20.26346 25.02436 25.82402 23.32174 20.52204 19.43094 20.21398
- [9] 22.51260 17.76356 22.22459 16.06818 16.99941 25.34963 15.09989
+ [1] 19.723833 23.379042 17.855962 17.348172  8.542324 14.046792 26.134293
+ [8] 20.000811 24.198983 19.436547 24.858358 15.111157 17.349608  3.974106
+[15] 14.421435
 > miu=mean(x)
 > sigma=5/sqrt(15)
 > startOfConfidenceInterval=miu-1.96*sigma
 > startOfConfidenceInterval
-[1] 18.7702
+[1] 15.22841
 > endOfConfidenceInterval=miu+1.96*sigma
 > endOfConfidenceInterval
-[1] 23.83089
+[1] 20.28911
 > 
 > count<-0
 > sigma <- 5/sqrt(15)
@@ -64,7 +65,7 @@ Type 'q()' to quit R.
 + }
 > ##During the 100 repeating, the miu appears in confidence interval for following times:
 > count
-[1] 94
+[1] 93
 > 
 > 
 > ##Exercise 7.27 ----------------------------------------------------
@@ -131,4 +132,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.172   0.024   0.245 
+  0.192   0.000   0.228 
