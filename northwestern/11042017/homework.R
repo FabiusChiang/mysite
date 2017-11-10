@@ -62,3 +62,20 @@ sd(earningsPerYear)
 mean(earningsPerYear)
 sd(earningsPerYear)/sqrt(length(earningsPerYear))
 length(earningsPerYear)-1
+
+
+##Exercise 7.40 ----------------------------------------------------
+## (a)
+importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-040JOCKO.csv")
+attach(importedData)
+
+importedData
+diff<-Other-Jocko
+diff
+
+## a)
+mean(diff)
+sd(diff)
+
+## b)
+sd(diff) / sqrt(length(diff))

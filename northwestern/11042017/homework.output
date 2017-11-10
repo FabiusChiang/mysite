@@ -37,16 +37,16 @@ Type 'q()' to quit R.
 > ##Exercise 6.141 ----------------------------------------------------
 > x<-rnorm(15, 20, 5)
 > x
- [1] 18.99767 20.06861 12.31680 19.27749 20.37048 15.53410 15.53765 16.94554
- [9] 12.24690 14.42406 21.06916 22.85717 22.12490 21.95943 19.63963
+ [1] 21.31717 19.18210 24.88428 22.96107 15.62776 29.18252 22.71628 11.42128
+ [9]  3.31337 24.64905 25.88015 20.17272 22.73087 20.73976 24.81063
 > miu=mean(x)
 > sigma=5/sqrt(15)
 > startOfConfidenceInterval=miu-1.96*sigma
 > startOfConfidenceInterval
-[1] 15.69429
+[1] 18.10892
 > endOfConfidenceInterval=miu+1.96*sigma
 > endOfConfidenceInterval
-[1] 20.75499
+[1] 23.16962
 > 
 > count<-0
 > sigma <- 5/sqrt(15)
@@ -64,7 +64,7 @@ Type 'q()' to quit R.
 + }
 > ##During the 100 repeating, the miu appears in confidence interval for following times:
 > count
-[1] 99
+[1] 98
 > 
 > 
 > ##Exercise 7.27 ----------------------------------------------------
@@ -97,6 +97,38 @@ Type 'q()' to quit R.
 > length(earningsPerYear)-1
 [1] 26
 > 
+> 
+> ##Exercise 7.40 ----------------------------------------------------
+> ## (a)
+> importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-040JOCKO.csv")
+> attach(importedData)
+> 
+> importedData
+   Car Jocko Other
+1    1  1410  1250
+2    2  1550  1300
+3    3  1250  1250
+4    4  1300  1200
+5    5   900   950
+6    6  1520  1575
+7    7  1750  1600
+8    8  3600  3380
+9    9  2250  2125
+10  10  2840  2600
+> diff<-Other-Jocko
+> diff
+ [1] -160 -250    0 -100   50   55 -150 -220 -125 -240
+> 
+> ## a)
+> mean(diff)
+[1] -114
+> sd(diff)
+[1] 114.4018
+> 
+> ## b)
+> sd(diff) / sqrt(length(diff))
+[1] 36.17703
+> 
 > proc.time()
    user  system elapsed 
-  0.180   0.008   0.218 
+  0.180   0.012   0.222 
