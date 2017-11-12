@@ -25,6 +25,11 @@ define('ember-site/tests/app.lint-test', [], function () {
     assert.ok(true, 'router.js should pass ESLint\n\n');
   });
 
+  QUnit.test('routes/contact-me.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/contact-me.js should pass ESLint\n\n');
+  });
+
   QUnit.test('routes/parterns.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'routes/parterns.js should pass ESLint\n\n');
@@ -181,9 +186,27 @@ define('ember-site/tests/tests.lint-test', [], function () {
     assert.ok(true, 'test-helper.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/routes/contact-me-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/contact-me-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/routes/parterns-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/parterns-test.js should pass ESLint\n\n');
+  });
+});
+define('ember-site/tests/unit/routes/contact-me-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:contact-me', 'Unit | Route | contact me', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
   });
 });
 define('ember-site/tests/unit/routes/parterns-test', ['ember-qunit'], function (_emberQunit) {

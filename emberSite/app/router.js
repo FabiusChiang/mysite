@@ -8,6 +8,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('parterns');
+  this.route('contactMe');
 });
 
 export default Router;

@@ -264,9 +264,19 @@ define('ember-site/router', ['exports', 'ember-site/config/environment'], functi
 
   Router.map(function () {
     this.route('parterns');
+    this.route('contactMe');
   });
 
   exports.default = Router;
+});
+define('ember-site/routes/contact-me', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var Route = Ember.Route;
+  exports.default = Route.extend({});
 });
 define("ember-site/routes/parterns", ["exports"], function (exports) {
     "use strict";
@@ -300,7 +310,7 @@ define("ember-site/templates/application", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "z+P2bupH", "block": "{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"Welcome to Fabius's site\"],[8],[0,\"\\n\\n\"],[1,[18,\"outlet\"],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/application.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "g3Bdtn5t", "block": "{\"symbols\":[],\"statements\":[[6,\"nav\"],[7],[0,\"\\n\"],[4,\"link-to\",[\"contactMe\"],[[\"class\"],[\"button\"]],{\"statements\":[[0,\"        Contact Me\\n\"]],\"parameters\":[]},null],[8],[0,\"\\n\\n\"],[6,\"h1\"],[7],[0,\"Welcome to Fabius's site\"],[8],[0,\"\\n\\n\"],[1,[18,\"outlet\"],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/application.hbs" } });
 });
 define("ember-site/templates/components/people-list", ["exports"], function (exports) {
   "use strict";
@@ -309,6 +319,14 @@ define("ember-site/templates/components/people-list", ["exports"], function (exp
     value: true
   });
   exports.default = Ember.HTMLBars.template({ "id": "NeU8foet", "block": "{\"symbols\":[\"person\"],\"statements\":[[6,\"h2\"],[7],[1,[18,\"title\"],false],[8],[0,\"\\n\\n\"],[6,\"ul\"],[7],[0,\"\\n\"],[4,\"each\",[[20,[\"people\"]]],null,{\"statements\":[[0,\"    \"],[6,\"li\"],[3,\"action\",[[19,0,[]],\"getDetails\",[19,1,[]]]],[7],[1,[19,1,[]],false],[8],[0,\"\\n\"]],\"parameters\":[1]},null],[8]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/components/people-list.hbs" } });
+});
+define("ember-site/templates/contact-me", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "IcaSo0rH", "block": "{\"symbols\":[],\"statements\":[[6,\"div\"],[9,\"class\",\"jumbo\"],[7],[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"right tomster\"],[7],[8],[0,\"\\n  \"],[6,\"h2\"],[7],[0,\"Want to contact with me?\"],[8],[0,\"\\n  \"],[6,\"p\"],[7],[0,\"\\n    Please just send an email to me -- \"],[6,\"a\"],[9,\"href\",\"mailto:fabiushust@hotmail.com\"],[7],[0,\"fabiushust@hotmail.com\"],[8],[0,\".\\n  \"],[8],[0,\"\\n  \"],[6,\"h5\"],[7],[0,\"I'll add an messagebox in this page, but it's under construction still -- you know I am making bicycle so far but I'll accumulate components until get a car.\"],[8],[0,\"\\n\"],[8]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/contact-me.hbs" } });
 });
 define("ember-site/templates/parterns", ["exports"], function (exports) {
   "use strict";
@@ -340,6 +358,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("ember-site/app")["default"].create({"name":"ember-site","version":"0.0.0+47f0e723"});
+  require("ember-site/app")["default"].create({"name":"ember-site","version":"0.0.0+ca4ea713"});
 }
 //# sourceMappingURL=ember-site.map
