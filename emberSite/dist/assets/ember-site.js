@@ -21,6 +21,21 @@ define('ember-site/app', ['exports', 'ember-site/resolver', 'ember-load-initiali
 
   exports.default = App;
 });
+define('ember-site/components/people-list', ['exports'], function (exports) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    var Component = Ember.Component;
+    exports.default = Component.extend({
+        actions: {
+            getDetails: function getDetails(person) {
+                alert(person);
+            }
+        }
+    });
+});
 define('ember-site/components/welcome-page', ['exports', 'ember-welcome-page/components/welcome-page'], function (exports, _welcomePage) {
   'use strict';
 
@@ -248,12 +263,12 @@ define('ember-site/router', ['exports', 'ember-site/config/environment'], functi
   });
 
   Router.map(function () {
-    this.route('scientists');
+    this.route('parterns');
   });
 
   exports.default = Router;
 });
-define("ember-site/routes/scientists", ["exports"], function (exports) {
+define("ember-site/routes/parterns", ["exports"], function (exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -262,7 +277,7 @@ define("ember-site/routes/scientists", ["exports"], function (exports) {
     var Route = Ember.Route;
     exports.default = Route.extend({
         model: function model() {
-            return ["Fabius Jiang", "Lela Zhou Pig"];
+            return ["Fabius Jiang", "Lela Zhou pig partern"];
         }
     });
 });
@@ -285,15 +300,23 @@ define("ember-site/templates/application", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "zbfJmFsp", "block": "{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"PeopleTracker\"],[8],[0,\"\\n\\n\"],[1,[18,\"outlet\"],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/application.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "z+P2bupH", "block": "{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"Welcome to Fabius's site\"],[8],[0,\"\\n\\n\"],[1,[18,\"outlet\"],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/application.hbs" } });
 });
-define("ember-site/templates/scientists", ["exports"], function (exports) {
+define("ember-site/templates/components/people-list", ["exports"], function (exports) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "VC8mdPfM", "block": "{\"symbols\":[\"scientist\"],\"statements\":[[6,\"h2\"],[7],[0,\"List of Scientists\"],[8],[0,\"\\n\"],[6,\"ul\"],[7],[0,\"\\n\"],[4,\"each\",[[20,[\"model\"]]],null,{\"statements\":[[0,\"        \"],[6,\"li\"],[7],[1,[19,1,[]],false],[8],[0,\"\\n\\n\"]],\"parameters\":[1]},null],[8]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/scientists.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "NeU8foet", "block": "{\"symbols\":[\"person\"],\"statements\":[[6,\"h2\"],[7],[1,[18,\"title\"],false],[8],[0,\"\\n\\n\"],[6,\"ul\"],[7],[0,\"\\n\"],[4,\"each\",[[20,[\"people\"]]],null,{\"statements\":[[0,\"    \"],[6,\"li\"],[3,\"action\",[[19,0,[]],\"getDetails\",[19,1,[]]]],[7],[1,[19,1,[]],false],[8],[0,\"\\n\"]],\"parameters\":[1]},null],[8]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/components/people-list.hbs" } });
+});
+define("ember-site/templates/parterns", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "X8sCF73r", "block": "{\"symbols\":[\"partern\"],\"statements\":[[6,\"h2\"],[7],[0,\"This is the list of parterns of the site\"],[8],[0,\"\\n\\n\"],[6,\"ul\"],[7],[0,\"\\n\"],[4,\"each\",[[20,[\"model\"]]],null,{\"statements\":[[0,\"        \"],[6,\"li\"],[3,\"action\",[[19,0,[]],\"getDetails\",[20,[\"person\"]]]],[7],[1,[19,1,[]],false],[8],[0,\"\\n\"]],\"parameters\":[1]},null],[8],[0,\"\\n\\n\"],[1,[25,\"people-list\",null,[[\"title\",\"people\"],[\"List of Parterns\",[20,[\"model\"]]]]],false]],\"hasEval\":false}", "meta": { "moduleName": "ember-site/templates/parterns.hbs" } });
 });
 
 

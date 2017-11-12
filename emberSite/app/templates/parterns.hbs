@@ -1,0 +1,10 @@
+<h2>This is the list of parterns of the site</h2>
+
+<ul>
+    {{#each model as |partern|}}
+        {{!-- <li {{action "getDetails" person}}>{{partern}}</li> --}}
+        <li {{action "getDetails" person}}>{{partern}}</li>
+    {{/each}}
+</ul>
+
+{{people-list title="List of Parterns" people=model}}

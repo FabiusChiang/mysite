@@ -7,7 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
-  this.route('scientists');
+  this.route('parterns');
 });
 
 export default Router;

@@ -10,6 +10,11 @@ define('ember-site/tests/app.lint-test', [], function () {
     assert.ok(true, 'app.js should pass ESLint\n\n');
   });
 
+  QUnit.test('components/people-list.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/people-list.js should pass ESLint\n\n');
+  });
+
   QUnit.test('resolver.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'resolver.js should pass ESLint\n\n');
@@ -20,9 +25,9 @@ define('ember-site/tests/app.lint-test', [], function () {
     assert.ok(true, 'router.js should pass ESLint\n\n');
   });
 
-  QUnit.test('routes/scientists.js', function (assert) {
+  QUnit.test('routes/parterns.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/scientists.js should pass ESLint\n\n');
+    assert.ok(true, 'routes/parterns.js should pass ESLint\n\n');
   });
 });
 define('ember-site/tests/helpers/destroy-app', ['exports'], function (exports) {
@@ -106,6 +111,35 @@ define('ember-site/tests/helpers/start-app', ['exports', 'ember-site/app', 'embe
     });
   }
 });
+define('ember-site/tests/integration/components/people-list-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForComponent)('people-list', 'Integration | Component | people list', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      "id": "SDbmOAjD",
+      "block": "{\"symbols\":[],\"statements\":[[1,[18,\"people-list\"],false]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      "id": "mhwqehad",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n\"],[4,\"people-list\",null,null,{\"statements\":[[0,\"      template block text\\n\"]],\"parameters\":[]},null],[0,\"  \"]],\"hasEval\":false}",
+      "meta": {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
 define('ember-site/tests/test-helper', ['ember-site/tests/helpers/resolver', 'ember-qunit', 'ember-cli-qunit'], function (_resolver, _emberQunit, _emberCliQunit) {
   'use strict';
 
@@ -137,20 +171,25 @@ define('ember-site/tests/tests.lint-test', [], function () {
     assert.ok(true, 'helpers/start-app.js should pass ESLint\n\n');
   });
 
+  QUnit.test('integration/components/people-list-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/people-list-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('test-helper.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'test-helper.js should pass ESLint\n\n');
   });
 
-  QUnit.test('unit/routes/scientists-test.js', function (assert) {
+  QUnit.test('unit/routes/parterns-test.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'unit/routes/scientists-test.js should pass ESLint\n\n');
+    assert.ok(true, 'unit/routes/parterns-test.js should pass ESLint\n\n');
   });
 });
-define('ember-site/tests/unit/routes/scientists-test', ['ember-qunit'], function (_emberQunit) {
+define('ember-site/tests/unit/routes/parterns-test', ['ember-qunit'], function (_emberQunit) {
   'use strict';
 
-  (0, _emberQunit.moduleFor)('route:scientists', 'Unit | Route | scientists', {
+  (0, _emberQunit.moduleFor)('route:parterns', 'Unit | Route | parterns', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });
