@@ -1,30 +1,22 @@
-export default class CategoryController{
-    // constructor (logger, schema) {
-    //     // const settings = {
-    //     //     validateResponse: false
-    //     // };
+"use strict";
 
-    //     // super(logger, schema, settings);
-    // }
+const express = require('express');
+const mockData = require("../mockData.json")
 
-    // getRoute (req, res) {
-    //     const container = req.container;
-    //     const AdvisorManager = container.get("advisorManager");
-    //     const context = req.context;
 
-    //     const advisorId = req.query.advisorId;
+const router = express.Router();
 
-    //     if (!advisorId) {
-    //         res.json({ clients: [] });
-    //         return;
-    //     }
 
-    //     AdvisorManager.getClientList(advisorId, context)
-    //         .then((data) => {
-    //             res.json({ advisor: data });
-    //         })
-    //         .catch((err) => {
-    //             res.json(err);
-    //         });
-    // }
+class CategoryController{
+    get (req, res) {
+        const retVal = mockData;
+        console.log(retVal);
+        res.send(retVal);
+    }
 }
+
+const controller = new CategoryController();
+
+router.get('/categories', controller.get);
+
+module.exports = router;

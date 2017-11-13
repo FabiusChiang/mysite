@@ -1,20 +1,32 @@
+"use strict";
+const stopWatch = require('./util/stop_watch');
+
 const express = require('express')
 const app = express()
 
-const mockData = require("./mockData.json");
-console.log(mockData);
+app.get('/', (req, res) => res.send('Hi! This is the API!'))
+app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
-app.get('/api', (req, res) => res.send('Hello World - api!'))
 
-// app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
-const classHello = require("./hello");
-const obj1 = new classHello("obj1");
-obj1.actionA();
 
-const classPoliteHello = require("./politeHello");
-const obj2 = new classPoliteHello("obj2");
-obj2.actionA();
-obj2.actionB();
+
+app.use(express.Router().all("/"), function(req, res, next){
+    const startTime = stopWatch.getStartTime();
+    
+    req.on("end", function(result){
+        const elaspedTime = stopWatch.getElaspedSecondes(startTime);
+        const currentTime = new Date();
+        console.log(`${currentTime.toISOString()}: url="${req.originalUrl}" costTime="${elaspedTime}s"`);
+    });
+
+    // res.on('finish', function() {
+    //     const elaspedTime = stopWatch.getElaspedSecondes(startTime);
+    //     console.log(elaspedTime);
+    //     res.setHeader("ContentType", "application/json");
+    // });
+
+    next();
+});
+app.use(require("./controllers/categories_controller"));
