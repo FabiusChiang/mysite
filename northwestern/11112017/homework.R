@@ -46,11 +46,25 @@ meanOfDifference <- 158.03 - 189.49
 sdOfDifference <- sqrt(33.8^2/308+41.3^2/317)
 meanOfDifference
 sdOfDifference
-TwoSidedPValue<-2*pt(meanOfDifference/sdOfDifference, df=308)
+TwoSidedPValue<-2*pt(meanOfDifference/sdOfDifference, df=307)
 ## So the P-Value is 
 TwoSidedPValue
 
 ## (b)
-t<- qt((1-0.95)/2, df=308)
+t<- qt((1-0.95)/2, df=307)
 abs(t*sdOfDifference)
 
+##Exercise 8.29 ----------------------------------------------------
+calculateConfidenceInterval <- function(confidenceLevel, p, sizeOfSample) {
+    t<- qt((1-confidenceLevel)/2, df=(sizeOfSample-1))
+    sd<- sqrt(p*(1-p)/sizeOfSample)
+    m<-abs(t*sd)
+    print(p-m);
+    print(p+m);
+}
+
+## (a)
+calculateConfidenceInterval(0.95, 0.6, 40)
+
+## (b)
+calculateConfidenceInterval(0.95, 0.6, 80)
