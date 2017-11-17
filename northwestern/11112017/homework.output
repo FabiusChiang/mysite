@@ -70,6 +70,25 @@ Type 'q()' to quit R.
 > 2*pt(tOfDifference, df=9)
 [1] 0.06548776
 > 
+> 
+> ##Exercise 7.128 ----------------------------------------------------
+> ## (a)
+> meanOfDifference <- 158.03 - 189.49
+> sdOfDifference <- sqrt(33.8^2/308+41.3^2/317)
+> meanOfDifference
+[1] -31.46
+> sdOfDifference
+[1] 3.014954
+> TwoSidedPValue<-2*pt(meanOfDifference/sdOfDifference, df=308)
+> ## So the P-Value is 
+> TwoSidedPValue
+[1] 5.008975e-22
+> 
+> ## (b)
+> t<- qt((1-0.95)/2, df=308)
+> abs(t*sdOfDifference)
+[1] 5.932513
+> 
 > proc.time()
    user  system elapsed 
-  0.092   0.020   0.129 
+  0.096   0.016   0.141 

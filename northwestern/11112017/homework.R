@@ -38,3 +38,19 @@ tOfDifference
 
 ##As it's 2 sided alternative, the P-Value is 
 2*pt(tOfDifference, df=9)
+
+
+##Exercise 7.128 ----------------------------------------------------
+## (a)
+meanOfDifference <- 158.03 - 189.49
+sdOfDifference <- sqrt(33.8^2/308+41.3^2/317)
+meanOfDifference
+sdOfDifference
+TwoSidedPValue<-2*pt(meanOfDifference/sdOfDifference, df=308)
+## So the P-Value is 
+TwoSidedPValue
+
+## (b)
+t<- qt((1-0.95)/2, df=308)
+abs(t*sdOfDifference)
+
