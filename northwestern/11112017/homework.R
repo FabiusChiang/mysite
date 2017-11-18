@@ -64,7 +64,7 @@ calculateConfidenceInterval <- function(confidenceLevel, p, sizeOfSample) {
 }
 
 ## (a)
-calculateConfidenceInterval(0.95, 0.6, 40)
+calculateConfidenceInterval(0.95, 0.4, 40)
 
 ## (b)
-calculateConfidenceInterval(0.95, 0.6, 80)
+calculateConfidenceInterval(0.95, 0.4, 80)

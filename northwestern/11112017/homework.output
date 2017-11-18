@@ -99,15 +99,15 @@ Type 'q()' to quit R.
 + }
 > 
 > ## (a)
-> calculateConfidenceInterval(0.95, 0.6, 40)
-[1] 0.443323
-[1] 0.756677
+> calculateConfidenceInterval(0.95, 0.4, 40)
+[1] 0.243323
+[1] 0.556677
 > 
 > ## (b)
-> calculateConfidenceInterval(0.95, 0.6, 80)
-[1] 0.4909786
-[1] 0.7090214
+> calculateConfidenceInterval(0.95, 0.4, 80)
+[1] 0.2909786
+[1] 0.5090214
 > 
 > proc.time()
    user  system elapsed 
-  0.136   0.000   0.177 
+  0.132   0.012   0.192 
