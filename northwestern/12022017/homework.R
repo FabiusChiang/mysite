@@ -56,7 +56,6 @@ diffOfY<-filteredData$SalesPrice-estimatedSalesPrice
 ## (a)
 dataForScatterplot<-data.frame(filteredData$AssessedValue, diffOfY)
 plot(dataForScatterplot, xlab="Assessed Value", ylab="Residuals", main="Exercise 10.46 (a)")
-abline(modelFilteredAS, col='blue')
 
 ## (b)
 hist(diffOfY, bre=6, main="10.46 (b) The difference between observed Y and the estimated Y")
@@ -75,4 +74,4 @@ m<-t*0.08295
 1.123+m
 
 ## (e)
-# t<-
+t<-
