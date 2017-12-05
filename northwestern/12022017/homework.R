@@ -47,20 +47,18 @@ summary(modelFilteredAS)
 
 
 ##Exercise 10.46 ----------------------------------------------------
-## (a)
-dataForScatterplot<-data.frame(filteredData$AssessedValue, filteredData$SalesPrice)
-plot(dataForScatterplot, xlab="Assessed Value", ylab="Sales Price", main="Exercise 10.46 (a)")
-abline(modelFilteredAS, col='blue')
-
-## (b)
 estimateY <- function(x){
     9.43181 + 1.123 * x
 }
 estimatedSalesPrice<-sapply(filteredData$AssessedValue, estimateY, simplify="array")
-
-
 diffOfY<-filteredData$SalesPrice-estimatedSalesPrice
 
+## (a)
+dataForScatterplot<-data.frame(filteredData$AssessedValue, diffOfY)
+plot(dataForScatterplot, xlab="Assessed Value", ylab="Residuals", main="Exercise 10.46 (a)")
+abline(modelFilteredAS, col='blue')
+
+## (b)
 hist(diffOfY, bre=6, main="10.46 (b) The difference between observed Y and the estimated Y")
 ## The value of residuals don't match Normal but "linear + Normal noise".
 ## From the histograph of the difference between observed Y and the estimated Y, we can infer the "difference" matches Normal roughly
@@ -77,3 +75,4 @@ m<-t*0.08295
 1.123+m
 
 ## (e)
+# t<-

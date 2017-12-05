@@ -144,20 +144,18 @@ F-statistic: 183.3 on 1 and 32 DF,  p-value: 8.563e-15
 > 
 > 
 > ##Exercise 10.46 ----------------------------------------------------
-> ## (a)
-> dataForScatterplot<-data.frame(filteredData$AssessedValue, filteredData$SalesPrice)
-> plot(dataForScatterplot, xlab="Assessed Value", ylab="Sales Price", main="Exercise 10.46 (a)")
-> abline(modelFilteredAS, col='blue')
-> 
-> ## (b)
 > estimateY <- function(x){
 +     9.43181 + 1.123 * x
 + }
 > estimatedSalesPrice<-sapply(filteredData$AssessedValue, estimateY, simplify="array")
-> 
-> 
 > diffOfY<-filteredData$SalesPrice-estimatedSalesPrice
 > 
+> ## (a)
+> dataForScatterplot<-data.frame(filteredData$AssessedValue, diffOfY)
+> plot(dataForScatterplot, xlab="Assessed Value", ylab="Residuals", main="Exercise 10.46 (a)")
+> abline(modelFilteredAS, col='blue')
+> 
+> ## (b)
 > hist(diffOfY, bre=6, main="10.46 (b) The difference between observed Y and the estimated Y")
 > ## The value of residuals don't match Normal but "linear + Normal noise".
 > ## From the histograph of the difference between observed Y and the estimated Y, we can infer the "difference" matches Normal roughly
@@ -175,6 +173,9 @@ F-statistic: 183.3 on 1 and 32 DF,  p-value: 8.563e-15
 > 1.123+m
 [1] 1.291964
 > 
+> ## (e)
+> # t<-
+> 
 > proc.time()
    user  system elapsed 
-  0.168   0.016   0.232 
+  0.176   0.004   0.225 
