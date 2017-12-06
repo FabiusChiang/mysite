@@ -153,7 +153,6 @@ F-statistic: 183.3 on 1 and 32 DF,  p-value: 8.563e-15
 > ## (a)
 > dataForScatterplot<-data.frame(filteredData$AssessedValue, diffOfY)
 > plot(dataForScatterplot, xlab="Assessed Value", ylab="Residuals", main="Exercise 10.46 (a)")
-> abline(modelFilteredAS, col='blue')
 > 
 > ## (b)
 > hist(diffOfY, bre=6, main="10.46 (b) The difference between observed Y and the estimated Y")
@@ -174,8 +173,10 @@ F-statistic: 183.3 on 1 and 32 DF,  p-value: 8.563e-15
 [1] 1.291964
 > 
 > ## (e)
-> # t<-
+> t<-(1.123-1)/0.08295
+> pt(t, df=32, lower.tail=F)
+[1] 0.07395227
 > 
 > proc.time()
    user  system elapsed 
-  0.176   0.004   0.225 
+  0.176   0.016   0.334 
