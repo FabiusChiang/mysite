@@ -1,6 +1,6 @@
 
-R version 3.4.1 (2017-06-30) -- "Single Candle"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -20,73 +20,92 @@ Type 'q()' to quit R.
 [Previously saved workspace restored]
 
 > 
-> importedData<-read.delim("data.csv")
+> importedData<-read.delim("data.txt")
+> 
+> attach(importedData)
+The following object is masked _by_ .GlobalEnv:
+
+    i
+
+> 
+> ## Question 5.1
+> dataForScatterplot<-data.frame(x_i, y_i)
+> plot(dataForScatterplot, xlab="X", ylab="Y", main="Final Exam Question#5")
+> 
+> modelXY<-lm(y_i~x_i)
+> abline(modelXY)
 > 
 > 
-> importedData
-    i  y_i x_i
-1   1 1000  24
-2   2 1010  24
-3   3  920  17
-4   4  840  19
-5   5  830  19
-6   6 1440  32
-7   7  490   7
-8   8 1050  23
-9   9  870  18
-10 10  970  21
-11 11  920  22
-12 12  810  19
-13 13 1080  23
-14 14 1000  19
-15 15 1030  25
-16 16  870  21
-17 17  880  21
-18 18  850  22
-19 19  780  22
-20 20  830  20
-21 21 1190  30
-22 22  800  16
-23 23  830  16
-24 24  890  23
-25 25  880  24
-26 26  980  27
-27 27 1030  23
-28 28 1220  30
-29 29 1080  22
-30 30  970  20
-31 31 1090  25
-32 32  860  19
-33 33  740  16
-34 34  500  10
-35 35  780  12
-36 36 1120  27
-37 37  590  12
-38 38  990  24
-39 39  700  16
-40 40  930  22
-41 41  860  23
-42 42  420  21
-43 43  800  20
-44 44 1140  24
-45 45  920  21
-46 46  800  21
-47 47 1040  24
-48 48  840  17
-49 49 1060  25
-50 50  870  21
-51 51 1120  25
-52 52  800  18
-53 53  960  27
-54 54  880  21
-55 55 1020  24
-56 56  790  14
-57 57  620  18
-58 58 1150  28
-59 59  970  20
-60 60 1060  24
+> ## Question 5.2
+> ## The point in the middle bottom is most likely to be an outlier because the distance between the estimated Y of the Y of the point is the farthest.
 > 
+> 
+> ## Question 5.3
+> ## The correlation between the two vaiables is:
+> cor(x_i, y_i)
+[1] 0.8166897
+> 
+> 
+> ## Question 5.4
+> ## The line has been drawed in question#5.1
+> ## The summary of the model is 
+> summary(modelXY)
+
+Call:
+lm(formula = y_i ~ x_i)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-488.51  -38.51    4.26   58.18  188.23 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  253.185     62.667    4.04 0.000159 ***
+x_i           31.206      2.895   10.78  1.8e-15 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 104.8 on 58 degrees of freedom
+Multiple R-squared:  0.667,	Adjusted R-squared:  0.6612 
+F-statistic: 116.2 on 1 and 58 DF,  p-value: 1.796e-15
+
+> 
+> ## So the equation of the line is y = 253.185 + 31.206 * x
+> 
+> 
+> ## Question 5.5
+> ## Null Hypothesis is b1 = 0
+> ## The HA is b1 != 0
+> t<-(31.206-0)/2.895
+> pt(t, df=60-2, lower.tail=F)
+[1] 8.938096e-16
+> ## The P-Value is so small, so it's significance and b1 is not 0
+> 
+> 
+> ## Question 5.6
+> ## The trend of the spots is absotlute; almost all spots are closed to the line got per linear regression.
+> ## At the same time we got it's almost impossible that b1 is 0. 
+> ## According to the diagram generated in question 5.1/5.4 and the calculation of 5.5, we get the same conslusion: the correlation between X and Y is strong.
+> 
+> ## Question 5.7
+> summary(x_i)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   7.00   19.00   21.00   21.13   24.00   32.00 
+> 
+> ymean<- 253.185 + 31.206 * 21.13
+> ymean
+[1] 912.5678
+> 
+> ymedian<- 253.185 + 31.206 * 21
+> ymedian
+[1] 908.511
+> 
+> 
+> ## Question 5.8
+> t<-qt(0.95+(1-0.95)/2, df=60-2)
+> t
+[1] 2.001717
 > 
 > proc.time()
    user  system elapsed 
-  0.108   0.000   0.128 
+  0.288   0.024   0.309 
