@@ -32,7 +32,7 @@ summary(modelXY)
 ## Null Hypothesis is b1 = 0
 ## The HA is b1 != 0
 t<-(31.206-0)/2.895
-pt(t, df=60-2, lower.tail=F)
+2*pt(t, df=60-2, lower.tail=F)
 ## The P-Value is so small, so it's significance and b1 is not 0
 
 
@@ -58,6 +58,10 @@ m<-t*2.895
 31.206+m
 
 ## Question 5.9
-## We konw y=b0+b1x
-## We know the distribution of b0 and b1, we know the exact value of x
-## So y=b0+30b1 (then we can calculate the mean of y and the sigma of y per the distribution of b0 and b1)
+## We can calculate the value per formula in Chapter 10, but R provide the function already.
+xToEstimate<-data.frame(x_i=30)
+predict(modelXY, xToEstimate, interval="prediction", level=0.95)
+
+
+## Question 4.4
+pnorm(99, 51.3, 20.65515, lower.tail=F)
