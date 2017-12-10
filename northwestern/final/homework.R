@@ -1,4 +1,9 @@
 
+## Question 4.4
+pnorm(99, 51.3, 20.65515, lower.tail=F)
+
+##############
+
 importedData<-read.delim("data.txt")
 
 attach(importedData)
@@ -60,8 +65,5 @@ m<-t*2.895
 ## Question 5.9
 ## We can calculate the value per formula in Chapter 10, but R provide the function already.
 xToEstimate<-data.frame(x_i=30)
-predict(modelXY, xToEstimate, interval="prediction", level=0.95)
+predict(modelXY, xToEstimate, interval="prediction", level=0.90)
 
-
-## Question 4.4
-pnorm(99, 51.3, 20.65515, lower.tail=F)
