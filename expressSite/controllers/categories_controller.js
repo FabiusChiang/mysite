@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 class CategoryController{
-    get (req, res) {
+    get(req, res) {
         const retVal = mockData;
         console.log(retVal);
         res.send(retVal);

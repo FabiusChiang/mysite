@@ -1,2 +1,7 @@
 tmp
 node_modules
+/bin
+/.vs/ExpressSite/v15
+*.suo
+/obj/Debug
+/expressSite/.vs

@@ -30,3 +30,14 @@ app.use(express.Router().all("/"), function(req, res, next){
     next();
 });
 app.use(require("./controllers/categories_controller"));
+
+//app.use(require("./controllers/test_controller"));
+const testController = require("./controllers/test_controller");
+const newTestController = new testController();
+const testRouter = express.Router();
+
+newTestController.install(testRouter, "/test");
+
+
+app.use(testRouter);
+//router.install("/test", new testController());

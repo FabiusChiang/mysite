@@ -16,15 +16,21 @@ const express = require("express");
  * @param opts.csrf {boolean} If false, disables CSRF token protection on this controller's endpoints.
  */
 function BaseController(opts) {
-    this.logger = opts.logger;
+    //this.logger = opts.logger;
     this.router = express.Router();
-    if (opts.csrf !== false) {
-        this.enableCsrf();
-    }
+    //if (opts.csrf !== false) {
+    //    this.enableCsrf();
+    //}
+}
+
+function delegateToChildObjectProperty(property, method) {
+    return function () {
+        return this[property][method].apply(this[property], arguments);
+    };
 }
 
 var delegateToInternalRouter = function (method) {
-    return fn.delegateToChildObjectProperty("router", method);
+    return delegateToChildObjectProperty("router", method);
 };
 
 /**
@@ -54,39 +60,39 @@ BaseController.prototype.install = function (parentRouter, path) {
  * @param {String} msg Optional message
  */
 BaseController.prototype.logError = function (err, msg) {
-    this.logger.error(msg, err);
+    //this.logger.error(msg, err);
 
-    var stackTrace = this.req.get("x-client-trace");
-    if (stackTrace) {
-        // if press-corp is available, then use it to
-        // de-obfuscate the stack trace
-        try {
-            stackTrace = require("press-corp").deobfuscate(stackTrace);
-        } catch (e) {}
-        this.logger.error("Associated client stack:\n" + stackTrace);
-    }
+    //var stackTrace = this.req.get("x-client-trace");
+    //if (stackTrace) {
+    //    // if press-corp is available, then use it to
+    //    // de-obfuscate the stack trace
+    //    try {
+    //        stackTrace = require("press-corp").deobfuscate(stackTrace);
+    //    } catch (e) {}
+    //    this.logger.error("Associated client stack:\n" + stackTrace);
+    //}
 };
 
-BaseController.prototype.getCSRFMiddleware = function () {
-    var csurfFn = csurf();
+//BaseController.prototype.getCSRFMiddleware = function () {
+//    var csurfFn = csurf();
 
-    return function csrfToken(req, res, next) {
-        csurfFn(req, res, function () {
-            res.locals._csrf = req.csrfToken();
-            next();
-        });
-    };
-};
+//    return function csrfToken(req, res, next) {
+//        csurfFn(req, res, function () {
+//            res.locals._csrf = req.csrfToken();
+//            next();
+//        });
+//    };
+//};
 
 BaseController.prototype.getCSRFErrorHandler = function () {
-    return function csrfError(err, req, res, next) {
-        if (err && err.status === 403) {
-            logger.warn("CSRF token not validated. Handling the CSRF Error");
-            this.handleCSRFError(req, res);
-            return;
-        }
-        next(err);
-    }.bind(this);
+    //return function csrfError(err, req, res, next) {
+    //    if (err && err.status === 403) {
+    //        logger.warn("CSRF token not validated. Handling the CSRF Error");
+    //        this.handleCSRFError(req, res);
+    //        return;
+    //    }
+    //    next(err);
+    //}.bind(this);
 };
 
 /**
@@ -100,13 +106,13 @@ BaseController.prototype.getCSRFErrorHandler = function () {
  * by "security.csrf.redirect"
  */
 BaseController.prototype.enableCsrf = function () {
-    if (config.is("security:csrf:enabled")) {
-        this.use(this.getCSRFMiddleware());
-        // error middleware to detect CSRF problems
-        // and redirect to login page with a special
-        // warning
-        this.use(this.getCSRFErrorHandler());
-    }
+    //if (config.is("security:csrf:enabled")) {
+    //    this.use(this.getCSRFMiddleware());
+    //    // error middleware to detect CSRF problems
+    //    // and redirect to login page with a special
+    //    // warning
+    //    this.use(this.getCSRFErrorHandler());
+    //}
 };
 
 /**
@@ -119,9 +125,9 @@ BaseController.prototype.enableCsrf = function () {
  * @param  {Function} next [description]
  */
 BaseController.prototype.disableCaching = function (req, res, next) {
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.header("Pragma", "no-cache");
-    res.header("Expires", 0);
+    //res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+    //res.header("Pragma", "no-cache");
+    //res.header("Expires", 0);
     next();
 };
 

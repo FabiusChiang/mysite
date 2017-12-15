@@ -10,6 +10,8 @@
   "author": "Fabius",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "util": "^0.10.3"
   }
 }
