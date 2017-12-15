@@ -27,6 +27,7 @@
     <Content Include="package.json" />
     <Compile Include="controllers\test_controller.js" />
     <Compile Include="controllers\rest_controller.js" />
+    <Compile Include="routers.js" />
     <Compile Include="index.js" />
     <Compile Include="controllers\base_controller.js" />
     <Compile Include="controllers\categories_controller.js" />
@@ -35,10 +36,14 @@
     <Compile Include="practice\index.js" />
     <Compile Include="practice\politeHello.js" />
     <Compile Include="util\stop_watch.js" />
+    <Content Include="static\hello.js" />
+    <Content Include="static\hello.html">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controllers" />
-    <Folder Include="ExpressSite" />
+    <Folder Include="static\" />
     <Folder Include="practice" />
     <Folder Include="util" />
   </ItemGroup>
