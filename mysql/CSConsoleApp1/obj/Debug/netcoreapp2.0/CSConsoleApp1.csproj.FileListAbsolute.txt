@@ -1,0 +1,11 @@
+C:\workspace\mysite\cpp\CSConsoleApp1\bin\Debug\netcoreapp2.0\CSConsoleApp1.deps.json
+C:\workspace\mysite\cpp\CSConsoleApp1\bin\Debug\netcoreapp2.0\CSConsoleApp1.runtimeconfig.json
+C:\workspace\mysite\cpp\CSConsoleApp1\bin\Debug\netcoreapp2.0\CSConsoleApp1.runtimeconfig.dev.json
+C:\workspace\mysite\cpp\CSConsoleApp1\bin\Debug\netcoreapp2.0\CSConsoleApp1.dll
+C:\workspace\mysite\cpp\CSConsoleApp1\bin\Debug\netcoreapp2.0\CSConsoleApp1.pdb
+C:\workspace\mysite\cpp\CSConsoleApp1\obj\Debug\netcoreapp2.0\CSConsoleApp1.csprojResolveAssemblyReference.cache
+C:\workspace\mysite\cpp\CSConsoleApp1\obj\Debug\netcoreapp2.0\CSConsoleApp1.csproj.CoreCompileInputs.cache
+C:\workspace\mysite\cpp\CSConsoleApp1\obj\Debug\netcoreapp2.0\CSConsoleApp1.AssemblyInfoInputs.cache
+C:\workspace\mysite\cpp\CSConsoleApp1\obj\Debug\netcoreapp2.0\CSConsoleApp1.AssemblyInfo.cs
+C:\workspace\mysite\cpp\CSConsoleApp1\obj\Debug\netcoreapp2.0\CSConsoleApp1.dll
+C:\workspace\mysite\cpp\CSConsoleApp1\obj\Debug\netcoreapp2.0\CSConsoleApp1.pdb
