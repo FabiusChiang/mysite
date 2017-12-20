@@ -1,0 +1,203 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ##Exercise 10.45 ----------------------------------------------------
+> importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 10/EX10-45SALES.csv")
+> attach(importedData)
+> 
+> importedData
+   House SalesPrice AssessedValue
+1      1       83.0          87.0
+2      2      129.9         103.8
+3      3      125.0         111.0
+4      4      245.0         157.4
+5      5      100.0         127.5
+6      6      134.7         127.7
+7      7      106.0         110.9
+8      8       91.5          90.8
+9      9      170.0         160.7
+10    10      295.0         250.5
+11    11      179.0         160.9
+12    12      230.0         213.2
+13    13      249.9         192.0
+14    14      112.0         117.4
+15    15      133.0         117.2
+16    16      177.5         116.6
+17    17      162.5         143.7
+18    18      238.0         198.2
+19    19      120.9          93.4
+20    20      142.5          92.3
+21    21      299.0         279.0
+22    22       82.5          90.4
+23    23      152.5         103.2
+24    24      139.9         114.9
+25    25      146.0         121.1
+26    26      230.5         212.1
+27    27      360.0         167.9
+28    28      127.9         110.2
+29    29      205.0         183.2
+30    30      163.5          93.6
+31    31      225.0         156.2
+32    32      335.0         278.1
+33    33      192.0         151.0
+34    34      232.0         178.8
+35    35      197.9         172.4
+> 
+> 
+> ## (a) The count of homes which have a sales price greater than the assessed value
+> diff <- SalesPrice - AssessedValue
+> isSalesGreaterThanAssessed <- function(x) 
++ {
++     if (x>0) 
++         return(TRUE) 
++     else 
++         return(FALSE)
++ }
+> 
+> length(Filter(isSalesGreaterThanAssessed, diff))
+[1] 30
+> 
+> # Prepare the parameters for t distribution
+> m<-mean(diff)
+> n<-length(diff)
+> s<-sd(diff)/sqrt(n)
+> 
+> pt(m/s, df=n-1, lower.tail=F)
+[1] 7.083833e-06
+> 
+> 
+> ## (b) 
+> dataForScatterplot<-data.frame(AssessedValue, SalesPrice)
+> plot(dataForScatterplot, xlab="Assessed Value", ylab="Sales Price", main="Exercise 10.45 (b)")
+> ## The correlation is:
+> # cor(BirthRate2011, Users)
+> 
+> modelAS<-lm(SalesPrice~AssessedValue)
+> abline(modelAS)
+> 
+> ## (c)
+> filteredData<-importedData[-27,]
+> modelFilteredAS<-lm(filteredData$SalesPrice~filteredData$AssessedValue)
+> abline(modelFilteredAS, col='blue')
+> 
+> ## (d)
+> summary(modelAS)
+
+Call:
+lm(formula = SalesPrice ~ AssessedValue)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-56.541 -23.253  -8.624  12.185 156.714 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     9.0176    19.1044   0.472     0.64    
+AssessedValue   1.1570     0.1217   9.505 5.69e-11 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 37.34 on 33 degrees of freedom
+Multiple R-squared:  0.7324,	Adjusted R-squared:  0.7243 
+F-statistic: 90.34 on 1 and 33 DF,  p-value: 5.686e-11
+
+> 
+> ## (e)
+> summary(modelFilteredAS)
+
+Call:
+lm(formula = filteredData$SalesPrice ~ filteredData$AssessedValue)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-52.614 -18.676  -5.212  13.195  58.808 
+
+Coefficients:
+                           Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                 9.43181   12.98994   0.726    0.473    
+filteredData$AssessedValue  1.12300    0.08295  13.539 8.56e-15 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 25.39 on 32 degrees of freedom
+Multiple R-squared:  0.8514,	Adjusted R-squared:  0.8467 
+F-statistic: 183.3 on 1 and 32 DF,  p-value: 8.563e-15
+
+> 
+> 
+> ##Exercise 10.46 ----------------------------------------------------
+> estimateY <- function(x){
++     9.43181 + 1.123 * x
++ }
+> estimatedSalesPrice<-sapply(filteredData$AssessedValue, estimateY, simplify="array")
+> diffOfY<-filteredData$SalesPrice-estimatedSalesPrice
+> 
+> ## (a)
+> dataForScatterplot<-data.frame(filteredData$AssessedValue, diffOfY)
+> plot(dataForScatterplot, xlab="Assessed Value", ylab="Residuals", main="Exercise 10.46 (a)")
+> 
+> ## (b)
+> hist(diffOfY, bre=6, main="10.46 (b) The difference between observed Y and the estimated Y")
+> ## The value of residuals don't match Normal but "linear + Normal noise".
+> ## From the histograph of the difference between observed Y and the estimated Y, we can infer the "difference" matches Normal roughly
+> 
+> ## (c)
+> ## Yes, the statistical inference is satified -- the difference between observed Y and the estimated Y is due to the random noise, which matches Normal roughly.
+> 
+> ## (d)
+> #From the summary(modelFilteredAS) we know the mean of slope is 1.123 and the standard error of slope is 0.08295
+> #The corresponding t of the 95% confidence level is:
+> t<-qt(0.95+(1-0.95)/2, df=32)
+> m<-t*0.08295
+> 1.123-m
+[1] 0.9540364
+> 1.123+m
+[1] 1.291964
+> 
+> ## (e)
+> t<-(1.123-1)/0.08295
+> pt(t, df=32, lower.tail=F)
+[1] 0.07395227
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> ##Exercise 8.63 ----------------------------------------------------
+> qnorm(0.95+(1-0.95)/2)
+[1] 1.959964
+> 
+> 
+> pnorm(19.50434991, lower.tail=F)
+[1] 5.041545e-85
+> 
+> proc.time()
+   user  system elapsed 
+  0.180   0.004   0.227 
