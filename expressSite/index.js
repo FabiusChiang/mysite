@@ -5,7 +5,7 @@ const routers = require('./routers');
 const express = require('express')
 const app = express()
 
-app.get('/', (req, res) => res.send('Hi! This is the API!'))
+//app.get('/', (req, res) => res.send('Hi! This is the API!'))
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 routers.applyRouters(app);
@@ -32,12 +32,12 @@ routers.applyRouters(app);
 app.use(require("./controllers/categories_controller"));
 
 //app.use(require("./controllers/test_controller"));
-const testController = require("./controllers/test_controller");
-const newTestController = new testController();
-const testRouter = express.Router();
+//const testController = require("./controllers/test_controller");
+//const newTestController = new testController();
+//const testRouter = express.Router();
 
-newTestController.install(testRouter, "/test");
+//newTestController.install(testRouter, "/test");
 
 
-app.use(testRouter);
+//app.use(testRouter);
 //router.install("/test", new testController());

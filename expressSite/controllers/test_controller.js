@@ -3,26 +3,23 @@
 const express = require('express');
 const restController = require('./rest_controller');
 
-const router = express.Router();
-
-
 class TestController extends restController {
     constructor(opt) {
         super(opt);
         this.count = 0;
         console.log("this.count" + this.count);
     }
-    
-    before (req, res, next) {
+
+    before(req, res, next) {
         const retVal = "This is before test.";
         console.log(retVal);
-        res.setHeader("h1", "v1");
+        res.setHeader("h1FromTestController", "v1");
         next();
     }
 
     get(req, res) {
         //if (this.count) {
-            
+
         //}
         //else {
         //    this.count = 1;
@@ -44,7 +41,7 @@ class TestController extends restController {
     //    res.send(retVal);
     //}
 
-    setCustomPath () {
+    setCustomPath() {
         this.get.customPath = "/:newId";
     }
 

@@ -13,7 +13,7 @@ setGlobalRouter();
 setPublicRouter();
 setPrivateRouter();
 
-function setStaticRouter() {
+function setStaticRouter () {
     var options = {
         dotfiles: 'ignore',
         etag: false,
@@ -28,88 +28,53 @@ function setStaticRouter() {
     staticRouter = express.static("static", options);
 }
 
-function setGlobalRouter() {
-    //globalRouter.all("/", (req, res, next) => {
-    //    const startTime = stopWatch.getStartTime();
-    //    req.on("end", function (result) {
-    //        const elaspedTime = stopWatch.getElaspedSecondes(startTime);
-    //        const currentTime = new Date();
-    //        console.log(`${currentTime.toISOString()}: url="${req.originalUrl}" costTime="${elaspedTime}s"`);
-    //    });
-
-    //    next();
-    //});
-}
-
-function setPublicRouter() {
-
-}
-
-function setPrivateRouter() {
-
-}
-
-//app.get('/', (req, res) => res.send('Hi! This is the API!'))
-//app.listen(3000, () => console.log('Example app listening on port 3000!'))
-
-
-
-
-
-
-//app.use(express.Router().all("/"), function(req, res, next){
-//    const startTime = stopWatch.getStartTime();
-    
-//    req.on("end", function(result){
-//        const elaspedTime = stopWatch.getElaspedSecondes(startTime);
-//        const currentTime = new Date();
-//        console.log(`${currentTime.toISOString()}: url="${req.originalUrl}" costTime="${elaspedTime}s"`);
-//    });
-
-//    // res.on('finish', function() {
-//    //     const elaspedTime = stopWatch.getElaspedSecondes(startTime);
-//    //     console.log(elaspedTime);
-//    //     res.setHeader("ContentType", "application/json");
-//    // });
-
-//    next();
-//});
-//app.use(require("./controllers/categories_controller"));
-
-////app.use(require("./controllers/test_controller"));
-//const testController = require("./controllers/test_controller");
-//const newTestController = new testController();
-//const testRouter = express.Router();
-
-//newTestController.install(testRouter, "/test");
-
-
-//app.use(testRouter);
-////router.install("/test", new testController());
-
-function applyRouters(app) {
-    //app.use("/static", staticRouter);
-
-    //app.use("/", setGlobalRouter);
-
-
-    app.use(function(req, res, next){
+function setGlobalRouter () {
+    globalRouter.use((req, res, next) => {
         const startTime = stopWatch.getStartTime();
-
-        req.on("end", function(result){
+        req.on("end", function (result) {
             const elaspedTime = stopWatch.getElaspedSecondes(startTime);
             const currentTime = new Date();
             console.log(`${currentTime.toISOString()}: url="${req.originalUrl}" costTime="${elaspedTime}s"`);
         });
-
-        // res.on('finish', function() {
-        //     const elaspedTime = stopWatch.getElaspedSecondes(startTime);
-        //     console.log(elaspedTime);
-        //     res.setHeader("ContentType", "application/json");
-        // });
-
         next();
     });
+}
+
+function setPublicRouter () {
+    const publicController = require("./controllers/public_controller");
+    const newController = new publicController();
+    newController.install(publicRouter, "/public");
+}
+
+function setPrivateRouter () {
+    privateRouter.use((req, res, next) => {
+
+        /// The cookie process is not done yet here.
+        let userId = null;
+        if (req.headers.cookies) {
+            userId = req.headers.cookies.userId;
+        }
+
+        if (userId) {
+            next();
+        }
+        else {
+            res.setHeader("cookies", "userId=aFakeUserId");
+            //next(error);
+            res.send("Login is done, please refresh your page");
+        }
+    });
+
+    const testController = require("./controllers/test_controller");
+    const newTestController = new testController();
+    newTestController.install(privateRouter, "/test");
+}
+
+function applyRouters (app) {
+    app.use("/", globalRouter);
+    app.use("/static", staticRouter);
+    app.use("/", publicRouter);
+    app.use("/", privateRouter);
 }
 
 module.exports.applyRouters = applyRouters;
