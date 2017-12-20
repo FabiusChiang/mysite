@@ -126,7 +126,9 @@ RESTController.prototype.describe = function () {
 };
 
 RESTController.prototype.setCustomPath = function () {
-    this.get.customPath = "/:oldId";
+    ///Just a empty function, the subclass can implement the function to define the 
+    ///path of action
+    ///A sample: this.get.customPath = "/:customizedId";
 }
 
 /**

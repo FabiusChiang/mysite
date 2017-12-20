@@ -48,21 +48,21 @@ function setPublicRouter () {
 
 function setPrivateRouter () {
     privateRouter.use((req, res, next) => {
-
-        /// The cookie process is not done yet here.
         let userId = null;
-        if (req.headers.cookies) {
-            userId = req.headers.cookies.userId;
+        if (req.headers.cookie) {
+            userId = req.headers.cookie.userId;
         }
+        //The context could be prepared here
+        next();
 
-        if (userId) {
-            next();
-        }
-        else {
-            res.setHeader("cookies", "userId=aFakeUserId");
-            //next(error);
-            res.send("Login is done, please refresh your page");
-        }
+        //if (userId) {
+        //    next();
+        //}
+        //else {
+        //    res.setHeader("Set-Cookie", "userId=aFakeUserId");
+        //    //next(error);
+        //    res.send("Login is done, please refresh your page");
+        //}
     });
 
     const testController = require("./controllers/test_controller");
