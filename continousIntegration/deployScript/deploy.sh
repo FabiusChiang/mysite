@@ -7,6 +7,8 @@ currentVersion=$2
 folderOfCurrentScript="$(dirname "${BASH_SOURCE}")"
 cd ${folderOfCurrentScript}
 
+source ../../../credentials.sh
+
 appName="mysite"
 if [ -z "${currentVersion}" ]; then
     currentVersion=`bash ../common/getVersion.sh`
@@ -29,7 +31,10 @@ wordPressContainerName=${appName}_wordpress_${appEnv}
 docker stop ${wordPressContainerName}
 docker rm ${wordPressContainerName}
 echo ${hostName}
-docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -d wordpress:4.8.3-apache
+echo ${userName}
+#docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -d wordpress:4.8.3-apache
+docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.8.3-apache
+
 
 
 #################################################################
