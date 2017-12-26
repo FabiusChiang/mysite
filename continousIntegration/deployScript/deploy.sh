@@ -28,6 +28,7 @@ port=`bash ../azureCommon/allocatePort.sh wordpress ${appEnv}`
 wordPressContainerName=${appName}_wordpress_${appEnv}
 docker stop ${wordPressContainerName}
 docker rm ${wordPressContainerName}
+echo ${hostName}
 docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -d wordpress:4.8.3-apache
 
 
