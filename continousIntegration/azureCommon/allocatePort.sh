@@ -20,14 +20,11 @@ fi
 
 if [ "wordpress" = "${componentName}" ]; then
     case "${appEnv}" in
-        prod)
+        dev)
             port=7090
             ;;
         qa)
             port=7091
-            ;;
-        dev)
-            port=7092
             ;;
         *)
             exit 1
