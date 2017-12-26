@@ -26,6 +26,9 @@ if [ "wordpress" = "${componentName}" ]; then
         qa)
             port=7091
             ;;
+        dev)
+            port=7092
+            ;;
         *)
             exit 1
     esac
