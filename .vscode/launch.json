@@ -8,14 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/index.js",
-            "sourceMaps": false
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Babel-node",
-            "program": "${workspaceFolder}/index.js"
+            "program": "${workspaceFolder}/expressSite/controllers/categories_controller.js"
         }
     ]
 }

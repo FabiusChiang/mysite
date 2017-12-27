@@ -1,4 +1,11 @@
 "use strict";
+
+require("babel-register")({
+    "presets": ["es2015"],
+    "plugins": ["add-module-exports"]
+});
+
+
 const stopWatch = require('./util/stop_watch');
 const routers = require('./routers');
 

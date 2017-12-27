@@ -1,5 +1,8 @@
 "use strict";
 
+import msg from "./testImport";
+
+
 const express = require('express');
 const stopWatch = require('./util/stop_watch');
 
@@ -34,6 +37,8 @@ function setGlobalRouter () {
         req.on("end", function (result) {
             const elaspedTime = stopWatch.getElaspedSecondes(startTime);
             const currentTime = new Date();
+            // import msg from "./testImport";
+            console.log(msg());
             console.log(`${currentTime.toISOString()}: url="${req.originalUrl}" costTime="${elaspedTime}s"`);
         });
         next();
