@@ -1,0 +1,9 @@
+{
+  "name": "music-from-xiami",
+  "version": "0.0.0",
+  "description": "musicFromXiami",
+  "main": "app.js",
+  "author": {
+    "name": "fabiu"
+  }
+}
