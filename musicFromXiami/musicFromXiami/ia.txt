@@ -1,0 +1,385 @@
+[object Object]<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title> 虾米音乐播放器 </title>
+		<meta name="data-spm" content="a1z1s" />
+		<meta charset="UTF-8">
+												
+		<link rel="shortcut icon" id="dynamic-favicon" type="image/x-icon" href="http://res.xiami.net/play.ico" />
+		<link rel="stylesheet" type="text/css" href="//g.alicdn.com/music/music-static/0.5.0/common/old.css">
+				<link rel="stylesheet" type="text/css" href="//g.alicdn.com/music/music-player/1.1.5/pages/??index/page/index-min.css,index/page/ui-min.css">
+				
+		<!-- kirov start -->
+		<script src="//g.alicdn.com/secdev/pointman/js/index.js" app="xiami"></script>
+		<!-- kirov end -->
+		
+		<style>
+		#J_header .friend {background: none;}
+		#J_header .user {background: none;border-left:none;}
+		#J_header .user .avatar {border: 2px solid rgba(255,255, 255, 0);}
+		#J_header .unlogin {padding: 0 8px;}
+		#J_header .user .arrow {margin-top: 11px;height: 30px;line-height:30px;width: 30px;border: 2px solid rgba(255,255, 255, 0);text-align: center;}
+		</style>
+		
+	</head>
+	<body data-spm="7154410" class="loading"><script>
+with(document)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("exparams","category=&userid=&aplus&yunid=&&asid=AACguoBaVn89SS2+AYg=",id="tb-beacon-aplus",src=(location>"https"?"//s":"//a")+".tbcdn.cn/s/aplus_v2.js")
+</script>
+
+		<div id="J_loading"></div>
+		<div id="J_xiamiPlayerWrap"><div id="J_xiamiPlayer"></div></div>
+		<div id="J_blurBackground"></div>
+		<div id="player-main">
+			<div id="top">
+				<div id="J_header">
+					<div class="logo">
+						<h1><a href="http://www.xiami.com/" target="_blank">虾米音乐</a></h1>
+					</div>
+					<div class="search-wrap">
+						<div class="search-content">
+							<form action="http://www.xiami.com/search" method="get" id="search" target="_blank">
+							<input id="J_searchStatus" type="submit" />
+							<input type="hidden" name="pos" value="1">
+							<div class="search-input"><input id="J_searchInput" autocomplete="off" type="text" name="key" /></div>
+							</form>
+						</div>
+					</div>
+				
+					<div class="userinfo" id="J_userInfo">
+												<div class="user unlogin">
+							<div class="arrow">
+																<img src="https://gw.alicdn.com/tps/TB1URHjLpXXXXcHXVXXXXXXXXXX-28-20.png" width="14" height="10" />
+							</div>
+						</div>
+						<div class="mod-login" id="J_login">
+							<div class="login-content">马上 <a href="javascript:;" id="J_miniLogin">登录</a></div>
+						</div>
+											</div>
+					
+				</div>
+			</div>
+			<div id="middle">
+				<div id="J_mainWrap" class="main-wrap">
+					<!-- 侧边栏  begin -->
+					<div class="main-sidebar">
+						<div class="menu-outer">
+							<ul id="J_sidebarMenu">
+								<li class="current" id="J_menuPlaying" data-page="J_pagePlayList">
+									<a><i class="icon-play"></i>正在播放</a>
+								</li>
+								<li id="J_menuHistory" data-page="J_pageHistory">
+									<a><i class="icon-history"></i>播放历史</a>
+								</li>
+								<li id="J_menuMyfav" data-page="J_pageMyfav">
+									<a><i class="icon-myfav"></i>我收藏的单曲</a>
+								</li>
+							</ul>
+						</div>
+						<div class="collect-outer">
+							<div class="collect-title">
+								<h3>我创建的歌单</h3>
+								<span><a class="icon-addCollect" id="J_createCollect"></a></span>
+							</div>
+						</div>
+						<div class="collect-list">
+							<div id="J_collectScrollView" class="ks-scroll-view">
+								<!-- 滚动内容 -->
+								<div class="ks-scroll-view-content" id="J_collectList"></div>
+								<!-- 滚动内容 end -->
+							</div>
+						</div>
+						<div class="promotion-block">
+							<a href="http://www.xiami.com/apps/mobile" target="_blank"><img src="https://img.alicdn.com/tps/TB1Q5DVNpXXXXbjXVXXXXXXXXXX-185-100.png"></a>
+						</div>
+					</div>
+					<!-- 侧边栏 end -->
+					<div id="J_tab" class="main-body">
+						<!-- 正在播放 begin -->
+						<div id="J_pagePlayList" class="main-page" data-spm="1996860241" style="display:block">
+							<div class="ui-playlist-header ui-row-item">
+								<div class="ui-row-item-body">
+									<div class="ui-row-item-column c1">
+										歌曲<span id="J_trackCount"></span>
+									</div>
+									<div class="ui-row-item-column c2">
+										演唱者
+									</div>
+									<div class="ui-row-item-column c3">
+										专辑
+									</div>
+								</div>
+							</div>
+							<div class="ui-playlist-body">
+
+								<div id="J_tracksScrollView" class="ks-scroll-view">
+									<!-- 歌曲列表 -->
+									<div class="ks-scroll-view-content">
+										<!-- 列表 begin -->
+										<div class="ui-tracks-wrap" id="J_playTracksList">
+
+										</div>
+										<!-- 列表 end -->
+									</div>
+									<!-- 歌曲列表 end -->
+								</div>
+
+							</div>
+							<div class="ui-playlist-footer">
+								<div class="ui-track-all">
+									<div class="ui-all-checkbox">
+										<input id="J_checkAll_track"  type="checkbox" onclick="SEIYA.syncCheck(this,'track')" />
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-delete" id="J_trackListDelete">删除</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-fav" id="J_trackListFav">收藏</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-add" id="J_trackListAdd" onclick="SEIYA.collects('track')">添加到歌单</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-more" data-type="track" data-event="more" id="J_trackListMore">更多</a>
+									</div>
+									<div id="playInAppWrap">
+                    <a class="icon-tracks-app" data-event="playapp" id="J_playInApp">手机继续听</a>
+                  </div>
+								</div>
+							</div>
+						</div>
+						<!-- 正在播放 end -->
+
+						<!-- 播放历史 begin -->
+						<div id="J_pageHistory" class="main-page" data-spm="1996860237" style="display: none">
+							<div class="ui-history-title">
+								<div class="ui-history-title-con">
+									<a class="icon-playAllBtn"  title="播放全部" id="J_playAllMyfav" onclick="SEIYA.addPlaySongs('history')"></a>
+									<h2>播放历史</h2>
+									<p id="J_historyCount">
+										<span>loading</span>
+									</p>
+								</div>
+							</div>
+							<div class="ui-history-header ui-row-item">
+								<div class="ui-row-item-body">
+									<div class="ui-row-item-column c1">
+										歌曲
+									</div>
+									<div class="ui-row-item-column c2">
+										演唱者
+									</div>
+									<div class="ui-row-item-column c3">
+										试听时间
+									</div>
+								</div>
+							</div>
+							<div class="ui-history-body">
+
+								<div id="J_historyScrollView" class="ks-scroll-view">
+									<!-- 歌曲列表 -->
+									<div class="ks-scroll-view-content">
+										<!-- 列表 begin -->
+										<div class="ui-tracks-wrap" id="J_historyTracksList">
+
+										</div>
+										<!-- 列表 end -->
+									</div>
+									<!-- 歌曲列表 end -->
+								</div>
+
+							</div>
+							<div class="ui-history-footer">
+								<div class="ui-track-all">
+									<div class="ui-all-checkbox">
+										<input id="J_checkAll_history" type="checkbox"  onclick="SEIYA.syncCheck(this,'history')" />
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-play" onclick="SEIYA.playAllSongs('history')">播放</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-add" onclick="SEIYA.collects('history')">添加到歌单</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-more" data-type="history" data-event="more">更多</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 播放历史 end -->
+
+						<!-- 我收藏的单曲 begin -->
+						<div id="J_pageMyfav" class="main-page" data-spm="1996860218" style="display:none">
+							<div class="ui-myfav-title">
+								<div class="ui-myfav-title-con">
+									<a class="icon-playAllBtn" title="播放全部" id="J_playAllMyfav" onclick="SEIYA.addPlaySongs('fav')"></a>
+									<h2>我收藏的单曲</h2>
+									<p id="J_favCount">
+										<span>loading </span>
+									</p>
+								</div>
+							</div>
+							<div class="ui-myfav-header ui-row-item">
+								<div class="ui-row-item-body">
+									<div class="ui-row-item-column c1">
+										歌曲
+									</div>
+									<div class="ui-row-item-column c2">
+										演唱者
+									</div>
+									<div class="ui-row-item-column c3">
+										专辑
+									</div>
+								</div>
+							</div>
+							<div class="ui-myfav-body">
+								<div id="J_myfavScrollView" class="ks-scroll-view">
+									<div class="ks-scroll-view-content">
+										<!-- 收藏单曲 begin -->
+										<div class="ui-tracks-wrap" id="J_myFavTracksList">
+
+										</div>
+										<!-- 收藏单曲 begin -->
+									</div>
+								</div>
+							</div>
+							<div class="ui-myfav-footer">
+								<div class="ui-track-all">
+									<div class="ui-all-checkbox">
+										<input id="J_checkAll_fav" type="checkbox" onclick="SEIYA.syncCheck(this,'fav')" />
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-play" onclick="SEIYA.playAllSongs('fav')">播放</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-add" onclick="SEIYA.collects('fav')">添加到歌单</a>
+									</div>
+									<div class="ui-all-item">
+										<a class="icon-tracks-more" data-type="fav" data-event="more">更多</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 我收藏的单曲 end -->
+
+						<!-- 歌单 detail -->
+						<div id="J_pageCollect" class="main-page" data-spm="1996860182" style="display:none">
+
+						</div>
+						<!-- 歌单 detail end -->
+					</div>
+					<div id="J_lrcWrap" class="main-outher" data-spm="1996860293">
+						<div class="ui-album-cover" id="J_albumCover">
+							<div id="J_playerCover" class="ui-album-img"></div>
+						</div>
+						<!-- <div class="ui-album-sale" id="J_albumSale" data-spm="1997588397"></div> -->
+						<div class="ui-player-lrc" id="J_lyricScrollWrap">
+							<div id="J_lyricScrollView" class="ks-scroll-view">
+								<div class="ks-scroll-view-content">
+									<div class="ui-player-lrc-wrap" id="J_playerLrc">
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="bottom">
+				<div id="J_playerWrap">
+					<div class="player-info" data-spm="1996860142">
+						<div class="track-info">
+							<div id="J_trackInfo" class="player-track-info">
+								<a href="#nohash">暂无歌曲</a>
+							</div>
+							<div class="track-controls">
+								<a id="J_trackFav" class="icon-fav" data-sid="0" title="收藏"></a>
+								<a id="J_trackShare" class="icon-share" data-sid="0" title="分享"></a>
+								<a id="J_trackComment" class="icon-comment" data-sid="0" title="评论"></a>
+								<a id="J_trackMore" class="icon-more" data-sid="0" title="更多"></a>
+							</div>
+						</div>
+						<div class="player-length">
+							<div class="player-position" id="J_positionTime">
+								00:00
+							</div>
+							<div class="player-progress">
+								<div class="progress" id="J_playerProgress">
+									<div class="loading" style="width:0%;"></div>
+									<div class="playing" style="width:0%;"></div>
+								</div>
+								<div class="panel" id="J_playerPanel">
+									<a class="player-dot" id="J_playerDot" style="left:0px;"></a>
+								</div>
+							</div>
+							<div class="player-duration" id="J_durationTime">
+								00:00
+							</div>
+						</div>
+					</div>
+					<div class="player-controls">
+						<a id="J_prevBtn" class="prev-btn"></a>
+						<a id="J_playBtn" class="play-btn"></a>
+						<a id="J_nextBtn" class="next-btn"></a>
+						<div class="player-mode">
+							<a id="J_playerMode" class="mode-order"></a>
+						</div>
+					</div>
+					<div class="player-volume">
+						<a id="J_playerHQ" class="mode-hq-on1" data-hq="off"></a>
+						<span id="J_translate" class="click" style="display:none;">译</span>
+						<div id="volume">
+							<div id="J_volumeSpeaker" class="volume-on"></div>
+							<div class="volume-wrap" id="J_volumeRange">
+								<div class="volume-panel">
+									<div class="volume-cur" style="width:50%"></div>
+								</div>
+								<div class="volume-control">
+									<a class="volume-dot" style="left:40px"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="http://res.xiami.net/??static/lib/jQuery/1.9.1/jquery.min.js,res/js/jquery/jqDnR.js,static/lib/jqmodal.js,res/js/jquery/jquery.cookie.js,res/js/jquery/jquery.form.js"></script>
+		<script type="text/javascript">
+            var _xiamitoken = '6017289548dddeed1989506432e3e821';
+			
+            function showDialog(a,b){$(".dialog_popup").length||$("body").prepend('<div id="dialog_clt" class="dialog_popup"><div class="dialog_main"></div><div class="jqDrag"></div></div>'),b||(b='<div class="dialog_content"><p class="loading">虾小米正为您在处理数据, 请稍候...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><a href="" class="jqmClose">关闭</a>'),a?a+=(a.match(/\?/)?"&":"?")+"_xiamitoken="+_xiamitoken:$(".dialog_main").html(b),$(".dialog_popup").jqm({ajax:a,modal:!0,target:".dialog_main",ajaxText:b,onLoad:function(){$(".dialog_popup").css({"margin-left":"-"+$(".dialog_main").width()/2+"px","margin-top":"-"+$(".dialog_main").height()/2+"px"})},onShow:function(){$(".dialog_popup").show()},onHide:function(){$(".dialog_popup").css({"margin-left":"-130px","margin-top":"-25px",top:"50%",left:"50%"}).hide(),$(".jqmOverlay").hide()}}).jqDrag(".jqDrag").jqmShow()}function closedialog(){$(".dialog_popup").jqmHide()}function dialogbg(){"msie"==getBrowser()&&$(".dialog_sharp").height($(".dialog_main").height())}function getBrowser(){var c,a=navigator.userAgent.toLowerCase(),b=new Array("msie","firefox","safari","opera","netscape");for(c=0;c<b.length;c++)if(-1!=a.indexOf(b[c]))return b[c];return"other"}
+			
+			var USER_SIGNKEY = '';
+		</script>
+					<script src="http://g.alicdn.com/kissy/k/1.4.2/seed-min.js?v=20140225154545" type="text/javascript"></script>
+		
+<script>
+KISSY.config({
+	combine : true,
+	packages : {
+		'widget' : {
+			debug : false,
+			tag : "20140305173316",
+			path : (- 1 === location.host.indexOf('www.xiami.com') ? 'http://g.assets.daily.taobao.net/' : 'http://g.alicdn.com/') + 'music/music-player/0.9.36/',
+			charset : "utf-8"
+		}
+	}
+});
+</script>
+
+<script>
+var DEBUG = '0';
+var ENV = 'prod';
+var USER_GENDER = '';
+</script>
+<script src="//g.alicdn.com/music/music-player/1.1.5/??common/global-min.js,pages/index/page/init-min.js" type="text/javascript"></script>
+<script src="http://res.xiami.net/static/athena/build/js/third.min.js" type="text/javascript"></script>
+
+<div style="display:none">
+<script src='http://s95.cnzz.com/stat.php?id=921634&web_id=921634' language='JavaScript' charset='gb2312'></script>
+<script src="http://s16.cnzz.com/stat.php?id=2629111&web_id=2629111" language="JavaScript"></script>
+</div>
+
+	</body>
+</html>
