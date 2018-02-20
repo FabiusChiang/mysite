@@ -31,7 +31,7 @@ const chrome = require('selenium-webdriver/chrome');
         {
             'args': [
                 "--load-extension=/workspace/mysite/musicFromXiami/musicFromXiami/testData/UnblockYouku-3.6.14_0,/workspace/mysite/musicFromXiami/musicFromXiami/testData/SoundPirate-1.9.0_0",
-                "--load-extension=/workspace/mysite/musicFromXiami/musicFromXiami/testData/SoundPirate-1.9.0_0",
+                //"--load-extension=/workspace/mysite/musicFromXiami/musicFromXiami/testData/SoundPirate-1.9.0_0",
                 "--disable-web-security"]
             //, 
             //'extensions': ["/workspace/mysite/musicFromXiami/musicFromXiami/testData/SoundPirate.crx"]
@@ -60,6 +60,10 @@ const chrome = require('selenium-webdriver/chrome');
         let url = 'http://www.xiami.com/collect/354466786?spm=a1z1s.3065917.6862697.91.wxs1XL';
         url = 'http://www.xiami.com/collect/2352110?spm=a1z1s.3065917.6862697.123.wxs1XL';
         url = "http://www.xiami.com/collect/10867107?spm=a1z1s.3065917.0.0.lcGbtR";
+        url = "http://www.xiami.com/collect/200060452?spm=a1z1s.3065917.6862697.80.NqDdKx";
+        url = "http://www.xiami.com/collect/11343797?spm=a1z1s.3065917.6862697.51.NqDdKx";
+        url = "http://www.xiami.com/collect/2209601?spm=a1z1s.3065917.6862697.21.v5wxz0";
+        url = "http://www.xiami.com/collect/207608918?spm=a1z1s.3065917.6862697.131.v5wxz0";
         await driver.get(url);
         //await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
         //await driver.wait(until.titleIs('webdriver - Google Search'), 100000);
@@ -69,7 +73,7 @@ const chrome = require('selenium-webdriver/chrome');
 
         const tabs = await driver.getAllWindowHandles();
         driver.switchTo().window(tabs[1]);
-        await driver.sleep(5000);
+        await driver.sleep(10000);
 
         while (true) {
             //await driver.wait(Promise.resolve(false), 8000);
