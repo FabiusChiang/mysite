@@ -1,0 +1,9 @@
+{
+  "name": "calculcate-erlang-b",
+  "version": "0.0.0",
+  "description": "calculcateErlangB",
+  "main": "app.js",
+  "author": {
+    "name": "fabiu"
+  }
+}
