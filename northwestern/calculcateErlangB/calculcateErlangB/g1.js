@@ -1,16 +1,7 @@
 ﻿"use strict";
 
 const calc = require("./funcs");
-
-const sourceData = [];
-
-let pb = 0.01;
-for (let i = 0; i < 10; i++) {
-    sourceData.push({
-        pb: pb + pb * i,
-        line: 24
-    });
-}
+const fs = require("fs");
 
 function fillData(dataArray) {
     dataArray.forEach(item => {
@@ -18,25 +9,45 @@ function fillData(dataArray) {
             item.bht = calc.ErlangBBHT(item.pb, item.line);
         }
         else if (!item.pb) {
-            item.pb = calc.ErlangBBHT(item.pb, item.line);
+            item.pb = calc.ErlangB(item.pb, item.line);
         }
         else if (!item.line) {
-            item.line = calc.ErlangBBHT(item.pb, item.line);
+            item.line = calc.ErlangBLines(item.pb, item.line);
         }
     });
 }
 
-
-function getUsersInBatch(dataArray) {
+async function outputData(dataArray, fileName) {
+    let stringValue = "Pb,Circuit,n*R\r\n";
     dataArray.forEach(item => {
-        item.bht = calc.ErlangBBHT(item.pb, 60);
-        item.users = item.bht / 0.1;
-        console.log(item);
+        stringValue = stringValue + `${item.pb},${item.line},${item.bht}` + "\r\n";
+    });
+    await fs.writeFile(fileName, stringValue, error => {
+        console.log(error);
     });
 }
 
-getUsersInBatch(sourceData);
+const sourceData1a = [];
 
-//console.log(bht);
-//console.log(lines);
-//console.log(blockProbability);
+let pb = 0.01;
+for (let i = 0; i < 10; i++) {
+    sourceData1a.push({
+        pb: pb + pb * i,
+        line: 24
+    });
+}
+
+fillData(sourceData1a);
+Promise.resolve(outputData(sourceData1a, "g1a.csv"));
+
+const sourceData1b = [];
+
+for (let i = 0; i < 10; i++) {
+    sourceData1b.push({
+        pb: pb + pb * i,
+        line: 774
+    });
+}
+
+fillData(sourceData1b);
+Promise.resolve(outputData(sourceData1b, "g1b.csv"));
