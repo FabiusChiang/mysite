@@ -9,10 +9,10 @@ function fillData(dataArray) {
             item.bht = calc.ErlangBBHT(item.pb, item.line);
         }
         else if (!item.pb) {
-            item.pb = calc.ErlangB(item.pb, item.line);
+            item.pb = calc.ErlangB(item.bht, item.line);
         }
         else if (!item.line) {
-            item.line = calc.ErlangBLines(item.pb, item.line);
+            item.line = calc.ErlangBLines(item.bht, item.pb);
         }
     });
 }
