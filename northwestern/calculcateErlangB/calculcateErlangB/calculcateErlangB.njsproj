@@ -33,6 +33,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="g2.js" />
+    <Compile Include="g5.js" />
+    <Compile Include="g6.js" />
+    <Compile Include="g4.js" />
     <Compile Include="g3.js" />
     <Compile Include="g1.js">
       <SubType>Code</SubType>
