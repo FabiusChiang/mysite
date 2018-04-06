@@ -28,31 +28,33 @@ baseImagesurl="fabius/"${appName}":"
 ##WordPress
 port=`bash ../azureCommon/allocatePort.sh wordpress ${appEnv}`
 wordPressContainerName=${appName}_wordpress_${appEnv}
+workPressContentFolder="${baseDataFolder}/${wordPressContainerName}/wp-content"
+echo ${workPressContentFolder}
 docker stop ${wordPressContainerName}
 docker rm ${wordPressContainerName}
 echo ${hostName}
 echo ${userName}
 #docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -d wordpress:4.8.3-apache
-docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.1-php5.6-apache
+docker run -p ${port}:80 -v ${workPressContentFolder}:/var/www/html/wp-content --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.1-php5.6-apache
 
 
 
-#################################################################
-##Web component
+# #################################################################
+# ##Web component
 
-#1. Stop original
-webContainerName=${appName}_web
+# #1. Stop original
+# webContainerName=${appName}_web
 
-docker stop ${webContainerName}
-docker rm ${webContainerName}
+# docker stop ${webContainerName}
+# docker rm ${webContainerName}
 
-#2. Get all new images
-webImageName=${baseImagesurl}web_${currentVersion}
-docker rmi ${webImageName}
-docker pull ${webImageName}
+# #2. Get all new images
+# webImageName=${baseImagesurl}web_${currentVersion}
+# docker rmi ${webImageName}
+# docker pull ${webImageName}
 
-#3. Launch images per sequence
-# port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
-# docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
+# #3. Launch images per sequence
+# # port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
+# # docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
 
 docker run -p 80:80 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static -v /home/fabius/data/static/.well-known:/usr/local/apache2/htdocs/.well-known --name ${webContainerName} -d ${webImageName}
