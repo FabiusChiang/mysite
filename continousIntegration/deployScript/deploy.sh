@@ -55,4 +55,4 @@ docker pull ${webImageName}
 # port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
 # docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
 
-docker run -p 80:80 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static --name ${webContainerName} -d ${webImageName}
+docker run -p 80:80 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static -v /home/fabius/data/static/.well-known:/usr/local/apache2/htdocs/.well-known --name ${webContainerName} -d ${webImageName}
