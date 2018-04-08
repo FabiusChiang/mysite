@@ -1,0 +1,78 @@
+
+R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> newfood = data.frame(
++ sales=c(225,323,424,268,224,331,254,492,167,226,210,289,204,288,245,161,161,
++ 246,128,154,163,151,180,150),
++ price=c(24,24,24,24,24,24,24,24,29,29,29,29,29,29,29,29,34,34,34,34,34,34,34,34),
++ ad=c(0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1),
++ loc=c(0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1),
++ income=c(7.3,8.3,6.9,6.5,7.3,8.3,6.9,6.5,6.5,8.4,6.5,6.2,6.5,8.4,6.5,6.2,
++ 7.2,8.1,6.6,6.1,7.2,8.1,6.6,6.1),
++ volume=c(34,41,32,28,34,41,23,37,33,39,30,27,37,43,30,19,32,42,29,24,32,36,29,24),
++ city=c(3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2))
+> 
+> 
+> plot(newfood)
+> 
+> attach(newfood)
+> 
+> 
+> 
+> # summary(lm(loc ~ income ))
+> 
+> round(cor(newfood), 4)
+         sales   price      ad     loc  income  volume    city
+sales   1.0000 -0.7039  0.1170  0.0105  0.1858  0.3930  0.0004
+price  -0.7039  1.0000  0.0000  0.0000 -0.1306 -0.1785  0.0000
+ad      0.1170  0.0000  1.0000  0.0000 -0.7464 -0.7420 -0.8944
+loc     0.0105  0.0000  0.0000  1.0000  0.0000 -0.0397  0.0000
+income  0.1858 -0.1306 -0.7464  0.0000  1.0000  0.8087  0.7916
+volume  0.3930 -0.1785 -0.7420 -0.0397  0.8087  1.0000  0.7407
+city    0.0004  0.0000 -0.8944  0.0000  0.7916  0.7407  1.0000
+> 
+> summary(lm(sales ~ price+ad+loc+volume))
+
+Call:
+lm(formula = sales ~ price + ad + loc + volume)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-71.013 -25.921  -6.456  16.743  71.904 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  125.931    116.274   1.083    0.292    
+price        -11.836      2.217  -5.340 3.74e-05 ***
+ad           131.283     26.587   4.938 9.13e-05 ***
+loc            7.768     17.475   0.445    0.662    
+volume        11.870      2.150   5.521 2.52e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 42.72 on 19 degrees of freedom
+Multiple R-squared:  0.8116,	Adjusted R-squared:  0.7719 
+F-statistic: 20.46 on 4 and 19 DF,  p-value: 1.132e-06
+
+> 
+> proc.time()
+   user  system elapsed 
+  0.256   0.032   0.299 

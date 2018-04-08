@@ -1,0 +1,60 @@
+
+R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # install.packages("car") # only do this once
+> # library(car)   # do this every R session
+> # setwd("/Users/ecm/teach/data/")
+> quality = read.csv("quality.csv")
+> 
+> plot(quality, pch=16)
+> round(cor(quality), 3)
+          temp density   rate     am defect
+temp     1.000  -0.959  0.908  0.563  0.929
+density -0.959   1.000 -0.915 -0.461 -0.923
+rate     0.908  -0.915  1.000  0.581  0.885
+am       0.563  -0.461  0.581  1.000  0.535
+defect   0.929  -0.923  0.885  0.535  1.000
+> 
+> fit = lm(defect~., quality)
+> summary(fit)
+
+Call:
+lm(formula = defect ~ ., data = quality)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.3478  -3.7614  -0.7298   3.0401  15.8935 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept) 31.14457   77.09396   0.404    0.690
+temp        13.95814    9.26003   1.507    0.144
+density     -2.24388    1.69777  -1.322    0.198
+rate         0.08883    0.14253   0.623    0.539
+am           1.94741    3.65017   0.534    0.598
+
+Residual standard error: 7.203 on 25 degrees of freedom
+Multiple R-squared:  0.8813,	Adjusted R-squared:  0.8623 
+F-statistic: 46.42 on 4 and 25 DF,  p-value: 3.23e-11
+
+> vif(fit)
+Error: could not find function "vif"
+Execution halted

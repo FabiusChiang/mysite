@@ -1,0 +1,70 @@
+
+R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> newfood = data.frame(
++ sales=c(225,323,424,268,224,331,254,492,167,226,210,289,204,288,245,161,161,
++ 246,128,154,163,151,180,150),
++ price=c(24,24,24,24,24,24,24,24,29,29,29,29,29,29,29,29,34,34,34,34,34,34,34,34),
++ ad=c(0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1),
++ loc=c(0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1),
++ income=c(7.3,8.3,6.9,6.5,7.3,8.3,6.9,6.5,6.5,8.4,6.5,6.2,6.5,8.4,6.5,6.2,
++ 7.2,8.1,6.6,6.1,7.2,8.1,6.6,6.1),
++ volume=c(34,41,32,28,34,41,23,37,33,39,30,27,37,43,30,19,32,42,29,24,32,36,29,24),
++ city=c(3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2))
+> 
+> 
+> newfood
+   sales price ad loc income volume city
+1    225    24  0   0    7.3     34    3
+2    323    24  0   0    8.3     41    4
+3    424    24  1   0    6.9     32    1
+4    268    24  1   0    6.5     28    2
+5    224    24  0   1    7.3     34    3
+6    331    24  0   1    8.3     41    4
+7    254    24  1   1    6.9     23    1
+8    492    24  1   1    6.5     37    2
+9    167    29  0   0    6.5     33    3
+10   226    29  0   0    8.4     39    4
+11   210    29  1   0    6.5     30    1
+12   289    29  1   0    6.2     27    2
+13   204    29  0   1    6.5     37    3
+14   288    29  0   1    8.4     43    4
+15   245    29  1   1    6.5     30    1
+16   161    29  1   1    6.2     19    2
+17   161    34  0   0    7.2     32    3
+18   246    34  0   0    8.1     42    4
+19   128    34  1   0    6.6     29    1
+20   154    34  1   0    6.1     24    2
+21   163    34  0   1    7.2     32    3
+22   151    34  0   1    8.1     36    4
+23   180    34  1   1    6.6     29    1
+24   150    34  1   1    6.1     24    2
+> 
+> newfood[1:4,1:6]
+  sales price ad loc income volume
+1   225    24  0   0    7.3     34
+2   323    24  0   0    8.3     41
+3   424    24  1   0    6.9     32
+4   268    24  1   0    6.5     28
+> 
+> proc.time()
+   user  system elapsed 
+  0.216   0.040   0.242 
