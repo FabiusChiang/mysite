@@ -10,6 +10,12 @@ volume=c(34,41,32,28,34,41,23,37,33,39,30,27,37,43,30,19,32,42,29,24,32,36,29,24
 city=c(3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2))
 
 
-newfood
+# newfood
+# newfood[1:4,1:6]
 
-newfood[1:4,1:6]
+attach(newfood)
+
+fit = lm(sales ~ ad)
+summary(fit)
+# abline(fit)
+plot(fit)
