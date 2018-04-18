@@ -57,8 +57,43 @@ Residual standard error: 90.84 on 22 degrees of freedom
 Multiple R-squared:  0.0137,	Adjusted R-squared:  -0.03113 
 F-statistic: 0.3056 on 1 and 22 DF,  p-value: 0.586
 
-> abline(fit)
-Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
-  plot.new has not been called yet
-Calls: abline -> int_abline
-Execution halted
+> # abline(fit)
+> plot(fit)
+hat values (leverages) are all = 0.08333333
+ and there are no factor predictors; no plot no. 5
+> 
+> 
+> deviance(lm(sales~1, newfood))
+[1] 184066
+> deviance(lm(sales~ad, newfood))
+[1] 181544.5
+> deviance(lm(sales~ad+volume, newfood))
+[1] 87246.89
+> deviance(lm(sales~volume, newfood))
+[1] 155637.6
+> 
+> fit2 = lm(sales ~ volume+ad)
+> 
+> anova(fit2)
+Analysis of Variance Table
+
+Response: sales
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+volume     1  28428   28428  6.8426 0.0161456 *  
+ad         1  68391   68391 16.4614 0.0005666 ***
+Residuals 21  87247    4155                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> drop1(fit2)
+Single term deletions
+
+Model:
+sales ~ volume + ad
+       Df Sum of Sq    RSS    AIC
+<none>               87247 202.76
+volume  1     94298 181544 218.35
+ad      1     68391 155638 214.65
+> 
+> proc.time()
+   user  system elapsed 
+  0.172   0.020   0.298 

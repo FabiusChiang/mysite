@@ -19,3 +19,14 @@ fit = lm(sales ~ ad)
 summary(fit)
 # abline(fit)
 plot(fit)
+
+
+deviance(lm(sales~1, newfood))
+deviance(lm(sales~ad, newfood))
+deviance(lm(sales~ad+volume, newfood))
+deviance(lm(sales~volume, newfood))
+
+fit2 = lm(sales ~ volume+ad)
+
+anova(fit2)
+drop1(fit2)
