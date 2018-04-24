@@ -1,0 +1,1 @@
+purchase=read.csv("party.csv")
