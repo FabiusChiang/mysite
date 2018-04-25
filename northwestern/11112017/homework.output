@@ -1,0 +1,113 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ##Exercise 7.126 ----------------------------------------------------
+> importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-126PAIRED.csv")
+> attach(importedData)
+> 
+> ## (a)
+> m1<-mean(Group1)
+> sd1<-sd(Group1)
+> sd1
+[1] 2.311805
+> 
+> m2<-mean(Group2)
+> sd2<-sd(Group2)
+> sd2
+[1] 1.92436
+> 
+> mOfPair<-m1-m2
+> sdOfPair<-sqrt(sd1*sd1/length(Group1)+sd2*sd2/length(Group2))
+> ## Thus the mean difference of the pair is:
+> mOfPair
+[1] -0.845
+> ## Thus the standard deviation of the difference of the pair is:
+> sdOfPair
+[1] 0.951189
+> 
+> tOfPair<-(mOfPair-0)/sdOfPair
+> tOfPair
+[1] -0.8883618
+> 
+> ##As it's 2 sided alternative, the P-Value is 
+> 2*pt(tOfPair, df=9)
+[1] 0.3974669
+> 
+> ## (b)
+> mOfDifference<-mean(Group1-Group2)
+> sdOfDifference<-sd(Group1-Group2)
+> ## Mark "the difference in 2 data collection of individual I" is the "parameter P of individual I"
+> ## Thus the mean of parameter P of the 10 individuals is:
+> mOfDifference
+[1] -0.845
+> ## Thus the standard deviation of parameter P of the 10 individuals is:
+> sdOfDifference
+[1] 1.274557
+> 
+> tOfDifference<-(mOfDifference-0)/(sdOfDifference/sqrt(length(Group1-Group2)))
+> tOfDifference
+[1] -2.096513
+> 
+> ##As it's 2 sided alternative, the P-Value is 
+> 2*pt(tOfDifference, df=9)
+[1] 0.06548776
+> 
+> 
+> ##Exercise 7.128 ----------------------------------------------------
+> ## (a)
+> meanOfDifference <- 158.03 - 189.49
+> sdOfDifference <- sqrt(33.8^2/308+41.3^2/317)
+> meanOfDifference
+[1] -31.46
+> sdOfDifference
+[1] 3.014954
+> TwoSidedPValue<-2*pt(meanOfDifference/sdOfDifference, df=307)
+> ## So the P-Value is 
+> TwoSidedPValue
+[1] 5.116498e-22
+> 
+> ## (b)
+> t<- qt((1-0.95)/2, df=307)
+> abs(t*sdOfDifference)
+[1] 5.932589
+> 
+> ##Exercise 8.29 ----------------------------------------------------
+> calculateConfidenceInterval <- function(confidenceLevel, p, sizeOfSample) {
++     t<- qt((1-confidenceLevel)/2, df=(sizeOfSample-1))
++     sd<- sqrt(p*(1-p)/sizeOfSample)
++     m<-abs(t*sd)
++     print(p-m);
++     print(p+m);
++ }
+> 
+> ## (a)
+> calculateConfidenceInterval(0.95, 0.4, 40)
+[1] 0.243323
+[1] 0.556677
+> 
+> ## (b)
+> calculateConfidenceInterval(0.95, 0.4, 80)
+[1] 0.2909786
+[1] 0.5090214
+> 
+> proc.time()
+   user  system elapsed 
+  0.132   0.012   0.192 
