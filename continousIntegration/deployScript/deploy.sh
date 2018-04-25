@@ -32,7 +32,6 @@ docker stop ${wordPressContainerName}
 docker rm ${wordPressContainerName}
 echo ${hostName}
 echo ${userName}
-#docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -d wordpress:4.8.3-apache
 docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.1-php5.6-apache
 
 
@@ -55,4 +54,4 @@ docker pull ${webImageName}
 # port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
 # docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
 
-docker run -p 80:80 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static --name ${webContainerName} -d ${webImageName}
+docker run -p 80:80 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static -v /home/fabius/workspace/httpsCert/:/usr/local/apache2/httpsCert --name ${webContainerName} -d ${webImageName}
