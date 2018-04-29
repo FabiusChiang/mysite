@@ -19,6 +19,9 @@ Type 'q()' to quit R.
 
 [Previously saved workspace restored]
 
+> library(car)
+Loading required package: carData
+> 
 > newfood = data.frame(
 + sales=c(225,323,424,268,224,331,254,492,167,226,210,289,204,288,245,161,161,
 + 246,128,154,163,151,180,150),
@@ -72,28 +75,67 @@ hat values (leverages) are all = 0.08333333
 > deviance(lm(sales~volume, newfood))
 [1] 155637.6
 > 
-> fit2 = lm(sales ~ volume+ad)
+> fit2 = lm(sales ~ price+ad+loc+volume+income)
 > 
-> anova(fit2)
-Analysis of Variance Table
+> # anova(fit2)
+> # drop1(fit2)
+> # summary(fit2)
+> vif(fit2)
+   price       ad      loc   volume   income 
+1.079882 2.697664 1.005447 3.447143 3.367158 
+> 
+> fit3 = lm(price ~ ad+loc+volume+income)
+> summary(fit3)
 
-Response: sales
-          Df Sum Sq Mean Sq F value    Pr(>F)    
-volume     1  28428   28428  6.8426 0.0161456 *  
-ad         1  68391   68391 16.4614 0.0005666 ***
-Residuals 21  87247    4155                      
+Call:
+lm(formula = price ~ ad + loc + volume + income)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.8935 -3.7421  0.0706  3.7764  6.2954 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)   
+(Intercept)  41.1799    13.3276   3.090  0.00603 **
+ad           -2.6724     2.8964  -0.923  0.36776   
+loc          -0.1114     1.8073  -0.062  0.95150   
+volume       -0.2228     0.2611  -0.853  0.40422   
+income       -0.5086     2.1128  -0.241  0.81235   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-> drop1(fit2)
-Single term deletions
 
-Model:
-sales ~ volume + ad
-       Df Sum of Sq    RSS    AIC
-<none>               87247 202.76
-volume  1     94298 181544 218.35
-ad      1     68391 155638 214.65
+Residual standard error: 4.415 on 19 degrees of freedom
+Multiple R-squared:  0.07397,	Adjusted R-squared:  -0.121 
+F-statistic: 0.3794 on 4 and 19 DF,  p-value: 0.8205
+
+> 
+> coef(fit3)
+(Intercept)          ad         loc      volume      income 
+ 41.1799266  -2.6724135  -0.1113777  -0.2227555  -0.5085963 
+> 
+> cor(newfood)
+              sales      price         ad         loc     income      volume
+sales   1.000000000 -0.7039149  0.1170423  0.01046719  0.1857936  0.39299715
+price  -0.703914896  1.0000000  0.0000000  0.00000000 -0.1305879 -0.17850621
+ad      0.117042260  0.0000000  1.0000000  0.00000000 -0.7463722 -0.74199852
+loc     0.010467194  0.0000000  0.0000000  1.00000000  0.0000000 -0.03974992
+income  0.185793603 -0.1305879 -0.7463722  0.00000000  1.0000000  0.80867129
+volume  0.392997149 -0.1785062 -0.7419985 -0.03974992  0.8086713  1.00000000
+city    0.000425552  0.0000000 -0.8944272  0.00000000  0.7915539  0.74069604
+               city
+sales   0.000425552
+price   0.000000000
+ad     -0.894427191
+loc     0.000000000
+income  0.791553868
+volume  0.740696036
+city    1.000000000
+> 
+> cor(data.frame(income = newfood$income, volume = newfood$volume ))
+          income    volume
+income 1.0000000 0.8086713
+volume 0.8086713 1.0000000
 > 
 > proc.time()
    user  system elapsed 
-  0.172   0.020   0.298 
+  0.408   0.012   0.529 

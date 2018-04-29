@@ -1,3 +1,5 @@
+library(car)
+
 newfood = data.frame(
 sales=c(225,323,424,268,224,331,254,492,167,226,210,289,204,288,245,161,161,
 246,128,154,163,151,180,150),
@@ -26,7 +28,18 @@ deviance(lm(sales~ad, newfood))
 deviance(lm(sales~ad+volume, newfood))
 deviance(lm(sales~volume, newfood))
 
-fit2 = lm(sales ~ volume+ad)
+fit2 = lm(sales ~ price+ad+loc+volume+income)
 
-anova(fit2)
-drop1(fit2)
+# anova(fit2)
+# drop1(fit2)
+# summary(fit2)
+vif(fit2)
+
+fit3 = lm(price ~ ad+loc+volume+income)
+summary(fit3)
+
+coef(fit3)
+
+cor(newfood)
+
+cor(data.frame(income = newfood$income, volume = newfood$volume ))
