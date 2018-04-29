@@ -3,6 +3,7 @@ FROM httpd:2.2
 ADD httpd.conf /usr/local/apache2/conf/
 ADD proxy.conf /usr/local/apache2/conf/
 ADD vhost.conf /usr/local/apache2/conf/
+ADD vhost-ssl.conf /usr/local/apache2/conf/
 ADD httpd-ssl.conf /usr/local/apache2/conf/
 
 # ADD server.crt /usr/local/apache2/conf/
