@@ -74,15 +74,77 @@ hat values (leverages) are all = 0.08333333
 [1] 87246.89
 > deviance(lm(sales~volume, newfood))
 [1] 155637.6
+> deviance(lm(sales~price+ad+loc+volume+income, newfood))
+[1] 34519.86
 > 
-> fit2 = lm(sales ~ price+ad+loc+volume+income)
+> fit2 = lm(sales ~ volume+price+ad+loc+income)
+> anova(fit2)
+Analysis of Variance Table
+
+Response: sales
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+volume     1  28428   28428 14.8237 0.0011727 ** 
+price      1  76364   76364 39.8193 6.008e-06 ***
+ad         1  44231   44231 23.0638 0.0001426 ***
+loc        1    361     361  0.1881 0.6696730    
+income     1    162     162  0.0843 0.7748127    
+Residuals 18  34520    1918                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> fit22 = lm(sales ~ price+ad+loc+volume+income)
+> anova(fit22)
+Analysis of Variance Table
+
+Response: sales
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+price      1  91204   91204 47.5573 1.896e-06 ***
+ad         1   2521    2521  1.3148    0.2665    
+loc        1     20      20  0.0105    0.9195    
+volume     1  55639   55639 29.0122 4.055e-05 ***
+income     1    162     162  0.0843    0.7748    
+Residuals 18  34520    1918                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > 
-> # anova(fit2)
-> # drop1(fit2)
-> # summary(fit2)
+> drop1(fit2)
+Single term deletions
+
+Model:
+sales ~ volume + price + ad + loc + income
+       Df Sum of Sq   RSS    AIC
+<none>              34520 186.51
+volume  1     41605 76125 203.49
+price   1     52210 86730 206.62
+ad      1     36501 71021 201.82
+loc     1       380 34900 184.77
+income  1       162 34682 184.62
+> summary(fit2)
+
+Call:
+lm(formula = sales ~ volume + price + ad + loc + income)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-70.475 -27.405  -3.733  17.992  71.757 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  157.810    162.027   0.974 0.342980    
+volume        12.291      2.639   4.658 0.000196 ***
+price        -11.872      2.275  -5.218 5.81e-05 ***
+ad           128.107     29.364   4.363 0.000375 ***
+loc            7.979     17.927   0.445 0.661565    
+income        -6.095     20.988  -0.290 0.774813    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 43.79 on 18 degrees of freedom
+Multiple R-squared:  0.8125,	Adjusted R-squared:  0.7604 
+F-statistic:  15.6 on 5 and 18 DF,  p-value: 5.366e-06
+
 > vif(fit2)
-   price       ad      loc   volume   income 
-1.079882 2.697664 1.005447 3.447143 3.367158 
+  volume    price       ad      loc   income 
+3.447143 1.079882 2.697664 1.005447 3.367158 
 > 
 > fit3 = lm(price ~ ad+loc+volume+income)
 > summary(fit3)
@@ -138,4 +200,4 @@ volume 0.8086713 1.0000000
 > 
 > proc.time()
    user  system elapsed 
-  0.408   0.012   0.529 
+  0.416   0.024   0.659 
