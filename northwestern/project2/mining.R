@@ -1,14 +1,14 @@
 library(tidyverse)
 library(sqldf)
 
-ord=read.csv("C://Users//fabiu//OneDrive//Northwestern//DataMining//project2//orders.csv")
+ord=read.csv("orders.csv")
 ord$t = as.numeric(as.Date("2014/11/25") - as.Date(ord$orddate, "%d%b%Y"))/365.25
 
 summary(ord$t)
 hist(ord$t)
 
 
-customer=read.csv("C://Users//fabiu//OneDrive//Northwestern//DataMining//project2//customer.csv")
+customer=read.csv("customer.csv")
 table(customer$train)
 head(customer)
 
@@ -131,22 +131,25 @@ testAveMSE = function(data, neededColumns, avoidColums, y, testTimes=200) {
 	mean(allMse)
 }
 
-for (i in 1:50) {
-s1 = testAveMSE(purchase, c(4:38), c(), purchase$logtarg)
-s2 = testAveMSE(purchase, c(4:38, 40), c(), purchase$logtarg)
-s3 = testAveMSE(purchase, c(4:38, 41), c(4), purchase$logtarg)
-best = min(s1, s2, s3)
-if (best == s1) {
-	print("s1");
-}else if (best == s2) {
-	print("s2");
-}
-else{
-	print("s3");
-}
-}
+table(c(1,2,2,3,3,3))
 
-min(10, 15, 13)
+# resultCollection=c();
+# for (i in 1:5) {
+# 	s1 = testAveMSE(purchase, c(4:38), c(), purchase$logtarg)
+# 	s2 = testAveMSE(purchase, c(4:38, 40), c(), purchase$logtarg)
+# 	s3 = testAveMSE(purchase, c(4:38, 41), c(4), purchase$logtarg)
+# 	best = min(s1, s2, s3)
+# 	if (best == s1) {
+# 		resultCollection=append(resultCollection, 1);
+# 	}else if (best == s2) {
+# 		resultCollection=append(resultCollection, 2);
+# 	}
+# 	else{
+# 		resultCollection=append(resultCollection, 3);
+# 	}
+# }
+
+
 
 
 
