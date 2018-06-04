@@ -331,7 +331,7 @@ head(train)
 
 ### test transformation of tof
 resultCollection=c();
-for (i in 1:20) {
+for (i in 1:80) {
 	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
 	s2 = testAveMSE(train, c(4:38, 41), c(), train$willBuy, 10, TRUE)
 	s3 = testAveMSE(train, c(4:38, 41), c(4), train$willBuy, 10, TRUE)
@@ -355,7 +355,7 @@ table(resultCollection)
 
 ### test transformation of r
 resultCollection=c();
-for (i in 1:20) {
+for (i in 1:80) {
 	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
 	s2 = testAveMSE(train, c(4:38, 52), c(), train$willBuy, 10, TRUE)
 	s3 = testAveMSE(train, c(4:38, 52), c(5), train$willBuy, 10, TRUE)
