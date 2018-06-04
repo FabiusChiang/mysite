@@ -115,7 +115,6 @@ purchase$freq=purchase$ford/purchase$tof
 purchase$freq2=purchase$freq^2
 purchase$logfreq=log(purchase$freq)
 
-
 colnames(purchase)
 
 dependVar2=as.matrix(purchase[,setdiff(c(4:38, 41), c(4))])
@@ -124,8 +123,8 @@ fit2 = cv.glmnet(dependVar2, purchase$logtarg, alpha=0, nfolds=5)
 yhat2 = predict(fit2, dependVar2)
 mean((purchase$logtarg-yhat2)^2)
 #
-testAveMSE = function(data, neededColumns, avoidColums, y, testTimes=20, isBinomal=false) {
-	dependVars = as.matrix(data[,setdiff(neededColumns, avoidColums)]);
+testAveMSE = function(data, neededColumns, avoidColums, y, testTimes=20, isBinomal=FALSE) {
+	dependVars = as.matrix(data[,setdiff(neededColumns, avoidCol ums)]);
 	allMse = c();
 	for(i in 1:testTimes ) {
 		if (isBinomal) {
@@ -157,17 +156,18 @@ testAveMSE = function(data, neededColumns, avoidColums, y, testTimes=20, isBinom
 ### test transformation of tof
 ### original x is the best, no clue shows the log(x) is better than x
 resultCollection=c();
-for (i in 1:1000) {
+for (i in 1:100) {
 	s1 = testAveMSE(purchase, c(4:38), c(), purchase$logtarg)
 	s2 = testAveMSE(purchase, c(4:38, 40), c(), purchase$logtarg)
 	s3 = testAveMSE(purchase, c(4:38, 41), c(4), purchase$logtarg)
 	best = min(s1, s2, s3)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
-	}else if (best == s2) {
+	}
+	if (best == s2) {
 		resultCollection=append(resultCollection, 2);
 	}
-	else{
+	if (best == s3) {
 		resultCollection=append(resultCollection, 3);
 	}
 }
@@ -177,17 +177,18 @@ table(resultCollection)
 ### test transformation of fitem
 ### the log(x) is the best
 resultCollection=c();
-for (i in 1:100) {
+for (i in 1:20) {
 	s1 = testAveMSE(purchase, c(4:38), c(), purchase$logtarg)
 	s2 = testAveMSE(purchase, c(4:38, 42), c(), purchase$logtarg)
 	s3 = testAveMSE(purchase, c(4:38, 43), c(6), purchase$logtarg)
 	best = min(s1, s2, s3)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
-	}else if (best == s2) {
+	}
+	if (best == s2) {
 		resultCollection=append(resultCollection, 2);
 	}
-	else{
+	if (best == s3) {
 		resultCollection=append(resultCollection, 3);
 	}
 }
@@ -204,10 +205,11 @@ for (i in 1:100) {
 	best = min(s1, s2, s3)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
-	}else if (best == s2) {
+	}
+	if (best == s2) {
 		resultCollection=append(resultCollection, 2);
 	}
-	else{
+	if (best == s3) {
 		resultCollection=append(resultCollection, 3);
 	}
 }
@@ -224,10 +226,11 @@ for (i in 1:100) {
 	best = min(s1, s2, s3)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
-	}else if (best == s2) {
+	}
+	if (best == s2) {
 		resultCollection=append(resultCollection, 2);
 	}
-	else{
+	if (best == s3) {
 		resultCollection=append(resultCollection, 3);
 	}
 }
@@ -243,10 +246,11 @@ for (i in 1:40) {
 	best = min(s1, s2, s3)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
-	}else if (best == s2) {
+	}
+	if (best == s2) {
 		resultCollection=append(resultCollection, 2);
 	}
-	else{
+	if (best == s3) {
 		resultCollection=append(resultCollection, 3);
 	}
 }
@@ -256,18 +260,40 @@ testAveMSE(purchase, c(4:38), c(), purchase$logtarg)
 testAveMSE(purchase, c(4:38, 48), c(), purchase$logtarg)
 
 ###
+## 	s3 = testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(8), purchase$logtarg)
 resultCollection=c();
-for (i in 1:40) {
-	s1 = testAveMSE(purchase, c(4:38, 48, 44, 47, 49), c(8), purchase$logtarg)
-	s2 = testAveMSE(purchase, c(4:38, 48, 44, 47), c(8), purchase$logtarg)
-	s3 = testAveMSE(purchase, c(4:38, 50, 44, 47), c(8), purchase$logtarg)
+for (i in 1:30) {
+	s1 = testAveMSE(purchase, c(4:38, 48, 43, 44, 47, 49), c(8), purchase$logtarg)
+	s2 = testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(), purchase$logtarg)
+	s3 = testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(8), purchase$logtarg)
 	best = min(s1, s2, s3)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
-	}else if (best == s2) {
+	}
+	if (best == s2) {
 		resultCollection=append(resultCollection, 2);
 	}
-	else{
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+}
+table(resultCollection)
+
+###
+##	s2 = testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(), purchase$logtarg)
+resultCollection=c();
+for (i in 1:10) {
+	s1 = testAveMSE(purchase, c(4:38, 48, 43, 44, 47, 49), c(), purchase$logtarg)
+	s2 = testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(), purchase$logtarg)
+	s3 = testAveMSE(purchase, c(4:38, 48, 46, 49, 43), c(8), purchase$logtarg)
+	best = min(s1, s2, s3)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
 		resultCollection=append(resultCollection, 3);
 	}
 }
@@ -275,7 +301,192 @@ table(resultCollection)
 
 
 #########################
+#########################
+#########################
+#########################
+#########################
 ### step# of the two-steps: tell if the customer will buy or not
+
+colnames(train)
+colnames(purchase)
+
+train$tof2=train$tof^2
+train$logtof=log(train$tof+1)
+train$fitem2=train$fitem^2
+train$logfitem=log(train$fitem+1)
+train$ford2=train$ford^2
+train$logford=log(train$ford+1)
+train$m2=train$m^2
+train$logm=log(train$m+1)
+train$freq=train$ford/train$tof
+train$freq2=train$freq^2
+train$logfreq=log(train$freq)
+train$r2=train$r^2
+train$logr=log(train$r)
+train$willBuy=(train$logtarg>0)
+
+colnames(train)
+head(train)
+
+
+### test transformation of tof
+resultCollection=c();
+for (i in 1:20) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
+	s2 = testAveMSE(train, c(4:38, 41), c(), train$willBuy, 10, TRUE)
+	s3 = testAveMSE(train, c(4:38, 41), c(4), train$willBuy, 10, TRUE)
+	s4 = testAveMSE(train, c(4:38, 40), c(), train$willBuy, 10, TRUE)
+	best = min(s1, s2, s3, s4)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+	if (best == s4) {
+		resultCollection=append(resultCollection, 4);
+	}
+}
+print("tof")
+table(resultCollection)
+
+### test transformation of r
+resultCollection=c();
+for (i in 1:20) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
+	s2 = testAveMSE(train, c(4:38, 52), c(), train$willBuy, 10, TRUE)
+	s3 = testAveMSE(train, c(4:38, 52), c(5), train$willBuy, 10, TRUE)
+	s4 = testAveMSE(train, c(4:38, 51), c(), train$willBuy, 10, TRUE)
+	best = min(s1, s2, s3, s4)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+	if (best == s4) {
+		resultCollection=append(resultCollection, 4);
+	}
+}
+print("r")
+table(resultCollection)
+
+### test transformation of fitem
+resultCollection=c();
+for (i in 1:10) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
+	s2 = testAveMSE(train, c(4:38, 43), c(), train$willBuy, 10, TRUE)
+	s3 = testAveMSE(train, c(4:38, 43), c(6), train$willBuy, 10, TRUE)
+	s4 = testAveMSE(train, c(4:38, 42), c(), train$willBuy, 10, TRUE)
+	best = min(s1, s2, s3, s4)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+	if (best == s4) {
+		resultCollection=append(resultCollection, 4);
+	}
+}
+print("fitem")
+table(resultCollection)
+
+### test transformation of ford
+resultCollection=c();
+for (i in 1:10) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
+	s2 = testAveMSE(train, c(4:38, 45), c(), train$willBuy, 10, TRUE)
+	s3 = testAveMSE(train, c(4:38, 45), c(7), train$willBuy, 10, TRUE)
+	s4 = testAveMSE(train, c(4:38, 44), c(), train$willBuy, 10, TRUE)
+	best = min(s1, s2, s3, s4)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+	if (best == s4) {
+		resultCollection=append(resultCollection, 4);
+	}
+}
+print("ford")
+table(resultCollection)
+
+### test transformation of m
+resultCollection=c();
+for (i in 1:10) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
+	s2 = testAveMSE(train, c(4:38, 47), c(), train$willBuy, 10, TRUE)
+	s3 = testAveMSE(train, c(4:38, 47), c(8), train$willBuy, 10, TRUE)
+	s4 = testAveMSE(train, c(4:38, 46), c(), train$willBuy, 10, TRUE)
+	best = min(s1, s2, s3, s4)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+	if (best == s4) {
+		resultCollection=append(resultCollection, 4);
+	}
+}
+print("m")
+table(resultCollection)
+
+### test transformation of freq
+resultCollection=c();
+for (i in 1:10) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
+	s2 = testAveMSE(train, c(4:38, 50), c(), train$willBuy, 10, TRUE)
+	s3 = testAveMSE(train, c(4:38, 50), c(48), train$willBuy, 10, TRUE)
+	s4 = testAveMSE(train, c(4:38, 49), c(), train$willBuy, 10, TRUE)
+	best = min(s1, s2, s3, s4)
+	if (best == s1) {
+		resultCollection=append(resultCollection, 1);
+	}
+	if (best == s2) {
+		resultCollection=append(resultCollection, 2);
+	}
+	if (best == s3) {
+		resultCollection=append(resultCollection, 3);
+	}
+	if (best == s4) {
+		resultCollection=append(resultCollection, 4);
+	}
+}
+print("freq")
+table(resultCollection)
+
+
+#tof	2	2	3	3
+#r	4	1	1	4
+#fitem	9	0	0	1
+#ford	10	0	0	0
+#m	8	0	2	0
+#freq	2	0	0	8
+
+
+
+
+
+
+
 
 
 
