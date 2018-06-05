@@ -123,18 +123,19 @@ fit2 = cv.glmnet(dependVar2, purchase$logtarg, alpha=0, nfolds=5)
 yhat2 = predict(fit2, dependVar2)
 mean((purchase$logtarg-yhat2)^2)
 #
-testAveMSE = function(data, neededColumns, avoidColums, y, testTimes=20, isBinomal=FALSE) {
-	dependVars = as.matrix(data[,setdiff(neededColumns, avoidCol ums)]);
+testAveMSE = function(data, neededColumns, avoidColums, y, testTimes=3, isBinomal=FALSE) {
+	dependVars = as.matrix(data[,setdiff(neededColumns, avoidColums)]);
 	allMse = c();
 	for(i in 1:testTimes ) {
 		if (isBinomal) {
 			model = cv.glmnet(dependVars , y, family="binomial", alpha=0, nfolds=5)
+			yhatPerModelOdd = predict(model , dependVars )
+			yhatPerModel = exp(yhatPerModelOdd)/(1+exp(yhatPerModelOdd))
 		}
 		else {
 			model = cv.glmnet(dependVars , y, alpha=0, nfolds=5)
+			yhatPerModel = predict(model , dependVars )
 		}
-
-		yhatPerModel = predict(model , dependVars )
 		mse = mean((y-yhatPerModel )^2)
 		allMse = append(allMse , mse)
 	}
@@ -331,11 +332,11 @@ head(train)
 
 ### test transformation of tof
 resultCollection=c();
-for (i in 1:80) {
-	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
-	s2 = testAveMSE(train, c(4:38, 41), c(), train$willBuy, 10, TRUE)
-	s3 = testAveMSE(train, c(4:38, 41), c(4), train$willBuy, 10, TRUE)
-	s4 = testAveMSE(train, c(4:38, 40), c(), train$willBuy, 10, TRUE)
+for (i in 1:10) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 3, TRUE)
+	s2 = testAveMSE(train, c(4:38, 41), c(), train$willBuy, 3, TRUE)
+	s3 = testAveMSE(train, c(4:38, 41), c(4), train$willBuy, 3, TRUE)
+	s4 = testAveMSE(train, c(4:38, 40), c(), train$willBuy, 3, TRUE)
 	best = min(s1, s2, s3, s4)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
@@ -355,11 +356,11 @@ table(resultCollection)
 
 ### test transformation of r
 resultCollection=c();
-for (i in 1:80) {
-	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
-	s2 = testAveMSE(train, c(4:38, 52), c(), train$willBuy, 10, TRUE)
-	s3 = testAveMSE(train, c(4:38, 52), c(5), train$willBuy, 10, TRUE)
-	s4 = testAveMSE(train, c(4:38, 51), c(), train$willBuy, 10, TRUE)
+for (i in 1:10) {
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 3, TRUE)
+	s2 = testAveMSE(train, c(4:38, 52), c(), train$willBuy, 3, TRUE)
+	s3 = testAveMSE(train, c(4:38, 52), c(5), train$willBuy, 3, TRUE)
+	s4 = testAveMSE(train, c(4:38, 51), c(), train$willBuy, 3, TRUE)
 	best = min(s1, s2, s3, s4)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
@@ -380,10 +381,10 @@ table(resultCollection)
 ### test transformation of fitem
 resultCollection=c();
 for (i in 1:10) {
-	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
-	s2 = testAveMSE(train, c(4:38, 43), c(), train$willBuy, 10, TRUE)
-	s3 = testAveMSE(train, c(4:38, 43), c(6), train$willBuy, 10, TRUE)
-	s4 = testAveMSE(train, c(4:38, 42), c(), train$willBuy, 10, TRUE)
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 3, TRUE)
+	s2 = testAveMSE(train, c(4:38, 43), c(), train$willBuy, 3, TRUE)
+	s3 = testAveMSE(train, c(4:38, 43), c(6), train$willBuy, 3, TRUE)
+	s4 = testAveMSE(train, c(4:38, 42), c(), train$willBuy, 3, TRUE)
 	best = min(s1, s2, s3, s4)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
@@ -404,10 +405,10 @@ table(resultCollection)
 ### test transformation of ford
 resultCollection=c();
 for (i in 1:10) {
-	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
-	s2 = testAveMSE(train, c(4:38, 45), c(), train$willBuy, 10, TRUE)
-	s3 = testAveMSE(train, c(4:38, 45), c(7), train$willBuy, 10, TRUE)
-	s4 = testAveMSE(train, c(4:38, 44), c(), train$willBuy, 10, TRUE)
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 3, TRUE)
+	s2 = testAveMSE(train, c(4:38, 45), c(), train$willBuy, 3, TRUE)
+	s3 = testAveMSE(train, c(4:38, 45), c(7), train$willBuy, 3, TRUE)
+	s4 = testAveMSE(train, c(4:38, 44), c(), train$willBuy, 3, TRUE)
 	best = min(s1, s2, s3, s4)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
@@ -428,10 +429,10 @@ table(resultCollection)
 ### test transformation of m
 resultCollection=c();
 for (i in 1:10) {
-	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
-	s2 = testAveMSE(train, c(4:38, 47), c(), train$willBuy, 10, TRUE)
-	s3 = testAveMSE(train, c(4:38, 47), c(8), train$willBuy, 10, TRUE)
-	s4 = testAveMSE(train, c(4:38, 46), c(), train$willBuy, 10, TRUE)
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 3, TRUE)
+	s2 = testAveMSE(train, c(4:38, 47), c(), train$willBuy, 3, TRUE)
+	s3 = testAveMSE(train, c(4:38, 47), c(8), train$willBuy, 3, TRUE)
+	s4 = testAveMSE(train, c(4:38, 46), c(), train$willBuy, 3, TRUE)
 	best = min(s1, s2, s3, s4)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
@@ -452,10 +453,10 @@ table(resultCollection)
 ### test transformation of freq
 resultCollection=c();
 for (i in 1:10) {
-	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 10, TRUE)
-	s2 = testAveMSE(train, c(4:38, 50), c(), train$willBuy, 10, TRUE)
-	s3 = testAveMSE(train, c(4:38, 50), c(48), train$willBuy, 10, TRUE)
-	s4 = testAveMSE(train, c(4:38, 49), c(), train$willBuy, 10, TRUE)
+	s1 = testAveMSE(train, c(4:38), c(), train$willBuy, 3, TRUE)
+	s2 = testAveMSE(train, c(4:38, 50), c(), train$willBuy, 3, TRUE)
+	s3 = testAveMSE(train, c(4:38, 50), c(48), train$willBuy, 3, TRUE)
+	s4 = testAveMSE(train, c(4:38, 49), c(), train$willBuy, 3, TRUE)
 	best = min(s1, s2, s3, s4)
 	if (best == s1) {
 		resultCollection=append(resultCollection, 1);
@@ -481,17 +482,115 @@ table(resultCollection)
 #m	8	0	2	0
 #freq	2	0	0	8
 
+hist(sqldf("SELECT * FROM train WHERE freq < 80")$freq)
+hist(log(sqldf("SELECT * FROM train")$freq))
+
+hist(train$m)
+hist(log(train$m))
+plot(train$m, train$willBuy)
 
 
+neededColumns=c(4:38, 49, 51)
+avoidColumns=c()
+dependVars = as.matrix(train[,setdiff(neededColumns, avoidColumns)]);
+model = cv.glmnet(dependVars , train$willBuy, family="binomial", alpha=0, nfolds=5)
+yWillBuyOdd=predict(model , dependVars)
+yWillBuy=exp(yWillBuyOdd)/(1+exp(yWillBuyOdd))
+
+write.csv(data.frame(original=train$willBuy, predict=yWillBuy), "C://Users//fjiang4//share//mysite//northwestern//project2//willBuy.csv", row.names=F)
 
 
+###get willBuy model
+neededColumnsB=c(4:38, 40, 52, 43, 45, 46, 50)
+avoidColumnsB=c(5, 6, 48)
+dependVars = as.matrix(train[,setdiff(neededColumnsB, avoidColumnsB)]);
+modelB = cv.glmnet(dependVars , train$willBuy, family="binomial", alpha=0, nfolds=5)
+#yWillBuyOdd=predict(modelB , dependVars)
+#yWillBuy=exp(yWillBuyOdd)/(1+exp(yWillBuyOdd))
+
+write.csv(data.frame(original=train$willBuy, predict=yWillBuy), "C://Users//fjiang4//share//mysite//northwestern//project2//willBuy1.csv", row.names=F)
+
+###get amount model
+#testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(8), purchase$logtarg)
+neededColumnsA=c(4:38, 48, 47, 49, 43)
+avoidColumnsA=c(8)
+dependVars = as.matrix(purchase[,setdiff(neededColumnsA, avoidColumnsA)]);
+modelA = cv.glmnet(dependVars, purchase$logtarg, alpha=0, nfolds=5)
+
+###predict all amount
+dependVars = as.matrix(train[,setdiff(neededColumnsA, avoidColumnsA)]);
+buyAmount=predict(modelA , dependVars)
+
+###mark all non-buyer
+dependVars = as.matrix(train[,setdiff(neededColumnsB, avoidColumnsB)]);
+yWillBuyOdd=predict(modelB , dependVars)
+yWillBuy=exp(yWillBuyOdd)/(1+exp(yWillBuyOdd))
+
+finalResult=(yWillBuy>0.075) * buyAmount
+
+resultDS = data.frame(o=train$logtarg, b=yWillBuy, p=finalResult)
+
+write.csv(resultDS, "C://Users//fjiang4//share//mysite//northwestern//project2//willBuy3.csv", row.names=F)
+
+head(resultDS)
 
 
+getPredictError = function(originalYs, predictYs) {
+	error = 0;
+	for(i in 1:length(originalYs)) {
+		originalY = originalYs[i]
+		predictY = predictYs[i]
+		if (originalY != 0 && predictY==0) {
+			error = (originalY - predictY) * 10 + error;
+		} else {
+			error = abs(originalY - predictY) + error;
+		}
+	}
+	error
+}
 
 
+benchmarks=seq(0.05, 0.13, 0.002)
+for(i in 1 : length(benchmarks)) {
+	benchmark=benchmarks[i]
 
+	### get the final non-buyer and the amount of buyer
+	finalResult=(yWillBuy>benchmark) * buyAmount
 
+	#resultDS = data.frame(o=train$logtarg, p=finalResult)
+	# mse=mean((finalResult - train$logtarg)^2)
+	error = getPredictError(train$logtarg, finalResult)
+	print(benchmark)
+	print(error)
+	print("---------")
+}
 
+###########competition
+competition=sqldf("SELECT a.*, c.logtarg as logtarg FROM allData a JOIN customer c ON (a.id = c.id AND c.train = 0)")
+competition$tof2=competition$tof^2
+competition$logtof=log(competition$tof+1)
+competition$fitem2=competition$fitem^2
+competition$logfitem=log(competition$fitem+1)
+competition$ford2=competition$ford^2
+competition$logford=log(competition$ford+1)
+competition$m2=competition$m^2
+competition$logm=log(competition$m+1)
+competition$freq=competition$ford/competition$tof
+competition$freq2=competition$freq^2
+competition$logfreq=log(competition$freq)
+competition$r2=competition$r^2
+competition$logr=log(competition$r)
 
+### get all amount
+dependVars = as.matrix(competition[,setdiff(neededColumnsA, avoidColumnsA)]);
+buyAmount=predict(modelA , dependVars)
 
+### mark all non-buyer
+dependVars = as.matrix(competition[,setdiff(neededColumnsB, avoidColumnsB)]);
+yWillBuyOdd=predict(modelB , dependVars)
+yWillBuy=exp(yWillBuyOdd)/(1+exp(yWillBuyOdd))
+
+finalResult=(yWillBuy>0.08) * buyAmount
+
+write.csv(data.frame(id=competition$id, logtarg=finalResult), "C://Users//fjiang4//share//mysite//northwestern//project2//competition.csv", row.names=F)
 
