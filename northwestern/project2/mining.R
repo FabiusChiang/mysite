@@ -514,6 +514,7 @@ write.csv(data.frame(original=train$willBuy, predict=yWillBuy), "C://Users//fjia
 #testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(8), purchase$logtarg)
 neededColumnsA=c(4:38, 48, 47, 49, 43)
 avoidColumnsA=c(8)
+head(as.matrix(purchase[,setdiff(neededColumnsA, avoidColumnsA)]))
 dependVars = as.matrix(purchase[,setdiff(neededColumnsA, avoidColumnsA)]);
 modelA = cv.glmnet(dependVars, purchase$logtarg, alpha=0, nfolds=5)
 
@@ -532,7 +533,8 @@ resultDS = data.frame(o=train$logtarg, b=yWillBuy, p=finalResult)
 
 write.csv(resultDS, "C://Users//fjiang4//share//mysite//northwestern//project2//willBuy3.csv", row.names=F)
 
-head(resultDS)
+colnames(purchase)
+colnames(train)
 
 
 getPredictError = function(originalYs, predictYs) {
@@ -590,7 +592,56 @@ dependVars = as.matrix(competition[,setdiff(neededColumnsB, avoidColumnsB)]);
 yWillBuyOdd=predict(modelB , dependVars)
 yWillBuy=exp(yWillBuyOdd)/(1+exp(yWillBuyOdd))
 
-finalResult=(yWillBuy>0.08) * buyAmount
+finalResult=(yWillBuy>0.063) * buyAmount
 
-write.csv(data.frame(id=competition$id, logtarg=finalResult), "C://Users//fjiang4//share//mysite//northwestern//project2//competition.csv", row.names=F)
+write.csv(data.frame(id=competition$id, logtarg=finalResult), "C://workspace//mysite//northwestern//project2//competition.csv", row.names=F)
+
+
+
+######################
+aveLogtarg=mean(purchase$logtarg)
+dependVars = as.matrix(train[,setdiff(neededColumnsA, avoidColumnsA)]);
+buyAmount=predict(modelA , dependVars)
+
+dependVars = as.matrix(train[,setdiff(neededColumnsB, avoidColumnsB)]);
+yWillBuyOdd=predict(modelB , dependVars)
+yWillBuy=exp(yWillBuyOdd)/(1+exp(yWillBuyOdd))
+
+benchmark1=0.063
+
+finalResult=(yWillBuy>benchmark1) * buyAmount
+mean((finalResult-train$logtarg)^2)
+
+averageResult=rep(NA, nrow(train))
+averageResult = (yWillBuy>benchmark1) * aveLogtarg
+
+mean((averageResult -train$logtarg)^2)
+
+head(purchase)
+
+averageResult = (yWillBuy>benchmark1) * mean(train$logtarg)
+mean((averageResult -train$logtarg)^2)
+
+averageResult = (yWillBuy>benchmark1) * mean(train$logtarg)
+mean((averageResult -train$logtarg)^2)
+allAveLogtarg=mean(train$logtarg)
+
+
+benchmarks=seq(0.005, 0.13, 0.002)
+for(i in 1 : length(benchmarks)) {
+	benchmark=benchmarks[i]
+
+averageResult = (yWillBuy>benchmark) * allAveLogtarg
+error = mean((averageResult -train$logtarg)^2)
+	print(benchmark)
+	print(error)
+	print("---------")
+}
+
+###get amount model
+#testAveMSE(purchase, c(4:38, 48, 47, 49, 43), c(8), purchase$logtarg)
+neededColumnsA=c(4:38, 48, 47, 49, 43)
+avoidColumnsA=c(8)
+dependVars = as.matrix(train[,setdiff(neededColumnsA, avoidColumnsA)]);
+modelA = cv.glmnet(dependVars, train$logtarg, alpha=0, nfolds=5)
 
