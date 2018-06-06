@@ -105,15 +105,30 @@ getScorePerPrediction = function(binomialGene, proBabilityGene, amountGene, data
 }
 
 reproduceChildren = function(momGene, dadGene) {
-    geneExchangeRatio = 0.5
-
+    totalGeneLength = length(momGene)
+    exchangeStartPos = round(runif(1, 1, length(momGene)))
+    exchangeGeneLength = round(runif(1, 1, length(momGene) - 1))
+    childA = rep(momGene)
+    childB = rep(dadGene)
+    for(i in 0:(exchangeGeneLength-1) ) {
+        toExchangePos = exchangeStartPos + i
+        if (toExchangePos > totalGeneLength) {
+            toExchangePos = toExchangePos - totalGeneLength
+        }
+        temp = childA[toExchangePos];
+        childA[toExchangePos] = childB[toExchangePos];
+        childB[toExchangePos] = temp;
+    }
+    childA = mutationGene(childA)
+    childB = mutationGene(childB)
+    return(list(childA, childB))
 }
 
 mutationGene = function(gene) {
-    mutationRatio = 4/(48+8+48)
-
+    mutationRatio = 4/length(gene)
+    return (gene)
 }
 
 removeDuplicatedIndividuals = function(genes) {
-    
+
 }
