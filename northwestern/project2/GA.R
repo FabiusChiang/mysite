@@ -80,8 +80,6 @@ splitGene = function(start, end, gene) {
 }
 
 calculateLiveScore = function (gene) {
-print("debug below")
-return (1)
     binomialGene = splitGene(1, 48, gene)
     probabilityGene = splitGene(1+48, 48+8, gene)
     amountGene = splitGene(48+8+1, 48+8+48, gene)
@@ -266,7 +264,7 @@ main = function(){
 evolve = function() {
     initialCount = length(population)
     parents = pickCouples(populationScores, as.integer(initialCount/2))
-print(population)
+print(parents)
     allChildren = list()
     for(i in 1: length(parents)) {
         parent = parents[[i]]
