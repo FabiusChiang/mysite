@@ -47,7 +47,7 @@ addTransformation = function(targetDS) {
     return(targetDS[,-c(1, 2, 39)])
 }
 
-newt = addTransformation(train)
+train = addTransformation(train)
 
 colnames(newt)
 
@@ -85,6 +85,14 @@ calculateLiveScore = function (gene) {
 }
 
 getScorePerPrediction = function(binomialGene, proBabilityGene, amountGene, dataDS) {
+    allScores = c();
+    for(i in 1:3) {
+        allScores = append(allScores, getSingleScorePerPrediction(binomialGene, proBabilityGene, amountGene, dataDS))
+    }
+    return mean(allScores)
+}
+
+getSingleScorePerPrediction = function(binomialGene, proBabilityGene, amountGene, dataDS) {
     binomialY = dataDS$willBuy
     binomialXs = translateGeneToFields(binomialGene, dataDS)
     modelB = cv.glmnet(binomialXs , binomialY, family="binomial", alpha=0, nfolds=5)
@@ -125,10 +133,193 @@ reproduceChildren = function(momGene, dadGene) {
 }
 
 mutationGene = function(gene) {
-    mutationRatio = 4/length(gene)
+    geneLength = length(gene)
+    mutationRatio = 4/geneLength
+    randomRatios = runif(geneLength)
+    for(i in 1:geneLength) {
+        if (randomRatios[i] < mutationRatio) {
+            gene[i] = reverseSingleGene(gene[i])
+        }
+    }
     return (gene)
 }
 
-removeDuplicatedIndividuals = function(genes) {
-
+reverseSingleGene = function(g) {
+    if (g == 1) {
+        return(0)
+    }        
+    eles {
+        return (1)
+    }
 }
+
+removeDuplicatedIndividuals = function(genes) {
+    geneLength = length(genes)
+    distinctIndividuals = list()
+    for(i in 1: geneLength) {
+        noDuplicated = TRUE
+        if (i != geneLength) {
+            for(j in (i+1): geneLength) {
+                if (isSameIndividuals(genes[[i]], genes[[j]])) {
+                    noDuplicated = FALSE
+                    break
+                }
+            }
+        }
+        if (noDuplicated) {
+            distinctIndividuals = append(distinctIndividuals, list(genes[[i]]))
+        }
+    }
+    return (distinctIndividuals)
+}
+
+isSameIndividuals = function(geneA, geneB) {
+    for(i in 1:length(geneA)) {
+        if (geneA[i] != geneB[i]) {
+            return(FALSE)
+        }
+    }
+    return(TRUE)
+}
+
+initializePopulation = function (geneLength, individualCount) {
+    population = list()
+    for(i in 1:individualCount) {
+        population[[i]] = as.integer(runif(geneLength,0,2))
+    }
+    return(population)
+}
+
+pickCouples = function(scores, couplesCount) {
+    result = list();
+    standardScores = standardizeScores(scores)
+    for(i in 1: couplesCount) {
+        couple = pickACoupleWithScoreAsDensity(standardScores)
+        result[[i]] = couple
+    }
+    return(result)
+}
+
+standardizeScores = function(scores) {
+    scoresLength = length(scores)
+    total = sum(scores)
+    result = rep(NA, scoresLength)
+    for(i in 1:scoresLength) {
+        result[i] = scores[i]/total
+    }
+    return(result)
+}
+
+pickACoupleWithScoreAsDensity = function(standardScores) {
+    mom = 0;
+    dad = 0;
+    repeat{
+        rdecimals = runif(2);
+        mom = pickIndividualWithScoreAsDensity(standardScores, rdecimals[1])
+        dad = pickIndividualWithScoreAsDensity(standardScores, rdecimals[2])
+        if (mom != dad){
+            break;
+        }
+    }
+    return(c(mom, dad))
+}
+
+pickIndividualWithScoreAsDensity = function(standardScores, rdecimal) {
+    cumulative = 0;
+    for(i in 1:length(standardScores)) {
+        cumulative = cumulative + standardScores[i];
+        if (cumulative > rdecimal){
+            return(i);
+        }
+    }
+}
+
+population = list()
+populationScores = c()
+
+main = function(){
+    population = initializePopulation(104, 20);
+
+    for(i in 1: length(population)) {
+        populationScores = append(populationScores, calculateLiveScore(population[[i]]))
+    }
+
+    for(i in 1: 5) {
+        evolve(newPopulation)
+    }
+}
+
+evolve = function() {
+    initialCount = length(population)
+    parents = pickCouples(populationScores, as.integer(initialCount/2))
+
+    allChildren = list()
+    for(i in 1: parents) {
+        parent = parents[[i]]
+        children = reproduceChildren(population[[parent[1]]], population[[parent[2]]])
+        allChildren = append(allChildren, children)
+    }
+
+    newPopulation = removeDuplicatedIndividuals(append(population, allChildren))
+    newScores = rep(NA, length(newPopulation));
+    for(i in 1: newPopulation) {
+        newScores[i] = calculateLiveScore(newPopulation[[i]])
+    }
+    sortedAllScores = sort(newScores)
+    aliveBenchmark = sortedAllScores[initialCount]
+    
+    nextGeneration = list()
+    nextGenerationScore = c()
+    for(i in 1: length(newScores)) {
+        if (newScores[i] <= aliveBenchmark && length(nextGeneration) <= initialCount) {
+            nextGeneration = append(nextGeneration, list(newPopulation[[i]]))
+            nextGenerationScore = append(nextGenerationScore, newScores[i])
+            if (newScores[i] == topScore) {
+                cat("Top score", topScore, ":", newPopulation[[i]], "\r\n")
+            }
+        }
+    }
+    population = nextGeneration
+    populationScores = nextGenerationScore
+}
+
+# evolve = function(population) {
+#     initialCount = length(population)
+#     scores = rep(NA, initialCount)
+#     for(i in 1: initialCount) {
+#         scores[i] = calculateLiveScore(population[[i]])
+#     }
+#     parents = pickCouples(scores, as.integer(initialCount/2))
+#     childrenScores = rep(NA, 2*length(parents));
+#     allChildren = list()
+#     for(i in 1: parents) {
+#         parent = parents[[i]]
+#         children = reproduceChildren(population[[parent[1]]], population[[parent[2]]])
+#         allChildren = append(allChildren, children)
+#         childrenScores[i*2-1] = calculateLiveScore(children[1])
+#         childrenScores[i*2] = calculateLiveScore(children[2])
+#     }
+#     sortedAllScores = sort(c(scores, childrenScores))
+#     aliveBenchmark = sortedAllScores[initialCount]
+#     topScore = sortedAllScores[1]
+#     result = list()
+#     for(i in 1: length(allChildren)) {
+#         if (childrenScores[i] <= aliveBenchmark) {
+#             result = append(result, list(allChildren[[i]]))
+#             if (childrenScores[i] == topScore) {
+#                 cat("Top score", topScore, ":", allChildren[[i]], "\r\n")
+#             }
+#         }
+#     }
+
+#     for(i in 1: length(population)) {
+#         if (scores[i] <= aliveBenchmark) {
+#             result = append(result, list(population[[i]]))
+#             if (scores[i] == topScore) {
+#                 cat("Top score", topScore, ":", population[[i]], "\r\n")
+#             }
+#         }
+#     }
+
+#     return(result)
+# }
