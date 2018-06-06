@@ -80,6 +80,8 @@ splitGene = function(start, end, gene) {
 }
 
 calculateLiveScore = function (gene) {
+print("debug below")
+return (1)
     binomialGene = splitGene(1, 48, gene)
     probabilityGene = splitGene(1+48, 48+8, gene)
     amountGene = splitGene(48+8+1, 48+8+48, gene)
@@ -187,7 +189,7 @@ isSameIndividuals = function(geneA, geneB) {
 initializePopulation = function (geneLength, individualCount) {
     population = list()
     for(i in 1:individualCount) {
-        population[[i]] = as.integer(runif(geneLength,0,3))
+        population[[i]] = as.integer(runif(geneLength,0,2))
     }
     return(population)
 }
@@ -240,22 +242,31 @@ population = list()
 populationScores = c()
 
 main = function(){
-    population = initializePopulation(104, 3);
+    population <<- initializePopulation(104, 3);
 
     for(i in 1: length(population)) {
-        populationScores = append(populationScores, calculateLiveScore(population[[i]]))
+        populationScores <<- append(populationScores, calculateLiveScore(population[[i]]))
     }
-print(populationScores)
+# #print(populationScores)
+# currentGeneration 
+# currentGeneration.population = population 
+# currentGeneration.populationScores = populationScores
 
     for(i in 1: 5) {
+        # newGeneration = evolve(currentGeneration)
+	    # currentGeneration.population = newGeneration.population
+	    # currentGeneration.populationScores = newGeneration.populationScores
         evolve()
     }
 }
 
+# evolve = function(lastGeneration) {
+#     population = lastGeneration.population
+#     populationScores = lastGeneration.populationScores
 evolve = function() {
     initialCount = length(population)
     parents = pickCouples(populationScores, as.integer(initialCount/2))
-
+print(population)
     allChildren = list()
     for(i in 1: length(parents)) {
         parent = parents[[i]]
@@ -264,7 +275,6 @@ evolve = function() {
     }
 
     newPopulation = removeDuplicatedIndividuals(append(population, allChildren))
-print(newPopulation)
     newScores = rep(NA, length(newPopulation));
     for(i in 1: length(newPopulation)) {
         newScores[i] = calculateLiveScore(newPopulation[[i]])
@@ -277,7 +287,7 @@ print(newPopulation)
     nextGeneration = list()
     nextGenerationScore = c()
     for(i in 1: length(newScores)) {
-        if (newScores[i] <= aliveBenchmark && length(nextGeneration) <= initialCount) {
+        if (newScores[i] <= aliveBenchmark && length(nextGeneration) < initialCount) {
             nextGeneration = append(nextGeneration, list(newPopulation[[i]]))
             nextGenerationScore = append(nextGenerationScore, newScores[i])
             if (newScores[i] == topScore) {
@@ -285,8 +295,11 @@ print(newPopulation)
             }
         }
     }
-    population = nextGeneration
-    populationScores = nextGenerationScore
+    population <<- nextGeneration
+    populationScores <<- nextGenerationScore
+    # newGeneration.population = nextGeneration
+    # newGeneration.populationScores = nextGenerationScore
+	# return(newGeneration)
 }
 
 main()
