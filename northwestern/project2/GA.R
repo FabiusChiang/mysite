@@ -2,8 +2,8 @@ library(tidyverse)
 library(sqldf)
 library(glmnet)
 
-#setwd("C://workspace//mysite//northwestern//project2")
-setwd("C://Users//fjiang4//share//mysite//northwestern//project2")
+setwd("C://workspace//mysite//northwestern//project2")
+#setwd("C://Users//fjiang4//share//mysite//northwestern//project2")
 
 ord=read.csv("orders.csv")
 ord$t = as.numeric(as.Date("2014/11/25") - as.Date(ord$orddate, "%d%b%Y"))/365.25
@@ -240,7 +240,7 @@ population = list()
 populationScores = c()
 
 main = function(){
-    population <<- initializePopulation(104, 3);
+    population <<- initializePopulation(104, 20);
 
     for(i in 1: length(population)) {
         populationScores <<- append(populationScores, calculateLiveScore(population[[i]]))
@@ -250,7 +250,7 @@ main = function(){
 # currentGeneration.population = population 
 # currentGeneration.populationScores = populationScores
 
-    for(i in 1: 5) {
+    for(i in 1: 50) {
         # newGeneration = evolve(currentGeneration)
 	    # currentGeneration.population = newGeneration.population
 	    # currentGeneration.populationScores = newGeneration.populationScores
