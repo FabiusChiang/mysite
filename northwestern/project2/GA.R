@@ -88,7 +88,7 @@ calculateLiveScore = function (gene) {
 
 getScorePerPrediction = function(binomialGene, proBabilityGene, amountGene, dataDS) {
     allScores = c();
-    for(i in 1:3) {
+    for(i in 1:20) {
         allScores = append(allScores, getSingleScorePerPrediction(binomialGene, proBabilityGene, amountGene, dataDS))
     }
     return(mean(allScores))
@@ -98,7 +98,8 @@ getSingleScorePerPrediction = function(binomialGene, proBabilityGene, amountGene
     binomialY = dataDS$willBuy
     binomialXs = translateGeneToFields(binomialGene, dataDS)
     modelB = cv.glmnet(binomialXs , binomialY, family="binomial", alpha=0, nfolds=5)
-    yHatB = predict(modelB , binomialXs)
+    yHatBOdd = predict(modelB , binomialXs)
+    yHatB = exp(yHatBOdd)/(1+exp(yHatBOdd))
 
     benchmarkProbability = translateGeneToBenchmarkProbability(proBabilityGene)
 
@@ -204,10 +205,15 @@ pickCouples = function(scores, couplesCount) {
 
 standardizeScores = function(scores) {
     scoresLength = length(scores)
-    total = sum(scores)
+    sortScores = sort(scores)
+	worstScore = sortScores[scoresLength]
+	worstScore = sortScores[1]
+	convertedScore = worstScore - scores
+
+    total = sum(convertedScore)
     result = rep(NA, scoresLength)
     for(i in 1:scoresLength) {
-        result[i] = scores[i]/total
+        result[i] = convertedScore[i]/total
     }
     return(result)
 }
@@ -250,12 +256,15 @@ main = function(){
 # currentGeneration.population = population 
 # currentGeneration.populationScores = populationScores
 
-    for(i in 1: 50) {
+    for(i in 1: 100) {
+        cat("Generation count:", i)
         # newGeneration = evolve(currentGeneration)
 	    # currentGeneration.population = newGeneration.population
 	    # currentGeneration.populationScores = newGeneration.populationScores
         evolve()
+        print(population)
     }
+	
 }
 
 # evolve = function(lastGeneration) {
