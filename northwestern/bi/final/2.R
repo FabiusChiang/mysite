@@ -44,7 +44,32 @@ for(i in 1:attempLimit){
     moob = mean(forOOBMean)
     oobRecords[i] = moob
     cat(i, moob, "\r\n")
-
 }
 
- 2
+varImpPlot(bestModel)
+partialPlot(bestModel, bc, "x3")
+
+
+install.packages("pROC")
+library(pROC)
+plot.roc(bc$y, bestModel$votes[,2], print.auc=T)
+
+head(bc)
+lnm=glm(y~x1+x2+x3+x4+x5+x6+x7+x8+x9, bc, family=binomial)
+summary(lnm)
+
+library(glmnet)
+xs = as.matrix(bc[, -1])
+fit.ridge=glmnet(xs, bc$y, family="binomial", alpha=0)
+fit.cv=cv.glmnet(xs, bc$y, family="binomial", alpha=0)
+fit.cv$lambda.min
+phat = predict(fit.ridge, s=fit.cv$lambda.min, newx=xs, type="resp")
+auc(bc$y, phat)
+
+fit.lasso=glmnet(xs, bc$y, family="binomial", alpha=1)
+fit.lassocv=cv.glmnet(xs, bc$y, family="binomial", alpha=0)
+fit.cv$lambda.min
+phat = predict(fit.ridge, s=fit.cv$lambda.min, newx=xs, type="resp")
+auc(bc$y, phat)
+
+
