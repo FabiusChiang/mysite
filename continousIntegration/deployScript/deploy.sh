@@ -36,7 +36,7 @@ docker stop ${wordPressContainerName}
 docker rm ${wordPressContainerName}
 echo ${hostName}
 echo ${userName}
-docker run -p ${port}:80 --link mysql:mysql -v ${workPressContentFolder}:/var/www/html/wp-content --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.1-php5.6-apache
+docker run -p ${port}:80 --link mysql:mysql -v ${workPressContentFolder}:/var/www/html/wp-content --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.8-php5.6-apache
 
 
 
