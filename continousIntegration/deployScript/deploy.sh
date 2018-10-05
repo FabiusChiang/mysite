@@ -24,7 +24,7 @@ hostName="mysql"
 # docker stop mysql
 # docker rm mysql
 # docker run --name mysql -e MYSQL_ROOT_PASSWORD=${mysqlPassword} -v /home/fabius/data/mysql:/var/lib/mysql -d mysql:5.7
-
+docker start mysql
 
 #################################################################
 ##WordPress
