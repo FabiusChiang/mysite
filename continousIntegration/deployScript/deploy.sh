@@ -18,11 +18,13 @@ baseImagesurl="fabius/"${appName}":"
 
 #################################################################
 ##MySql
-# mysqlPassword="1234567"
+mysqlPassword="${specialPass}"
+userName="root"
+hostName="mysql"
 # docker stop mysql
 # docker rm mysql
 # docker run --name mysql -e MYSQL_ROOT_PASSWORD=${mysqlPassword} -v /home/fabius/data/mysql:/var/lib/mysql -d mysql:5.7
-
+docker start mysql
 
 #################################################################
 ##WordPress
@@ -34,8 +36,7 @@ docker stop ${wordPressContainerName}
 docker rm ${wordPressContainerName}
 echo ${hostName}
 echo ${userName}
-#docker run -p ${port}:80 --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -d wordpress:4.8.3-apache
-docker run -p ${port}:80 -v ${workPressContentFolder}:/var/www/html/wp-content --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.1-php5.6-apache
+docker run -p ${port}:80 --link mysql:mysql -v ${workPressContentFolder}:/var/www/html/wp-content --name ${wordPressContainerName} -e WORDPRESS_DB_HOST=${hostName} -e WORDPRESS_DB_PASSWORD="${specialPass}" -e WORDPRESS_DB_NAME=wordpress_${appEnv} -e WORDPRESS_DB_USER="${userName}" -d wordpress:4.9.8-php5.6-apache
 
 
 
@@ -57,4 +58,4 @@ webImageName=${baseImagesurl}web_${currentVersion}
 # port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
 # docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
 
-docker run -p 80:80 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static -v /home/fabius/data/static/.well-known:/usr/local/apache2/htdocs/.well-known --name ${webContainerName} -d ${webImageName}
+docker run -p 80:80 -p 443:443 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static -v /home/fabius/workspace/httpsCert:/usr/local/apache2/httpsCert --name ${webContainerName} -d ${webImageName}

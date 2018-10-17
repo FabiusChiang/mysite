@@ -9,4 +9,8 @@ cd ${folderOfCurrentScript}
 
 cd dockerBuild
 
+cp -f ../../../../iisKeys/server.* ./
+
 docker build --no-cache=true -t ${imageName}:${imageTag} -f Dockerfile .
+
+rm server.crt server.key
