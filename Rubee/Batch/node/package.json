@@ -1,0 +1,18 @@
+{
+  "name": "rubee.batch",
+  "version": "1.0.0",
+  "description": "Batch job of Rubee",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Rubee",
+    "Batch"
+  ],
+  "author": "Rubee's team",
+  "license": "ISC",
+  "dependencies": {
+    "fast-csv": "^2.4.1"
+  }
+}
