@@ -21,5 +21,5 @@ rubeeWebContainerName=${appName}_rubeeweb_${appEnv}
 docker stop ${rubeeWebContainerName}
 docker rm ${rubeeWebContainerName}
 port=`bash ../azureCommon/allocatePort.sh rubeeweb ${appEnv}`
-webImageName=${baseImagesurl}web_${currentVersion}
+webImageName=${baseImagesurl}rubeeweb_${currentVersion}
 docker run -p ${port}:3000 --name ${rubeeWebContainerName} -e appEnv=${appEnv} -d ${webImageName}
