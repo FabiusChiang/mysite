@@ -32,7 +32,7 @@ if [ "wordpress" = "${componentName}" ]; then
 fi
 
 
-if [ "rubee" = "${componentName}" ]; then
+if [ "rubeeweb" = "${componentName}" ]; then
     case "${appEnv}" in
         prod)
             port=7190
