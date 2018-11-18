@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo v0.0.41
+echo v0.0.42
