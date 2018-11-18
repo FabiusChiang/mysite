@@ -9,3 +9,4 @@ ADD httpd-ssl.conf /usr/local/apache2/conf/
 # ADD server.key /usr/local/apache2/conf/
 
 ADD webRoot/* /usr/local/apache2/htdocs/
+RUN chmod -R o+r /usr/local/apache2/htdocs
