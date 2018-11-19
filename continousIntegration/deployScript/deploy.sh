@@ -21,9 +21,9 @@ baseImagesurl="fabius/"${appName}":"
 mysqlPassword="${specialPass}"
 userName="root"
 hostName="mysql"
-# docker stop mysql
-# docker rm mysql
-# docker run --name mysql -e MYSQL_ROOT_PASSWORD=${mysqlPassword} -v /home/fabius/data/mysql:/var/lib/mysql -d mysql:5.7
+docker stop mysql
+docker rm mysql
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=${mysqlPassword} -v /home/fabius/data/mysql:/var/lib/mysql -d mysql:5.7
 docker start mysql
 
 #################################################################
@@ -54,8 +54,5 @@ webImageName=${baseImagesurl}web_${currentVersion}
 # docker rmi ${webImageName}
 # docker pull ${webImageName}
 
-#3. Launch images per sequence
-# port=`bash ../azureCommon/allocatePort.sh web ${appEnv}`
-# docker run --link ${wordPressContainerName}:mywordpress -p ${port}:80 --name ${webContainerName} -d ${webImageName}
-
+#3. Start Apache
 docker run -p 80:80 -p 443:443 -v /home/fabius/data/static:/usr/local/apache2/htdocs/static -v /home/fabius/workspace/httpsCert:/usr/local/apache2/httpsCert --name ${webContainerName} -d ${webImageName}
