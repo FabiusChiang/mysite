@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "mdp", "mdp\mdp.dwproj", "{DA005F1E-8D19-44CA-B4F2-148FFBE650BD}"
 EndProject
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "AdWorksDW", "AdWorksDW\AdWorksDW.dwproj", "{5CF4CF35-9903-486B-A689-36F1567F3B39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Default = Development|Default
@@ -13,6 +15,9 @@ Global
 		{DA005F1E-8D19-44CA-B4F2-148FFBE650BD}.Development|Default.ActiveCfg = Development
 		{DA005F1E-8D19-44CA-B4F2-148FFBE650BD}.Development|Default.Build.0 = Development
 		{DA005F1E-8D19-44CA-B4F2-148FFBE650BD}.Development|Default.Deploy.0 = Development
+		{5CF4CF35-9903-486B-A689-36F1567F3B39}.Development|Default.ActiveCfg = Development
+		{5CF4CF35-9903-486B-A689-36F1567F3B39}.Development|Default.Build.0 = Development
+		{5CF4CF35-9903-486B-A689-36F1567F3B39}.Development|Default.Deploy.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

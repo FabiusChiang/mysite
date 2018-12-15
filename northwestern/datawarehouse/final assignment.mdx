@@ -1,0 +1,33 @@
+
+//a. The total of internet-based sales and the total of retail sales (on columns), for each year (on rows).
+
+//SELECT 
+//	[Measures].[Sales Amount]  ON COLUMNS,
+//	[Order Date].[Calendar Year].MEMBERS ON ROWS
+//FROM  [InternetSales]
+//
+//
+//SELECT 
+//	[Measures].[Sales Amount]  ON COLUMNS,
+//	[Order Date].[Calendar Year].MEMBERS ON ROWS
+//FROM  [ResellerSales];
+//
+//
+//
+//
+//SELECT 
+//	[Measures].[Sales Amount]  ON COLUMNS,
+//	[Dim Employee].[Department Name].MEMBERS ON ROWS,
+//	[Order Date].[Calendar Year].MEMBERS ON 2
+//FROM  [ResellerSales];
+
+//b. For each year, the total (retail) sales amount per department
+
+SELECT 
+	[Order Date].[Calendar Year].MEMBERS ON COLUMNS,
+	[Dim Employee].[Department Name].MEMBERS ON ROWS
+FROM  [ResellerSales]
+WHERE Measures.[Sales Amount]
+
+
+//c. For each year, the total (retail) sales amount per department
