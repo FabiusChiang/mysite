@@ -1,25 +1,10 @@
 
 //a. The total of internet-based sales and the total of retail sales (on columns), for each year (on rows).
-
-//SELECT 
-//	[Measures].[Sales Amount]  ON COLUMNS,
-//	[Order Date].[Calendar Year].MEMBERS ON ROWS
-//FROM  [InternetSales]
-//
-//
-//SELECT 
-//	[Measures].[Sales Amount]  ON COLUMNS,
-//	[Order Date].[Calendar Year].MEMBERS ON ROWS
-//FROM  [ResellerSales];
-//
-//
-//
-//
-//SELECT 
-//	[Measures].[Sales Amount]  ON COLUMNS,
-//	[Dim Employee].[Department Name].MEMBERS ON ROWS,
-//	[Order Date].[Calendar Year].MEMBERS ON 2
-//FROM  [ResellerSales];
+WITH MEMBER [Measures].[Sales Amount - Fact Reseller Sales] AS [Measures].[Sales Amount]
+SELECT 
+	{[Measures].[Sales Amount - Fact Internet Sales], [Measures].[Sales Amount - Fact Reseller Sales]}  ON COLUMNS,
+	[Order Date].[Calendar Year].MEMBERS ON ROWS
+	FROM [AllSales];
 
 //b. For each year, the total (retail) sales amount per department
 
@@ -27,7 +12,20 @@ SELECT
 	[Order Date].[Calendar Year].MEMBERS ON COLUMNS,
 	[Dim Employee].[Department Name].MEMBERS ON ROWS
 FROM  [ResellerSales]
-WHERE Measures.[Sales Amount]
+WHERE Measures.[Sales Amount];
 
 
-//c. For each year, the total (retail) sales amount per department
+//c. All the measures (on columns) for each state in the US (on rows).
+//c.1 all measures about Reseller sales
+SELECT 
+	[Measures].[Sales Amount] ON COLUMNS,
+	[Dim Reseller].[State Province Name].MEMBERS ON ROWS
+FROM [ResellerSales]
+	WHERE [Dim Reseller].[Country Region Code].[US];
+
+//c.2 all measures about Internet sales
+SELECT 
+	[Measures].MEMBERS ON COLUMNS,
+	[Dim Customer].[State Province Name].MEMBERS ON ROWS
+FROM [InternetSales]
+	WHERE [Dim Customer].[Country Region Code].[US];
