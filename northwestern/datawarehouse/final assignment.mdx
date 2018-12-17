@@ -1,5 +1,7 @@
 
 //a. The total of internet-based sales and the total of retail sales (on columns), for each year (on rows).
+//A "AllSales" cube was created, which contains 2 measure groups -- "Fact Internet Sales" and "Fact Reseller Sales".
+
 WITH MEMBER [Measures].[Sales Amount - Fact Reseller Sales] AS [Measures].[Sales Amount]
 SELECT 
 	{[Measures].[Sales Amount - Fact Internet Sales], [Measures].[Sales Amount - Fact Reseller Sales]}  ON COLUMNS,
