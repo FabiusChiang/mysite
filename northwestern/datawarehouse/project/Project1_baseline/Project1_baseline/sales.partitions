@@ -1,0 +1,85 @@
+﻿<Cube xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="e041b111-ef49-4665-8b44-7f371d67b930" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>sales</ID>
+  <MeasureGroups>
+    <MeasureGroup>
+      <ID>Fact Internet Sales</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="4a7346bf-5dcd-4a15-9cab-b4ce754fe22e">
+          <ID>Fact Internet Sales</ID>
+          <Name>Fact Internet Sales</Name>
+          <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="e660e665-1e20-424a-bcfb-2da4f3b8e815">
+            <DataSourceViewID>Adventure Works DW2014</DataSourceViewID>
+            <TableID>dbo_FactInternetSales</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Fact Sales Quota</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="7e09e747-ec4d-4e92-81be-724025bbebab">
+          <ID>Fact Sales Quota</ID>
+          <Name>Fact Sales Quota</Name>
+          <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="fe3fbf84-88b8-449b-90a3-ce12a0884509">
+            <DataSourceViewID>Adventure Works DW2014</DataSourceViewID>
+            <TableID>dbo_FactSalesQuota</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Fact Reseller Sales</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="02d77563-21d8-4c83-8381-9151427240bd">
+          <ID>Fact Reseller Sales</ID>
+          <Name>Fact Reseller Sales</Name>
+          <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="35e230a0-6893-46dc-be3e-333e0ebf0dc1">
+            <DataSourceViewID>Adventure Works DW2014</DataSourceViewID>
+            <TableID>dbo_FactResellerSales</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Fact Currency Rate</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="a6ef7569-add9-4c41-ba7c-ab4ded4e8275">
+          <ID>Fact Currency Rate</ID>
+          <Name>Fact Currency Rate</Name>
+          <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="1fd02f8b-c91a-47f9-9521-587af371b477">
+            <DataSourceViewID>Adventure Works DW2014</DataSourceViewID>
+            <TableID>dbo_FactCurrencyRate</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+  </MeasureGroups>
+</Cube>
