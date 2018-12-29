@@ -25,6 +25,11 @@ class PublicController extends restController {
     setCustomPath() {
         this.get.customPath = "/:pubContent";
     }
+
+    _readFile(pageName){
+        ///Not done yet, will test HBS template
+    }
+
 }
 
 module.exports = PublicController;

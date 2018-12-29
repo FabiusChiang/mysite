@@ -5,7 +5,42 @@
     <meta charset="utf-8" />
     <title>This is not error!</title>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 <body>
-    Hey, static file is loaded!
+    <div id="welcomeBar">
+        <p>{{ message }}</p>
+    </div>
+
+    <div id="app-2">
+        <span v-bind:title="message">
+          Hover your mouse over me for a few seconds
+          to see my dynamically bound title!
+        </span>
+      </div>
+
+    <div id="app-4">
+        <ol>
+            <li v-for="item in todos">
+            {{ item.text }}
+            </li>
+        </ol>
+    </div>
+
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+    </div>
+
+
+    <div id="controlBar">
+        <span v-if="(seen=='true')">Applicable</span> <br/>
+        <button v-on:click="toggle2">Reverse Message</button>
+        {{seen}}
+        <input v-model="seen">
+    </div>
+
+
+    <script src="hello.js"></script>
 </body>
 </html>
