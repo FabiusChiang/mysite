@@ -12,7 +12,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'BaseFrame',
       component: BaseFrame,
       children: [
         {
