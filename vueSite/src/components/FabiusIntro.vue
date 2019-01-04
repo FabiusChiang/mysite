@@ -33,7 +33,7 @@ export default {
       let introData = 'abc';
       getContent().then((data) => {
         console.log(data);
-        this.introData = data;
+        this.introContent = data;
       })
       return {
         introContent: introData // "this is the content"

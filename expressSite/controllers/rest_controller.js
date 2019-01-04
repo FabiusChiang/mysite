@@ -79,6 +79,9 @@ function RESTController(opts) {
     if (settings.disableCaching) {
         this.use(this.disableCaching);
     }
+    
+    this.use(this.addHeaders);
+
     if (settings.validateResponse) {
         this.addValidationFilters();
     }
@@ -90,13 +93,10 @@ function RESTController(opts) {
 RESTController.prototype = Object.create(BaseController.prototype);
 RESTController.prototype.constructor = RESTController;
 
-/**
- * Exposes notImplemented locally.
- * @deprecated Use capitol-core.Util.fn.notImplemented
- * @type {function}
- */
-//RESTController.notImplemented = notImplemented;
-
+BaseController.prototype.addHeaders = function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://*.fabiuslela.com");
+    next();
+};
 /**
  * Returns metadata about this controller in order
  * to describe the available routes provided.
