@@ -94,7 +94,7 @@ RESTController.prototype = Object.create(BaseController.prototype);
 RESTController.prototype.constructor = RESTController;
 
 BaseController.prototype.addHeaders = function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://*.fabiuslela.com");
+    res.header("Access-Control-Allow-Origin", "http://local.fabiuslela.com:8080; https://www.fabiuslela.com");
     next();
 };
 /**

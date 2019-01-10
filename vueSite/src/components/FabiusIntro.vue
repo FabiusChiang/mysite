@@ -4,13 +4,14 @@
         <h5>Title1 description, Dec 7, 2017</h5>
         <div class="fakeimg">Fake Image</div>
         <p>Hi I am Fabius</p>
-        <!-- <div>
+        <div>
           <div class="entry-content">
             <p>Hello, I am Fabius. I like cooking and coding.</p>
             <p>I write some blogs sometimes, you’re very welcome to visit my blog at http://blog.fabiuslela.com. In order to avoid spam comment, I enabled the review of comment. So your comment won’t be displayed until I see it. You know there are a lot of robots trying to spread virus through the comments in WordPress.</p>
           </div>
-        </div> -->
-        {{introContent}}
+        </div>
+        <li>delimiter</li>
+        <div class="dynamicContent" v-html="introContent"></div>
         <!-- <iframe src="http://blog.fabiuslela.com/fabiuss-introduction/"/> -->
     </div>
 </template>
@@ -24,7 +25,7 @@ export default {
     data() {
       async function getContent () {
         try {
-          let response = await extractContent('http://blog.fabiuslela.com/fabiuss-introduction/') ;
+          let response = await extractContent('http://local2.fabiuslela.com:3000/posts/wordpressSample') ;
           return response;
         } catch (err) {
           console.log(err)
@@ -61,7 +62,7 @@ iframe {
   width: 100%;
   height: 800px;
 }
-.entry-content {
+.dynamicContent >>> .entry-content {
   text-align: left;
 }
 </style>

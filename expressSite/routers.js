@@ -73,6 +73,10 @@ function setPrivateRouter () {
     const testController = require("./controllers/test_controller");
     const newTestController = new testController();
     newTestController.install(privateRouter, "/test");
+
+    const postsController = require("./controllers/posts_controller");
+    const newPostsController = new postsController();
+    newPostsController.install(privateRouter, "/posts");
 }
 
 function applyRouters (app) {
