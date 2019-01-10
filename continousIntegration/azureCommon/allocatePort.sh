@@ -32,4 +32,31 @@ if [ "wordpress" = "${componentName}" ]; then
 fi
 
 
+if [ "rubeeweb" = "${componentName}" ]; then
+    case "${appEnv}" in
+        prod)
+            port=7190
+            ;;
+        qa)
+            port=7191
+            ;;
+        *)
+            exit 1
+    esac
+fi
+
+
+if [ "i" = "${componentName}" ]; then
+    case "${appEnv}" in
+        prod)
+            port=6090
+            ;;
+        qa)
+            port=6091
+            ;;
+        *)
+            exit 1
+    esac
+fi
+
 echo ${port}

@@ -1,0 +1,128 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> ## Question 4.4
+> pnorm(99, 51.3, 20.65515, lower.tail=F)
+[1] 0.01046204
+> 
+> ##############
+> 
+> importedData<-read.delim("data.txt")
+> 
+> attach(importedData)
+The following object is masked _by_ .GlobalEnv:
+
+    i
+
+> 
+> ## Question 5.1
+> dataForScatterplot<-data.frame(x_i, y_i)
+> plot(dataForScatterplot, xlab="X", ylab="Y", main="Final Exam Question#5")
+> 
+> modelXY<-lm(y_i~x_i)
+> abline(modelXY)
+> 
+> 
+> ## Question 5.2
+> ## The point in the middle bottom is most likely to be an outlier because the distance between the estimated Y of the Y of the point is the farthest.
+> 
+> 
+> ## Question 5.3
+> ## The correlation between the two vaiables is:
+> cor(x_i, y_i)
+[1] 0.8166897
+> 
+> 
+> ## Question 5.4
+> ## The line has been drawed in question#5.1
+> ## The summary of the model is 
+> summary(modelXY)
+
+Call:
+lm(formula = y_i ~ x_i)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-488.51  -38.51    4.26   58.18  188.23 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  253.185     62.667    4.04 0.000159 ***
+x_i           31.206      2.895   10.78  1.8e-15 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 104.8 on 58 degrees of freedom
+Multiple R-squared:  0.667,	Adjusted R-squared:  0.6612 
+F-statistic: 116.2 on 1 and 58 DF,  p-value: 1.796e-15
+
+> 
+> ## So the equation of the line is y = 253.185 + 31.206 * x
+> 
+> 
+> ## Question 5.5
+> ## Null Hypothesis is b1 = 0
+> ## The HA is b1 != 0
+> t<-(31.206-0)/2.895
+> 2*pt(t, df=60-2, lower.tail=F)
+[1] 1.787619e-15
+> ## The P-Value is so small, so it's significance and b1 is not 0
+> 
+> 
+> ## Question 5.6
+> ## The trend of the spots is absotlute; almost all spots are closed to the line got per linear regression.
+> ## At the same time we got it's almost impossible that b1 is 0. 
+> ## According to the diagram generated in question 5.1/5.4 and the calculation of 5.5, we get the same conslusion: the correlation between X and Y is strong.
+> 
+> ## Question 5.7
+> summary(x_i)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   7.00   19.00   21.00   21.13   24.00   32.00 
+> 
+> ymean<- 253.185 + 31.206 * 21.13
+> ymean
+[1] 912.5678
+> 
+> ymedian<- 253.185 + 31.206 * 21
+> ymedian
+[1] 908.511
+> 
+> 
+> ## Question 5.8
+> t<-qt(0.95+(1-0.95)/2, df=60-2)
+> m<-t*2.895
+> 31.206-m
+[1] 25.41103
+> 31.206+m
+[1] 37.00097
+> 
+> ## Question 5.9
+> ## We can calculate the value per formula in Chapter 10, but R provide the function already.
+> xToEstimate<-data.frame(x_i=30)
+> predict(modelXY, xToEstimate, interval="prediction", level=0.90)
+       fit      lwr      upr
+1 1189.358 1007.537 1371.178
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  0.160   0.000   0.225 

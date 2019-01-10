@@ -1,0 +1,135 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ##Exercise 6.137 ----------------------------------------------------
+> 
+> drawShadeInNorm <- function(begin, end, title, sigma) {
++     begin <- begin * sigma
++     end <- end * sigma
++     cord.x <- c(begin,seq(begin,end,0.01),end) 
++     cord.y <- c(0,dnorm(seq(begin,end,0.01), 0, sigma),0) 
++     curve(dnorm(x,0,sigma),xlim=c(-6 * sigma,6 * sigma),main=title) 
++     polygon(cord.x,cord.y,col='skyblue')
++     abline(0,0)
++ }
+> 
+> drawShadeInNorm(6.9/(55/sqrt(104)), 6, "Exercise 6.137 (a)", 55/sqrt(104))
+> 
+> 
+> ##Exercise 6.141 ----------------------------------------------------
+> x<-rnorm(15, 20, 5)
+> x
+ [1] 19.723833 23.379042 17.855962 17.348172  8.542324 14.046792 26.134293
+ [8] 20.000811 24.198983 19.436547 24.858358 15.111157 17.349608  3.974106
+[15] 14.421435
+> miu=mean(x)
+> sigma=5/sqrt(15)
+> startOfConfidenceInterval=miu-1.96*sigma
+> startOfConfidenceInterval
+[1] 15.22841
+> endOfConfidenceInterval=miu+1.96*sigma
+> endOfConfidenceInterval
+[1] 20.28911
+> 
+> count<-0
+> sigma <- 5/sqrt(15)
+> for (i in 1:100) {
++     x<-rnorm(15, 20, 5)
++     miu<-mean(x)
++     startOfConfidenceInterval <- miu-1.96*sigma
++     
++     endOfConfidenceInterval <- miu+1.96*sigma
++     if (startOfConfidenceInterval<20 && endOfConfidenceInterval>20){
++         count <- count +1
++     }
++     i
++     count
++ }
+> ##During the 100 repeating, the miu appears in confidence interval for following times:
+> count
+[1] 93
+> 
+> 
+> ##Exercise 7.27 ----------------------------------------------------
+> ## (a)
+> importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-027UBERX.csv")
+> attach(importedData)
+> hist(Earnings, bre=6, main="7.27 (a).1 histogram")
+> boxplot(Earnings, main="7.27 (a).2 boxplot")
+> qqnorm(Earnings, main="7.27 (a).3 normal quantile")
+> 
+> ## (b)
+> sd(Earnings)
+[1] 6.579523
+> mean(Earnings)
+[1] 36.15704
+> sd(Earnings)/sqrt(length(Earnings))
+[1] 1.26623
+> length(Earnings)-1
+[1] 26
+> 
+> 
+> ## (c)
+> earningsPerYear=Earnings*40*52
+> sd(earningsPerYear)
+[1] 13685.41
+> mean(earningsPerYear)
+[1] 75206.64
+> sd(earningsPerYear)/sqrt(length(earningsPerYear))
+[1] 2633.758
+> length(earningsPerYear)-1
+[1] 26
+> 
+> 
+> ##Exercise 7.40 ----------------------------------------------------
+> ## (a)
+> importedData<-read.csv("/home/fabius/workspace/mysite/northwestern/CSV/Chapter\ 7/EX07-040JOCKO.csv")
+> attach(importedData)
+> 
+> importedData
+   Car Jocko Other
+1    1  1410  1250
+2    2  1550  1300
+3    3  1250  1250
+4    4  1300  1200
+5    5   900   950
+6    6  1520  1575
+7    7  1750  1600
+8    8  3600  3380
+9    9  2250  2125
+10  10  2840  2600
+> diff<-Jocko-Other
+> diff
+ [1] 160 250   0 100 -50 -55 150 220 125 240
+> 
+> ## a)
+> mean(diff)
+[1] 114
+> sd(diff)
+[1] 114.4018
+> 
+> ## b)
+> sd(diff) / sqrt(length(diff))
+[1] 36.17703
+> 
+> proc.time()
+   user  system elapsed 
+  0.192   0.000   0.228 
