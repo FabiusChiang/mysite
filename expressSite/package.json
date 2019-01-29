@@ -10,10 +10,11 @@
   "author": "Fabius",
   "license": "ISC",
   "dependencies": {
+    "babel-register": "6.26.0",
+    "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
-    "util": "^0.10.3",
-    "babel-register": "6.26.0"
+    "util": "^0.10.3"
   },
   "devDependencies": {
     "babel-plugin-add-module-exports": "^0.2.1",

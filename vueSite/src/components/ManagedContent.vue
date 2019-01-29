@@ -1,10 +1,5 @@
 <template>
-    <div class="col-sm-8">
-        <h2>Fabius introduction</h2>
-        <h5>Title1 description, Dec 7, 2017</h5>
-        <div class="fakeimg">Fake Image</div>
-        <div class="dynamicContent" v-html="introContent"></div>
-    </div>
+    <div class="dynamicContent" v-html="introContent"></div>
 </template>
 
 <script>
@@ -16,7 +11,7 @@ async function getManagedContent(url) {
 }
 
 export default {
-    name: 'Home',
+    // name: 'ManagedContent',
     data() {
       async function getContent () {
         try {

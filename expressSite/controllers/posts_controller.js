@@ -3,47 +3,49 @@
 const express = require('express');
 const restController = require('./rest_controller');
 const fs = require('fs');
+const extractContent = require("../services/extractContent.js");
+
+const validDomainRegExp = /^https?:\/\/((localhost)|(([\d-\w]{0,100}.)?fabiuslela.com))(:?\d{2,5})?($|\/|\?)/ig;
 
 class PostsController extends restController {
     constructor(opt) {
         super(opt);
     }
 
-    // before(req, res, next) {
-    //     const retVal = "This is before test.";
-    //     console.log(retVal);
-    //     res.setHeader("h1FromTestController", "v1");
-    //     next();
-    // }
-
     async get(req, res) {
-        res.setHeader("Content-Type", "text/html; charset=utf-8");
-        const fileName = "static/" + req.params.postId + ".html";
-        fs.readFile(fileName, 'utf8', function(err, contents) {
-            // console.log(contents);
-            const retVal = contents;
-            res.send(retVal);
-        });
-         
-        
-        
+        const previousHost = this._getCallerHostName(req);
+        // const previousHost = "http://localhost:8080";
+        if (previousHost) {
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.setHeader("Access-Control-Allow-Origin", previousHost);
+            const postUrl = req.params.postUrl;
+            if (postUrl.match(validDomainRegExp)){
+                const content = await extractContent(postUrl);
+                res.send(content);
+            }
+            else{
+                this._return403(res);
+            }
+        }
+        else {
+            this._return403(res);
+        }
     }
-
-    _cal() {
-        this.count++;
-        return this.count;
-    }
-
-    //getRouter (req, res) {
-    //    const retVal = "This is test";
-    //    console.log(retVal);
-    //    res.send(retVal);
-    //}
 
     setCustomPath() {
-        this.get.customPath = "/:postId";
+        this.get.customPath = "/:postUrl";
     }
 
+    _return403(res) {
+        res.send(403, "Not allowed request");
+    }
+
+    _getCallerHostName(req) {
+        const referer = req.headers.referer || '';
+        const regResult = referer.match(validDomainRegExp);
+        const hostName = regResult && regResult[0].replace(/(\/|\?)$/g, '');
+        return hostName;
+    }
 }
 
 module.exports = PostsController;
