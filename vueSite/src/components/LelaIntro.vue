@@ -3,14 +3,24 @@
         <h2>Lela introduction</h2>
         <h5>Start, Jan 1, 2019</h5>
         <div class="fakeimg">Fake Image</div>
-        <p>Hi I am Fabius</p>
-        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        <div class="pageBody">
+          <!-- <managedContent v-bind:dataSource="url" /> -->
+          <managedContent dataSource="http://blog.fabiuslela.com/lelas-introduction/" />
+        </div>
     </div>
 </template>
 
 <script>
+import managedContent from './ManagedContent.vue';
+
 export default {
-    name: 'Home'
+    name: 'Lela',
+    components: { managedContent },
+    data() {
+      return {
+        url: "http://blog.fabiuslela.com/lelas-introduction/"
+      }
+    }
 }
 </script>
 
@@ -28,5 +38,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.pageBody{
+  text-align: left;
 }
 </style>

@@ -3,34 +3,21 @@
         <h2>Fabius introduction</h2>
         <h5>Title1 description, Dec 7, 2017</h5>
         <div class="fakeimg">Fake Image</div>
-        <div class="dynamicContent" v-html="introContent"></div>
+        <div class="pageBody">
+          <managedContent v-bind:dataSource="url" />
+        </div>
     </div>
 </template>
 
 <script>
-import httpGet from '../../../expressSite/services/get.js';
-
-async function getManagedContent(url) {
-  const fullUrl = `http://localhost:3000/posts/${encodeURIComponent(url)}`;
-  return await httpGet(fullUrl);
-}
+import managedContent from './ManagedContent.vue';
 
 export default {
-    name: 'Home',
+    name: 'Fabius',
+    components: { managedContent },
     data() {
-      async function getContent () {
-        try {
-          let response = await getManagedContent('http://blog.fabiuslela.com/fabiuss-introduction/') ;
-          return response;
-        } catch (err) {
-          console.log(err)
-        }
-      }
-      getContent().then((data) => {
-        this.introContent = data;
-      })
       return {
-        introContent: null // "this is the content"
+        url: "http://blog.fabiuslela.com/fabiuss-introduction/"
       }
     }
 }
@@ -51,11 +38,7 @@ li {
 a {
   color: #42b983;
 }
-iframe {
-  width: 100%;
-  height: 800px;
-}
-.dynamicContent >>> .entry-content {
+.pageBody{
   text-align: left;
 }
 </style>
