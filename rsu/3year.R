@@ -11,6 +11,6 @@ xa <- seq(f=0.03,t=0.20,b=0.005)
 ya <- lapply(xa, getYInCurve)
 
 matrix(c(xa, ya), nc=2)
-
+  
 
 # curve(getYInCurve, 0.03, 0.20,main="Fitting for equation", xlab="x", ylab="Discrepancy") 
