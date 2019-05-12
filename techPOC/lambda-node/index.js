@@ -4,7 +4,14 @@
 const myFunc = require("./myFunc")
 
 exports.myHandler = async function(event, context) {   
-    myFunc();
+    const result = await myFunc();
     // callback(null, "no news");
+
+    return {
+        statusCode: 200, 
+        headers: {
+            "x-custom-header" : "forFun"}, 
+            body: JSON.stringify(result) 
+        };
 }
 

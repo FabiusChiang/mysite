@@ -3,4 +3,9 @@
 // import myFuc from "./myFunc";
 const index = require("./index")
 
-index.myHandler();
+async function main(){
+    const result = await index.myHandler();
+    console.log(result);
+}
+
+main();

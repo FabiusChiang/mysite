@@ -20,6 +20,7 @@ async function myFunc (event, context, callback) {
         await hold(holdmilliSec);
         log(uidOfEvent, `Progress is ${i}`);
     }
+    return "It's done";
 }
 
 module.exports = myFunc;
