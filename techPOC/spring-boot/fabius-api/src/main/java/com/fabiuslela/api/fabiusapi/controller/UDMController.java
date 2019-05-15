@@ -1,6 +1,6 @@
 package com.fabiuslela.api.fabiusapi.controller;
 
-// import org.springframework.beans.factory.annotation.*;
+import com.fp.aws.lambda.restClient.OfficeApiRestClient;
 import org.springframework.web.bind.annotation.*;
 
 // import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,8 @@ public class UDMController {
 
     @GetMapping("/{id}")
     public String findOne(@PathVariable String id) {
-        return id + " is received!";
+        OfficeApiRestClient restClient = new OfficeApiRestClient();
+        return restClient.testFuncInRestClient(id);
     }
 
 }
