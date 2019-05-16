@@ -25,8 +25,8 @@ import org.springframework.stereotype.Component;
  */
 // @Component
 @WebFilter
-@Order(1)
-public class SampleFilter implements Filter {
+@Order(2)
+public class GlobalFilter implements Filter {
 
 	private final static Logger LOG = LoggerFactory.getLogger(SampleFilter.class);
 
@@ -38,10 +38,9 @@ public class SampleFilter implements Filter {
 	@Override
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-        LOG.info("Starting SampleFilter for req :{}", req.getRequestURI());
-        // ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Rejected by filter");
-        chain.doFilter(request, response);
-		LOG.info("Committing SampleFilter for req :{}", req.getRequestURI());
+        LOG.info("GlobalFilter:{}", req.getRequestURI());
+		chain.doFilter(request, response);
+		LOG.info("GlobalFilter:{}", req.getRequestURI());
 	}
 
 	@Override
