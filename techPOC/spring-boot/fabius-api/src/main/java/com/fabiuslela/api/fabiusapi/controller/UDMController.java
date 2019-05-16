@@ -35,10 +35,17 @@ public class UDMController {
     //     return ControllerResponseUtility.convertToStatusResponse(submissionId, results);
     // }
 
-    @GetMapping("/{id}")
-    public String findOne(@PathVariable String id) {
+    @GetMapping("/id/{id}")
+    public String getId(@PathVariable String id) {
         OfficeApiRestClient restClient = new OfficeApiRestClient();
         return restClient.testFuncInRestClient(id);
+    }
+
+
+    @GetMapping("/getFunc")
+    public String findOne() {
+        OfficeApiRestClient restClient = new OfficeApiRestClient();
+        return restClient.testFuncInRestClient("fake ID");
     }
 
 }
