@@ -1,5 +1,7 @@
 package com.fabiuslela.api.fabiusapi.controller;
 
+import java.util.Map;
+
 import com.fp.aws.lambda.restClient.OfficeApiRestClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +37,11 @@ public class UDMController {
     //     return ControllerResponseUtility.convertToStatusResponse(submissionId, results);
     // }
 
-    @GetMapping("/id/{id}")
-    public String getId(@PathVariable String id) {
+    @GetMapping("/id/{id}/dataset/{dset}")
+    public String getId(@PathVariable Map<String,String> pathParams) {
+        
         OfficeApiRestClient restClient = new OfficeApiRestClient();
-        return restClient.testFuncInRestClient(id);
+        return restClient.testFuncInRestClient(pathParams.get("id") + ":" + pathParams.get("dset"));
     }
 
 
