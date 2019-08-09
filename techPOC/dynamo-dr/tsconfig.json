@@ -11,6 +11,10 @@
     },
     "files": [
         "index.ts",
-        "hello.ts"
+        "userStatusManager.ts",
+        "userStatus.ts",
+        "hello.ts",
+        "IKeyValueStorage.ts",
+        "dynamoDBService.ts"
     ]
 }

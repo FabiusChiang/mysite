@@ -15,12 +15,15 @@ class Hello {
         });
     }
     greetingToRemote() {
-        console.log(this.addTimestamp("Sending a message slowly"));
-        return new Promise(function (resolve, reject) {
-            setTimeout((() => {
-                console.log(this.addTimestamp("Sending slow message is done"));
-                resolve();
-            }).bind(this), 1000 * 2);
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(this.addTimestamp("Sending a message slowly"));
+            const thisObj = this;
+            yield new Promise(function (resolve, reject) {
+                setTimeout(() => {
+                    console.log(thisObj.addTimestamp("Sending slow message is done"));
+                    resolve();
+                }, 1000 * 2);
+            });
         });
     }
     addTimestamp(text) {

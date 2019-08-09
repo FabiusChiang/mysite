@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const hello_1 = require("./hello");
+const dynamoDBService_1 = require("./dynamoDBService");
 class Index {
     static main() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -16,7 +17,25 @@ class Index {
             const helloObj = new hello_1.default();
             yield helloObj.greetings();
             yield helloObj.greetingToRemote();
+            yield this.dynamoDBSpike();
             console.log("Main function ends");
+        });
+    }
+    static dynamoDBSpike() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userInfoO = {
+                    id: "FE48822D-BF50-44A1-9CE0-61B06504D726",
+                    status: "3no_aggregation"
+                };
+                const dbService = new dynamoDBService_1.default();
+                yield dbService.Put(userInfoO.id, userInfoO);
+                const userInfo = yield dbService.Get(userInfoO.id);
+                console.log(userInfo);
+            }
+            catch (ex) {
+                console.log(ex);
+            }
         });
     }
 }
