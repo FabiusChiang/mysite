@@ -1,8 +1,8 @@
 import IKeyValueStorage from "./IKeyValueStorage";
-import { DynamoDB } from 'aws-sdk';
+import { config, DynamoDB } from 'aws-sdk';
 
 
-class DynamoDBService<T> implements IKeyValueStorage<T> {
+class MultiRegionDynamoDBService<T> implements IKeyValueStorage<T> {
     private dynamoDB: DynamoDB;
     private tableName: string;
     private keyName: string;
@@ -20,6 +20,27 @@ class DynamoDBService<T> implements IKeyValueStorage<T> {
             "region": region
         };
         this.dynamoDB = new DynamoDB(config);
+    }
+
+    private getBaseInfo(key: string, valueObj:T ): any {
+        let valueObjSnippet = "";
+        if (valueObj){
+            valueObjSnippet = `,
+            "valueObj": {
+                "S": ${JSON.stringify(JSON.stringify(valueObj))}
+            }`
+        };
+
+        const keyInfoJsonString = `{
+            "${valueObj ? "Item" : "Key"}": {  
+                    "${this.keyName}": {
+                        "${this.keyType}": "${key}"
+                    }${valueObjSnippet}                    
+                },
+            "ReturnConsumedCapacity": "TOTAL",
+            "TableName": "${this.tableName}"
+        }`;
+        return JSON.parse(keyInfoJsonString);
     }
 
     public async put(key: string, valueObj: T) {
@@ -49,27 +70,6 @@ class DynamoDBService<T> implements IKeyValueStorage<T> {
             });
         });
     }
-
-    private getBaseInfo(key: string, valueObj:T ): any {
-        let valueObjSnippet = "";
-        if (valueObj){
-            valueObjSnippet = `,
-            "valueObj": {
-                "S": ${JSON.stringify(JSON.stringify(valueObj))}
-            }`
-        };
-
-        const keyInfoJsonString = `{
-            "${valueObj ? "Item" : "Key"}": {  
-                    "${this.keyName}": {
-                        "${this.keyType}": "${key}"
-                    }${valueObjSnippet}                    
-                },
-            "ReturnConsumedCapacity": "TOTAL",
-            "TableName": "${this.tableName}"
-        }`;
-        return JSON.parse(keyInfoJsonString);
-    }
 }
 
-export default DynamoDBService;
+export default MultiRegionDynamoDBService;

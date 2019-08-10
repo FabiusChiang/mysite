@@ -1,7 +1,7 @@
 interface IKeyValueStorage<T> {
-    Put(key: string, valueObj: T): Promise<void>;
+    put(key: string, valueObj: T): Promise<void>;
 
-    Get(key: string): Promise<T>;
+    get(key: string): Promise<T>;
 }
 
 export default IKeyValueStorage;

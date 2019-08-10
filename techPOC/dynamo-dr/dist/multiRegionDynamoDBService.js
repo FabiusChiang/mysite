@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const aws_sdk_1 = require("aws-sdk");
-class DynamoDBService {
+class MultiRegionDynamoDBService {
     constructor(tableName, keyName, region, keyType = "S") {
         this.tableName = tableName;
         this.keyName = keyName;
@@ -73,5 +73,5 @@ class DynamoDBService {
         });
     }
 }
-exports.default = DynamoDBService;
-//# sourceMappingURL=dynamoDBService.js.map
+exports.default = MultiRegionDynamoDBService;
+//# sourceMappingURL=multiRegionDynamoDBService.js.map

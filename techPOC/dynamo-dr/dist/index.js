@@ -24,13 +24,16 @@ class Index {
     static dynamoDBSpike() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userInfoO = {
+                const userInfo0 = {
                     id: "FE48822D-BF50-44A1-9CE0-61B06504D726",
                     status: "3no_aggregation"
                 };
-                const dbService = new dynamoDBService_1.default();
-                yield dbService.Put(userInfoO.id, userInfoO);
-                const userInfo = yield dbService.Get(userInfoO.id);
+                const userInfo1 = {
+                    id: "EE48822D-BF50-44A1-9CE0-61B06504D726",
+                    status: "4no_aggregation"
+                };
+                const dbService = new dynamoDBService_1.default("fabiusT-user-info-east-2", "userId", "us-east-1");
+                const userInfo = yield dbService.Get(userInfo0.id);
                 console.log(userInfo);
             }
             catch (ex) {
