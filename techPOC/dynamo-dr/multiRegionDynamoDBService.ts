@@ -1,74 +1,77 @@
 import IKeyValueStorage from "./IKeyValueStorage";
-import { config, DynamoDB } from 'aws-sdk';
-
+import IMultiRegionConfig from "./IMultiRegionConfig";
+import DynamoDBService from "./dynamoDBService";
+import { ECS } from 'aws-sdk';
 
 class MultiRegionDynamoDBService<T> implements IKeyValueStorage<T> {
-    private dynamoDB: DynamoDB;
-    private tableName: string;
+    private primaryDynamoDBService: DynamoDBService<T>;
+    private drDynamoDBServices: Array<DynamoDBService<T>>;
     private keyName: string;
     private keyType: string;
-    
-    constructor(tableName: string, keyName: string, region: string, keyType: string = "S") {
-        this.tableName = tableName;
-        this.keyName = keyName;
-        this.keyType = keyType;
 
-        const config = {
-            "apiVersions": {
-                dynamodb: '2012-08-10'
-            },
-            "region": region
-        };
-        this.dynamoDB = new DynamoDB(config);
-    }
-
-    private getBaseInfo(key: string, valueObj:T ): any {
-        let valueObjSnippet = "";
-        if (valueObj){
-            valueObjSnippet = `,
-            "valueObj": {
-                "S": ${JSON.stringify(JSON.stringify(valueObj))}
-            }`
-        };
-
-        const keyInfoJsonString = `{
-            "${valueObj ? "Item" : "Key"}": {  
-                    "${this.keyName}": {
-                        "${this.keyType}": "${key}"
-                    }${valueObjSnippet}                    
-                },
-            "ReturnConsumedCapacity": "TOTAL",
-            "TableName": "${this.tableName}"
-        }`;
-        return JSON.parse(keyInfoJsonString);
+    constructor(originalConfig: IMultiRegionConfig) {
+        const config = MultiRegionDynamoDBService.validateConfig(originalConfig);
+        this.keyName = config.keyName;
+        this.keyType = config.keyType;
+        const primaryConfig = config.regionConfigs.filter(c => c.primary == true)[0];
+        this.primaryDynamoDBService = new DynamoDBService<T>(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType);
+        const drConfigs = config.regionConfigs.filter(c => c.primary == false);
+        this.drDynamoDBServices = new Array<DynamoDBService<T>>();
+        drConfigs.forEach(drConfig => {
+            const drDynamoDDsvc = new DynamoDBService<T>(drConfig.tableName, config.keyName, drConfig.region, config.keyType);
+            this.drDynamoDBServices.push(drDynamoDDsvc);
+        });
     }
 
     public async put(key: string, valueObj: T) {
-        const baseInfo = this.getBaseInfo(key, valueObj);
-        await new Promise<void>((resolve, reject) => {
-            this.dynamoDB.putItem(baseInfo, (err, putItemOutput) => {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                }
-                console.log("dynamodb put is done");
-                resolve();
-            });
+        const primaryWritePromise = this.primaryDynamoDBService.put(key, valueObj);
+        this.drDynamoDBServices.forEach(drDBsvc => {
+            drDBsvc.put(key, valueObj)
+                .catch(ex => {
+                    console.log(`Failed to put data into ${key}`);
+                    console.warn(ex);
+                });
         });
+        await primaryWritePromise;
     }
 
     public async get(key: string): Promise<T> {
-        const queryInfo = this.getBaseInfo(key, null);
-        return await new Promise<T>((resolve, reject) => {
-            this.dynamoDB.getItem(queryInfo, (err, data) => {
-                if (err) {
-                    reject(err);
-                }
-                const jsonObj = JSON.parse(JSON.stringify(data.Item)).valueObj.S;
-                console.log("dynamodb get is done");
-                resolve(jsonObj);
-            });
-        });
+        return await this.primaryDynamoDBService.get(key);
+    }
+
+    private static getDefaultRegion(): string {
+        return process.env.AWS_REGION || "us-east-1";
+    }
+
+    private static validateConfig(originalConfig: IMultiRegionConfig): IMultiRegionConfig {
+        let config: IMultiRegionConfig = (JSON.parse(JSON.stringify(originalConfig)));
+
+        const primaryConfig = config.regionConfigs.filter((c) => c.primary == true);
+
+        const currentRegion = this.getDefaultRegion();
+        if (primaryConfig.length == 0) {
+            const tableInCurrentRegion = config.regionConfigs.filter((c) => c.region === currentRegion);
+            if (tableInCurrentRegion.length > 1) {
+                throw Error(`No primary table is defined and there are ${tableInCurrentRegion.length} tables in the current region (${currentRegion}) per config, can't determine which table should be the primary table.`);
+            }
+            if (tableInCurrentRegion.length === 0) {
+                throw Error(`No primary table is defined and there is no table in the current region (${currentRegion}) per config, can't determine which table should be the primary table.`);
+            }
+            if (tableInCurrentRegion.length === 1) {
+                config.regionConfigs.forEach(c => c.primary = (c == tableInCurrentRegion[0]));
+                console.log(`No primary table is defined, but the table ${tableInCurrentRegion[0].tableName} in the current region ${currentRegion} is choosed as the primary table`);
+                return config;
+            }
+        }
+
+        if (primaryConfig.length > 1) {
+            const primaryConfigInCurrentRegion = primaryConfig.filter((c) => { c.region === currentRegion });
+            if (primaryConfigInCurrentRegion.length === 0 || primaryConfigInCurrentRegion.length > 1) {
+                throw Error(`Too many primary tables are defined and failed to filter out a single primary table based on the current region (${currentRegion}), can't determine which table should be the primary table.`);
+            }
+            config.regionConfigs.forEach(c => c.primary = (c == primaryConfigInCurrentRegion[0]));
+            return config;
+        }
     }
 }
 

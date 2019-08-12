@@ -8,17 +8,49 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const hello_1 = require("./hello");
 const dynamoDBService_1 = require("./dynamoDBService");
+const multiRegionDynamoDBService_1 = require("./multiRegionDynamoDBService");
 class Index {
     static main() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Main function is called");
-            const helloObj = new hello_1.default();
-            yield helloObj.greetings();
-            yield helloObj.greetingToRemote();
-            yield this.dynamoDBSpike();
+            yield this.multiDynamoDBSpike();
             console.log("Main function ends");
+        });
+    }
+    static multiDynamoDBSpike() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userInfo0 = {
+                    id: "FE48822D-BF50-44A1-9CE0-61B06504D726",
+                    status: "33no_aggregation"
+                };
+                const userInfo1 = {
+                    id: "EE48822D-BF50-44A1-9CE0-61B06504D726",
+                    status: "44no_aggregation"
+                };
+                const config = {
+                    keyName: "userId",
+                    keyType: "S",
+                    regionConfigs: [
+                        {
+                            tableName: "fabiusT-user-info-east-2",
+                            region: "us-east-1"
+                        },
+                        {
+                            tableName: "fabiusT-user-info-west-2",
+                            region: "us-west-2"
+                        }
+                    ]
+                };
+                const dbService = new multiRegionDynamoDBService_1.default(config);
+                yield dbService.put(userInfo1.id, userInfo1);
+                const userInfo = yield dbService.get(userInfo0.id);
+                console.log(userInfo);
+            }
+            catch (ex) {
+                console.log(ex);
+            }
         });
     }
     static dynamoDBSpike() {
@@ -33,7 +65,7 @@ class Index {
                     status: "4no_aggregation"
                 };
                 const dbService = new dynamoDBService_1.default("fabiusT-user-info-east-2", "userId", "us-east-1");
-                const userInfo = yield dbService.Get(userInfo0.id);
+                const userInfo = yield dbService.get(userInfo0.id);
                 console.log(userInfo);
             }
             catch (ex) {

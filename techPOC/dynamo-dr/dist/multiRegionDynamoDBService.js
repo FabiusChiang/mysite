@@ -8,69 +8,68 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const aws_sdk_1 = require("aws-sdk");
+const dynamoDBService_1 = require("./dynamoDBService");
 class MultiRegionDynamoDBService {
-    constructor(tableName, keyName, region, keyType = "S") {
-        this.tableName = tableName;
-        this.keyName = keyName;
-        this.keyType = keyType;
-        const config = {
-            "apiVersions": {
-                dynamodb: '2012-08-10'
-            },
-            "region": region
-        };
-        this.dynamoDB = new aws_sdk_1.DynamoDB(config);
+    constructor(originalConfig) {
+        const config = MultiRegionDynamoDBService.validateConfig(originalConfig);
+        this.keyName = config.keyName;
+        this.keyType = config.keyType;
+        const primaryConfig = config.regionConfigs.filter(c => c.primary == true)[0];
+        this.primaryDynamoDBService = new dynamoDBService_1.default(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType);
+        const drConfigs = config.regionConfigs.filter(c => c.primary == false);
+        this.drDynamoDBServices = new Array();
+        drConfigs.forEach(drConfig => {
+            const drDynamoDDsvc = new dynamoDBService_1.default(drConfig.tableName, config.keyName, drConfig.region, config.keyType);
+            this.drDynamoDBServices.push(drDynamoDDsvc);
+        });
     }
-    getBaseInfo(key, valueObj) {
-        let valueObjSnippet = "";
-        if (valueObj) {
-            valueObjSnippet = `,
-            "valueObj": {
-                "S": ${JSON.stringify(JSON.stringify(valueObj))}
-            }`;
+    put(key, valueObj) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const primaryWritePromise = this.primaryDynamoDBService.put(key, valueObj);
+            this.drDynamoDBServices.forEach(drDBsvc => {
+                drDBsvc.put(key, valueObj)
+                    .catch(ex => {
+                    console.log(`Failed to put data into ${key}`);
+                    console.warn(ex);
+                });
+            });
+            yield primaryWritePromise;
+        });
+    }
+    get(key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.primaryDynamoDBService.get(key);
+        });
+    }
+    static getDefaultRegion() {
+        return process.env.AWS_REGION || "us-east-1";
+    }
+    static validateConfig(originalConfig) {
+        let config = (JSON.parse(JSON.stringify(originalConfig)));
+        const primaryConfig = config.regionConfigs.filter((c) => c.primary == true);
+        const currentRegion = this.getDefaultRegion();
+        if (primaryConfig.length == 0) {
+            const tableInCurrentRegion = config.regionConfigs.filter((c) => c.region === currentRegion);
+            if (tableInCurrentRegion.length > 1) {
+                throw Error(`No primary table is defined and there are ${tableInCurrentRegion.length} tables in the current region (${currentRegion}) per config, can't determine which table should be the primary table.`);
+            }
+            if (tableInCurrentRegion.length === 0) {
+                throw Error(`No primary table is defined and there is no table in the current region (${currentRegion}) per config, can't determine which table should be the primary table.`);
+            }
+            if (tableInCurrentRegion.length === 1) {
+                config.regionConfigs.forEach(c => c.primary = (c == tableInCurrentRegion[0]));
+                console.log(`No primary table is defined, but the table ${tableInCurrentRegion[0].tableName} in the current region ${currentRegion} is choosed as the primary table`);
+                return config;
+            }
         }
-        ;
-        const keyInfoJsonString = `{
-            "${valueObj ? "Item" : "Key"}": {  
-                    "${this.keyName}": {
-                        "${this.keyType}": "${key}"
-                    }${valueObjSnippet}                    
-                },
-            "ReturnConsumedCapacity": "TOTAL",
-            "TableName": "${this.tableName}"
-        }`;
-        return JSON.parse(keyInfoJsonString);
-    }
-    Put(key, valueObj) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const baseInfo = this.getBaseInfo(key, valueObj);
-            yield new Promise((resolve, reject) => {
-                this.dynamoDB.putItem(baseInfo, (err, putItemOutput) => {
-                    if (err) {
-                        console.log(err);
-                        reject(err);
-                    }
-                    console.log("dynamodb put is done");
-                    resolve();
-                });
-            });
-        });
-    }
-    Get(key) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const queryInfo = this.getBaseInfo(key, null);
-            return yield new Promise((resolve, reject) => {
-                this.dynamoDB.getItem(queryInfo, (err, data) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    const jsonObj = JSON.parse(JSON.stringify(data.Item)).valueObj.S;
-                    console.log("dynamodb get is done");
-                    resolve(jsonObj);
-                });
-            });
-        });
+        if (primaryConfig.length > 1) {
+            const primaryConfigInCurrentRegion = primaryConfig.filter((c) => { c.region === currentRegion; });
+            if (primaryConfigInCurrentRegion.length === 0 || primaryConfigInCurrentRegion.length > 1) {
+                throw Error(`Too many primary tables are defined and failed to filter out a single primary table based on the current region (${currentRegion}), can't determine which table should be the primary table.`);
+            }
+            config.regionConfigs.forEach(c => c.primary = (c == primaryConfigInCurrentRegion[0]));
+            return config;
+        }
     }
 }
 exports.default = MultiRegionDynamoDBService;

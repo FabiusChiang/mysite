@@ -27,7 +27,7 @@ class DynamoDBService<T> implements IKeyValueStorage<T> {
         await new Promise<void>((resolve, reject) => {
             this.dynamoDB.putItem(baseInfo, (err, putItemOutput) => {
                 if (err) {
-                    console.log(err);
+                    console.log(`dynamodb put action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                     reject(err);
                 }
                 console.log("dynamodb put is done");
@@ -41,6 +41,7 @@ class DynamoDBService<T> implements IKeyValueStorage<T> {
         return await new Promise<T>((resolve, reject) => {
             this.dynamoDB.getItem(queryInfo, (err, data) => {
                 if (err) {
+                    console.log(`dynamodb get action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                     reject(err);
                 }
                 const jsonObj = JSON.parse(JSON.stringify(data.Item)).valueObj.S;
