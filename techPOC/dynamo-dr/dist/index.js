@@ -9,13 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dynamoDBService_1 = require("./dynamoDBService");
+const userStatusManager_1 = require("./userStatusManager");
 const multiRegionDynamoDBService_1 = require("./multiRegionDynamoDBService");
 class Index {
     static main() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Main function is called");
-            yield this.multiDynamoDBSpike();
+            yield this.demoUserStatusManager();
             console.log("Main function ends");
+        });
+    }
+    static demoUserStatusManager() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userStatusManager = new userStatusManager_1.default();
+            const sampleUserStatus = {
+                id: "AA48822D-BF50-44A1-9CE0-61B06504D726",
+                status: "#1 - This is the status of sample user"
+            };
+            yield userStatusManager.storeUserStatus(sampleUserStatus);
+            const userInfoFromDB = yield userStatusManager.getUserStatus(sampleUserStatus.id);
+            console.log(userInfoFromDB.status);
         });
     }
     static multiDynamoDBSpike() {

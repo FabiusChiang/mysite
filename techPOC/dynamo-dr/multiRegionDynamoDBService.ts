@@ -72,6 +72,8 @@ class MultiRegionDynamoDBService<T> implements IKeyValueStorage<T> {
             config.regionConfigs.forEach(c => c.primary = (c == primaryConfigInCurrentRegion[0]));
             return config;
         }
+
+        return config;
     }
 }
 

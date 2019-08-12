@@ -1,67 +1,35 @@
-import { config, DynamoDB } from 'aws-sdk';
-import { resolve } from 'path';
-
+import MultiRegionDynamoDBService from "./multiRegionDynamoDBService";
+import IKeyValueStorage from "./IKeyValueStorage";
+import UserStatus from "./userStatus";
 
 class UserStatusManager {
-    private dynamoDB: DynamoDB;
+    private dbService: IKeyValueStorage<UserStatus>;
 
     constructor() {
-        // config.apiVersions = {
-        //     dynamodb: '2012-08-10'
-        // };
-        // config.region = "us-east-1";
         const config = {
-            "apiVersions": {
-                dynamodb: '2012-08-10'
-            },
-            "region": "us-east-1"
-        };
-        this.dynamoDB = new DynamoDB(config);
-    }
-    public async Put() {
-        var params = {
-            Item: {
-                "id": {
-                    N: "2"
+            keyName: "userId",
+            keyType: "S",
+            regionConfigs: [
+                {
+                    tableName: "fabiusT-user-info-east-2",
+                    region: "us-east-1",
+                    primary: true
                 },
-                "content": {
-                    S: "This is test content of 2"
-                },
-                "content2": {
-                    M: {
-                        "Name": { S: "Joe"},
-                        "Age": {N: "29"}
-                    }
+                {
+                    tableName: "fabiusT-user-info-west-2",
+                    region: "us-west-2"
                 }
-            },
-            ReturnConsumedCapacity: "TOTAL",
-            TableName: "fabiusTestEast"
+            ]
         };
-
-        // this.dynamoDB.putItem(params, (err, putItemOutput) => {
-        //     console.log(err);
-        //     console.log(putItemOutput);
-
-        //     console.log("dynamodb call is done");
-        // });
-
-        await new Promise<void> ((resolve, reject) => {
-            this.dynamoDB.putItem(params, (err, putItemOutput) => {
-                console.log(err);
-                console.log(putItemOutput);
-    
-                console.log("dynamodb call is done");
-                resolve();
-            });
-        });
-
-
+        this.dbService = new MultiRegionDynamoDBService(config);
+    }
+    public async storeUserStatus(userStatus: UserStatus): Promise<void> {
+        await this.dbService.put(userStatus.id, userStatus);
     }
 
-    public async Get() {
-
+    public async getUserStatus(userId: string): Promise<UserStatus> {
+        return this.dbService.get(userId);
     }
-
 }
 
 export default UserStatusManager;

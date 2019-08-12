@@ -8,49 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const aws_sdk_1 = require("aws-sdk");
+const multiRegionDynamoDBService_1 = require("./multiRegionDynamoDBService");
 class UserStatusManager {
     constructor() {
         const config = {
-            "apiVersions": {
-                dynamodb: '2012-08-10'
-            },
-            "region": "us-east-1"
-        };
-        this.dynamoDB = new aws_sdk_1.DynamoDB(config);
-    }
-    Put() {
-        return __awaiter(this, void 0, void 0, function* () {
-            var params = {
-                Item: {
-                    "id": {
-                        N: "2"
-                    },
-                    "content": {
-                        S: "This is test content of 2"
-                    },
-                    "content2": {
-                        M: {
-                            "Name": { S: "Joe" },
-                            "Age": { N: "29" }
-                        }
-                    }
+            keyName: "userId",
+            keyType: "S",
+            regionConfigs: [
+                {
+                    tableName: "fabiusT-user-info-east-2",
+                    region: "us-east-1",
+                    primary: true
                 },
-                ReturnConsumedCapacity: "TOTAL",
-                TableName: "fabiusTestEast"
-            };
-            yield new Promise((resolve, reject) => {
-                this.dynamoDB.putItem(params, (err, putItemOutput) => {
-                    console.log(err);
-                    console.log(putItemOutput);
-                    console.log("dynamodb call is done");
-                    resolve();
-                });
-            });
+                {
+                    tableName: "fabiusT-user-info-west-2",
+                    region: "us-west-2"
+                }
+            ]
+        };
+        this.dbService = new multiRegionDynamoDBService_1.default(config);
+    }
+    storeUserStatus(userStatus) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.dbService.put(userStatus.id, userStatus);
         });
     }
-    Get() {
+    getUserStatus(userId) {
         return __awaiter(this, void 0, void 0, function* () {
+            return this.dbService.get(userId);
         });
     }
 }

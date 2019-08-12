@@ -1,9 +1,10 @@
 import Hello from "./hello"
-// import UserStatusManager from "./userStatusManager";
 import DynamoDBService from "./dynamoDBService";
+import UserStatusManager from "./userStatusManager";
 import UserStatus from "./userStatus";
 import IKeyValueStorage from "./IKeyValueStorage";
 import MultiRegionDynamoDBService from "./multiRegionDynamoDBService";
+
 
 class Index {
     static async main() {
@@ -14,9 +15,26 @@ class Index {
 
         // await this.dynamoDBSpike();
 
-        await this.multiDynamoDBSpike();
+        //await this.multiDynamoDBSpike();
+
+        await this.demoUserStatusManager();
 
         console.log("Main function ends");
+    }
+
+
+    static async demoUserStatusManager() {
+        const userStatusManager = new UserStatusManager();
+
+        const sampleUserStatus: UserStatus = {
+            id: "AA48822D-BF50-44A1-9CE0-61B06504D726",
+            status: "#1 - This is the status of sample user"
+        };
+
+        await userStatusManager.storeUserStatus(sampleUserStatus);
+        const userInfoFromDB = await userStatusManager.getUserStatus(sampleUserStatus.id)
+        console.log(userInfoFromDB.status);
+
     }
 
     static async multiDynamoDBSpike() {
