@@ -28,7 +28,7 @@ class UserStatusManager {
     }
 
     public async getUserStatus(userId: string): Promise<UserStatus> {
-        return this.dbService.get(userId);
+        return await this.dbService.get(userId);
     }
 }
 

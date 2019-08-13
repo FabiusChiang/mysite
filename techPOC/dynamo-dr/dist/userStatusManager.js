@@ -35,7 +35,8 @@ class UserStatusManager {
     }
     getUserStatus(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.dbService.get(userId);
+            const retVal = yield this.dbService.get(userId);
+            return retVal;
         });
     }
 }

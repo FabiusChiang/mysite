@@ -44,7 +44,7 @@ class DynamoDBService<T> implements IKeyValueStorage<T> {
                     console.log(`dynamodb get action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                     reject(err);
                 }
-                const jsonObj = JSON.parse(JSON.stringify(data.Item)).valueObj.S;
+                const jsonObj = JSON.parse(data.Item.valueObj.S);
                 console.log("dynamodb get is done");
                 resolve(jsonObj);
             });
