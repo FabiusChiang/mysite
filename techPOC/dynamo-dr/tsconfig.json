@@ -15,7 +15,7 @@
         "userStatus.ts",
         "hello.ts",
         "IKeyValueStorage.ts",
-        "dynamoDBService.ts",
+        "DynamoDBService.ts",
         "multiRegionDynamoDBService"
     ]
 }

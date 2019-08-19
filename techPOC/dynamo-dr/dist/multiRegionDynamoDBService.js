@@ -8,18 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dynamoDBService_1 = require("./dynamoDBService");
+const DynamoDBService_1 = require("./DynamoDBService");
 class MultiRegionDynamoDBService {
     constructor(originalConfig) {
         const config = MultiRegionDynamoDBService.validateConfig(originalConfig);
         this.keyName = config.keyName;
         this.keyType = config.keyType;
         const primaryConfig = config.regionConfigs.filter(c => c.primary == true)[0];
-        this.primaryDynamoDBService = new dynamoDBService_1.default(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType);
+        this.primaryDynamoDBService = new DynamoDBService_1.default(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType);
         const drConfigs = config.regionConfigs.filter(c => c.primary == false);
         this.drDynamoDBServices = new Array();
         drConfigs.forEach(drConfig => {
-            const drDynamoDDsvc = new dynamoDBService_1.default(drConfig.tableName, config.keyName, drConfig.region, config.keyType);
+            const drDynamoDDsvc = new DynamoDBService_1.default(drConfig.tableName, config.keyName, drConfig.region, config.keyType);
             this.drDynamoDBServices.push(drDynamoDDsvc);
         });
     }

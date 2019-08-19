@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dynamoDBService_1 = require("./dynamoDBService");
+const DynamoDBService_1 = require("./DynamoDBService");
 const userStatusManager_1 = require("./userStatusManager");
 const multiRegionDynamoDBService_1 = require("./multiRegionDynamoDBService");
 class Index {
@@ -77,7 +77,7 @@ class Index {
                     id: "EE48822D-BF50-44A1-9CE0-61B06504D726",
                     status: "4no_aggregation"
                 };
-                const dbService = new dynamoDBService_1.default("fabiusT-user-info-east-2", "userId", "us-east-1");
+                const dbService = new DynamoDBService_1.default("fabiusT-user-info-east-2", "userId", "us-east-1");
                 const userInfo = yield dbService.get(userInfo0.id);
                 console.log(userInfo);
             }

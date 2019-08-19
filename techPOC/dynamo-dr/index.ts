@@ -1,5 +1,5 @@
 import Hello from "./hello"
-import DynamoDBService from "./dynamoDBService";
+import DynamoDBService from "./DynamoDBService";
 import UserStatusManager from "./userStatusManager";
 import UserStatus from "./userStatus";
 import IKeyValueStorage from "./IKeyValueStorage";

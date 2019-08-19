@@ -75,4 +75,4 @@ class DynamoDBService {
     }
 }
 exports.default = DynamoDBService;
-//# sourceMappingURL=dynamoDBService.js.map
+//# sourceMappingURL=DynamoDBService.js.map
