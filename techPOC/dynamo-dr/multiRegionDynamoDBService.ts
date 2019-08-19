@@ -1,5 +1,5 @@
 import KeyValueStorage from "./KeyValueStorage";
-import IMultiRegionConfig from "./IMultiRegionConfig";
+import IMultiRegionConfig from "./MultiRegionConfig";
 import DynamoDBService from "./DynamoDBService";
 import { ECS } from 'aws-sdk';
 
