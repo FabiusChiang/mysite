@@ -1,9 +1,9 @@
-import IKeyValueStorage from "./IKeyValueStorage";
+import KeyValueStorage from "./KeyValueStorage";
 import IMultiRegionConfig from "./IMultiRegionConfig";
 import DynamoDBService from "./DynamoDBService";
 import { ECS } from 'aws-sdk';
 
-class MultiRegionDynamoDBService<T> implements IKeyValueStorage<T> {
+class MultiRegionDynamoDBService<T> implements KeyValueStorage<T> {
     private primaryDynamoDBService: DynamoDBService<T>;
     private drDynamoDBServices: Array<DynamoDBService<T>>;
     private keyName: string;

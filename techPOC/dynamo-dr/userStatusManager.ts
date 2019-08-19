@@ -1,9 +1,9 @@
 import MultiRegionDynamoDBService from "./multiRegionDynamoDBService";
-import IKeyValueStorage from "./IKeyValueStorage";
+import KeyValueStorage from "./KeyValueStorage";
 import UserStatus from "./userStatus";
 
 class UserStatusManager {
-    private dbService: IKeyValueStorage<UserStatus>;
+    private dbService: KeyValueStorage<UserStatus>;
 
     constructor() {
         const config = {

@@ -1,8 +1,8 @@
-import IKeyValueStorage from "./IKeyValueStorage";
+import KeyValueStorage from "./KeyValueStorage";
 import { DynamoDB } from 'aws-sdk';
 
 
-class DynamoDBService<T> implements IKeyValueStorage<T> {
+class DynamoDBService<T> implements KeyValueStorage<T> {
     private dynamoDB: DynamoDB;
     private tableName: string;
     private keyName: string;

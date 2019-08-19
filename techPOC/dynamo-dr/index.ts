@@ -2,7 +2,7 @@ import Hello from "./hello"
 import DynamoDBService from "./DynamoDBService";
 import UserStatusManager from "./userStatusManager";
 import UserStatus from "./userStatus";
-import IKeyValueStorage from "./IKeyValueStorage";
+import KeyValueStorage from "./KeyValueStorage";
 import MultiRegionDynamoDBService from "./multiRegionDynamoDBService";
 
 
@@ -66,7 +66,7 @@ class Index {
                 ]
             };
 
-            const dbService: IKeyValueStorage<UserStatus> = 
+            const dbService: KeyValueStorage<UserStatus> = 
                 new MultiRegionDynamoDBService<UserStatus>(config);
             await dbService.put(userInfo1.id, userInfo1);
             const userInfo: UserStatus = await dbService.get(userInfo0.id);
