@@ -10,7 +10,7 @@
         "alwaysStrict": true
     },
     "files": [
-        "index.ts",
+        "Index.ts",
         "userStatusManager.ts",
         "userStatus.ts",
         "hello.ts",
