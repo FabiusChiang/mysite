@@ -1,4 +1,4 @@
-import MultiRegionDynamoDBService from "./multiRegionDynamoDBService";
+import MultiRegionDynamoDBService from "./MultiRegionDynamoDBService";
 import KeyValueStorage from "./KeyValueStorage";
 import UserStatus from "./userStatus";
 
