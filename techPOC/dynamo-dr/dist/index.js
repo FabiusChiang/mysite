@@ -88,4 +88,4 @@ class Index {
     }
 }
 Index.main();
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=Index.js.map

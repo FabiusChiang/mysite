@@ -11,8 +11,8 @@
     },
     "files": [
         "Index.ts",
-        "userStatusManager.ts",
-        "userStatus.ts",
+        "UserStatusManager.ts",
+        "UserStatus.ts",
         "hello.ts",
         "KeyValueStorage.ts",
         "DynamoDBService.ts",

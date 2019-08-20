@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const multiRegionDynamoDBService_1 = require("./multiRegionDynamoDBService");
+const MultiRegionDynamoDBService_1 = require("./MultiRegionDynamoDBService");
 class UserStatusManager {
     constructor() {
         const config = {
@@ -26,7 +26,7 @@ class UserStatusManager {
                 }
             ]
         };
-        this.dbService = new multiRegionDynamoDBService_1.default(config);
+        this.dbService = new MultiRegionDynamoDBService_1.default(config);
     }
     storeUserStatus(userStatus) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,7 +35,7 @@ class UserStatusManager {
     }
     getUserStatus(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.dbService.get(userId);
+            return yield this.dbService.get(userId);
         });
     }
 }

@@ -3,7 +3,7 @@ import DynamoDBService from "./DynamoDBService";
 import UserStatusManager from "./userStatusManager";
 import UserStatus from "./userStatus";
 import KeyValueStorage from "./KeyValueStorage";
-import MultiRegionDynamoDBService from "./MultiRegionDynamoDBService";
+import MultiRegionDynamoDBService from "./multiRegionDynamoDBService";
 
 
 class Index {
