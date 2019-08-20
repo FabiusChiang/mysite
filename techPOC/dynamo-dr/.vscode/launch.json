@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "runtimeExecutable": "/Users/fjiang4/.nvm/versions/node/v10.16.2/bin/node",
-            "program": "${workspaceFolder}/index.ts",
+            "program": "${workspaceFolder}/src/index.ts",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
@@ -20,7 +20,7 @@
             "request": "launch",
             "name": "Debug at home",
             "runtimeExecutable": "/usr/local/Cellar/nvm/0.34.0/versions/node/v10.16.2/bin/node",
-            "program": "${workspaceFolder}/index.ts",
+            "program": "${workspaceFolder}/src/index.ts",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"

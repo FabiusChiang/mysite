@@ -10,13 +10,13 @@
         "alwaysStrict": true
     },
     "files": [
-        "Index.ts",
-        "UserStatusManager.ts",
-        "UserStatus.ts",
-        "Logger.ts",
-        "KeyValueStorage.ts",
-        "DynamoDBService.ts",
-        "MultiRegionDynamoDBService.ts",
-        "safeLoggerWrapper.ts",
+        "src/Index.ts",
+        "src/UserStatusManager.ts",
+        "src/UserStatus.ts",
+        "src/Logger.ts",
+        "src/KeyValueStorage.ts",
+        "src/DynamoDBService.ts",
+        "src/MultiRegionDynamoDBService.ts",
+        "src/safeLoggerWrapper.ts",
     ]
 }
