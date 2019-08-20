@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const DynamoDBService_1 = require("./DynamoDBService");
-const userStatusManager_1 = require("./userStatusManager");
+const UserStatusManager_1 = require("./UserStatusManager");
 const MultiRegionDynamoDBService_1 = require("./MultiRegionDynamoDBService");
 class Index {
     static main() {
@@ -21,7 +21,7 @@ class Index {
     }
     static demoUserStatusManager() {
         return __awaiter(this, void 0, void 0, function* () {
-            const userStatusManager = new userStatusManager_1.default();
+            const userStatusManager = new UserStatusManager_1.default();
             const sampleUserStatus = {
                 id: "AA48822D-BF50-44A1-9CE0-61B06504D726",
                 status: "#1 - This is the status of sample user"

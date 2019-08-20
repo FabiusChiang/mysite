@@ -1,6 +1,6 @@
 import Hello from "./hello"
 import DynamoDBService from "./DynamoDBService";
-import UserStatusManager from "./userStatusManager";
+import UserStatusManager from "./UserStatusManager";
 import UserStatus from "./userStatus";
 import KeyValueStorage from "./KeyValueStorage";
 import MultiRegionDynamoDBService from "./MultiRegionDynamoDBService";

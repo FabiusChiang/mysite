@@ -11,7 +11,7 @@
     },
     "files": [
         "Index.ts",
-        "userStatusManager.ts",
+        "UserStatusManager.ts",
         "UserStatus.ts",
         "hello.ts",
         "KeyValueStorage.ts",

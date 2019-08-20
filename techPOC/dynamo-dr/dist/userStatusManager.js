@@ -40,4 +40,4 @@ class UserStatusManager {
     }
 }
 exports.default = UserStatusManager;
-//# sourceMappingURL=userStatusManager.js.map
+//# sourceMappingURL=UserStatusManager.js.map
