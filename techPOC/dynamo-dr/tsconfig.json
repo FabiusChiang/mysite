@@ -16,6 +16,6 @@
         "hello.ts",
         "KeyValueStorage.ts",
         "DynamoDBService.ts",
-        "multiRegionDynamoDBService"
+        "MultiRegionDynamoDBService.ts"
     ]
 }
