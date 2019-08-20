@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const DynamoDBService_1 = require("./DynamoDBService");
 const userStatusManager_1 = require("./userStatusManager");
-const multiRegionDynamoDBService_1 = require("./multiRegionDynamoDBService");
+const MultiRegionDynamoDBService_1 = require("./MultiRegionDynamoDBService");
 class Index {
     static main() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -56,7 +56,7 @@ class Index {
                         }
                     ]
                 };
-                const dbService = new multiRegionDynamoDBService_1.default(config);
+                const dbService = new MultiRegionDynamoDBService_1.default(config);
                 yield dbService.put(userInfo1.id, userInfo1);
                 const userInfo = yield dbService.get(userInfo0.id);
                 console.log(userInfo);
