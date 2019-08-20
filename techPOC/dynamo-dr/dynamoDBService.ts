@@ -7,12 +7,41 @@ class DynamoDBService<T> implements KeyValueStorage<T> {
     private tableName: string;
     private keyName: string;
     private keyType: string;
-    
-    constructor(tableName: string, keyName: string, region: string, keyType: string = "S") {
+    private region: string;
+
+    get TableName(): string {
+        return this.tableName;
+    }
+
+    get Region(): string {
+        return this.region;
+    }
+
+    private logInformation: (infoMsg: string) => any = function (inforMsg: string) {
+        console.log(inforMsg);
+    }
+
+    private logError: (errorMsg: string) => any = function (errorMsg: string) {
+        this.logInformation(errorMsg);
+    }
+
+    constructor(tableName: string, keyName: string, region: string, keyType: string = "S",
+        logInformation: (infoMsg: string) => any = null,
+        logError: (errorMsg: string) => any = null) {
+
         this.tableName = tableName;
         this.keyName = keyName;
         this.keyType = keyType;
 
+        if (logInformation) {
+            this.logInformation = logInformation;
+        }
+
+        if (logError) {
+            this.logError = logError;
+        }
+
+        this.region = region;
         const config = {
             "apiVersions": {
                 dynamodb: '2012-08-10'
@@ -24,13 +53,14 @@ class DynamoDBService<T> implements KeyValueStorage<T> {
 
     public async put(key: string, valueObj: T) {
         const baseInfo = this.getBaseInfo(key, valueObj);
+        const thisObj = this;
         await new Promise<void>((resolve, reject) => {
             this.dynamoDB.putItem(baseInfo, (err, putItemOutput) => {
                 if (err) {
-                    console.log(`dynamodb put action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
+                    thisObj.logError(`dynamodb put action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                     reject(err);
                 }
-                console.log("dynamodb put is done");
+                thisObj.logInformation("dynamodb put is done");
                 resolve();
             });
         });
@@ -38,22 +68,23 @@ class DynamoDBService<T> implements KeyValueStorage<T> {
 
     public async get(key: string): Promise<T> {
         const queryInfo = this.getBaseInfo(key, null);
+        const thisObj = this;
         return await new Promise<T>((resolve, reject) => {
             this.dynamoDB.getItem(queryInfo, (err, data) => {
                 if (err) {
-                    console.log(`dynamodb get action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
+                    thisObj.logError(`dynamodb get action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                     reject(err);
                 }
                 const jsonObj = JSON.parse(data.Item.valueObj.S);
-                console.log("dynamodb get is done");
+                thisObj.logInformation("dynamodb get is done");
                 resolve(jsonObj);
             });
         });
     }
 
-    private getBaseInfo(key: string, valueObj:T ): any {
+    private getBaseInfo(key: string, valueObj: T): any {
         let valueObjSnippet = "";
-        if (valueObj){
+        if (valueObj) {
             valueObjSnippet = `,
             "valueObj": {
                 "S": ${JSON.stringify(JSON.stringify(valueObj))}

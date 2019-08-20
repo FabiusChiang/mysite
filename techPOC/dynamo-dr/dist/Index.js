@@ -24,7 +24,7 @@ class Index {
             const userStatusManager = new UserStatusManager_1.default();
             const sampleUserStatus = {
                 id: "AA48822D-BF50-44A1-9CE0-61B06504D726",
-                status: "#1 - This is the status of sample user"
+                status: "#2 - This is the status of sample user"
             };
             yield userStatusManager.storeUserStatus(sampleUserStatus);
             const userInfoFromDB = yield userStatusManager.getUserStatus(sampleUserStatus.id);

@@ -10,8 +10,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const DynamoDBService_1 = require("./DynamoDBService");
 class MultiRegionDynamoDBService {
-    constructor(originalConfig) {
-        const config = MultiRegionDynamoDBService.validateConfig(originalConfig);
+    constructor(originalConfig, logInformation = null, logWarning = null, logError = null) {
+        this.logInformation = function (inforMsg) {
+            console.log(inforMsg);
+        };
+        this.logWarning = function (warningMsg) {
+            this.logInformation(warningMsg);
+        };
+        this.logError = function (errorMsg) {
+            this.logWarning(errorMsg);
+        };
+        if (logInformation) {
+            this.logInformation = logInformation;
+        }
+        if (logWarning) {
+            this.logWarning = logWarning;
+        }
+        if (logError) {
+            this.logError = logError;
+        }
+        const config = this.validateConfig(originalConfig);
         this.keyName = config.keyName;
         this.keyType = config.keyType;
         const primaryConfig = config.regionConfigs.filter(c => c.primary == true)[0];
@@ -25,12 +43,19 @@ class MultiRegionDynamoDBService {
     }
     put(key, valueObj) {
         return __awaiter(this, void 0, void 0, function* () {
-            const primaryWritePromise = this.primaryDynamoDBService.put(key, valueObj);
+            let primaryWritePromise;
+            try {
+                primaryWritePromise = this.primaryDynamoDBService.put(key, valueObj);
+            }
+            catch (ex) {
+                this.logError(`Failed to put data with key ${key} into the primary table ${this.primaryDynamoDBService.TableName} in region ${this.primaryDynamoDBService.Region}`);
+            }
+            const thisObj = this;
             this.drDynamoDBServices.forEach(drDBsvc => {
                 drDBsvc.put(key, valueObj)
                     .catch(ex => {
-                    console.log(`Failed to put data into ${key}`);
-                    console.warn(ex);
+                    thisObj.logWarning(`ailed to put data with key ${key} into the DR table ${drDBsvc.TableName} in region ${drDBsvc.Region}`);
+                    thisObj.logWarning(ex);
                 });
             });
             yield primaryWritePromise;
@@ -41,10 +66,7 @@ class MultiRegionDynamoDBService {
             return yield this.primaryDynamoDBService.get(key);
         });
     }
-    static getDefaultRegion() {
-        return process.env.AWS_REGION || "us-east-1";
-    }
-    static validateConfig(originalConfig) {
+    validateConfig(originalConfig) {
         const config = (JSON.parse(JSON.stringify(originalConfig)));
         config.regionConfigs.forEach(c => {
             if (c.primary != true) {
@@ -52,7 +74,7 @@ class MultiRegionDynamoDBService {
             }
         });
         const primaryConfigs = config.regionConfigs.filter((c) => c.primary == true);
-        const currentRegion = this.getDefaultRegion();
+        const currentRegion = MultiRegionDynamoDBService.getDefaultRegion();
         if (primaryConfigs.length == 0) {
             const tablesInCurrentRegion = config.regionConfigs.filter((c) => c.region === currentRegion);
             if (tablesInCurrentRegion.length > 1) {
@@ -62,7 +84,7 @@ class MultiRegionDynamoDBService {
                 throw Error(`No primary table is defined and there is no table in the current region (${currentRegion}) per config, can't determine which table should be the primary table.`);
             }
             if (tablesInCurrentRegion.length === 1) {
-                console.log(`No primary table is defined, but the table ${tablesInCurrentRegion[0].tableName} in the current region ${currentRegion} is choosed as the primary table`);
+                this.logInformation(`No primary table is defined, but the table ${tablesInCurrentRegion[0].tableName} in the current region ${currentRegion} is choosed as the primary table`);
                 config.regionConfigs.forEach(c => c.primary = (c == tablesInCurrentRegion[0]));
                 return config;
             }
@@ -72,11 +94,14 @@ class MultiRegionDynamoDBService {
             if (primaryConfigInCurrentRegion.length === 0 || primaryConfigInCurrentRegion.length > 1) {
                 throw Error(`Too many primary tables are defined and failed to filter out a single primary table based on the current region (${currentRegion}), can't determine which table should be the primary table.`);
             }
-            console.log(`Too many primary tables are defined, but the table ${primaryConfigInCurrentRegion[0].tableName} in the current region ${currentRegion} is choosed as the unique primary table`);
+            this.logInformation(`Too many primary tables are defined, but the table ${primaryConfigInCurrentRegion[0].tableName} in the current region ${currentRegion} is choosed as the unique primary table`);
             config.regionConfigs.forEach(c => c.primary = (c == primaryConfigInCurrentRegion[0]));
             return config;
         }
         return config;
+    }
+    static getDefaultRegion() {
+        return process.env.AWS_REGION || "us-east-1";
     }
 }
 exports.default = MultiRegionDynamoDBService;

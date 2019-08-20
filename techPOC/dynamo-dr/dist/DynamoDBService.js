@@ -10,10 +10,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const aws_sdk_1 = require("aws-sdk");
 class DynamoDBService {
-    constructor(tableName, keyName, region, keyType = "S") {
+    constructor(tableName, keyName, region, keyType = "S", logInformation = null, logError = null) {
+        this.logInformation = function (inforMsg) {
+            console.log(inforMsg);
+        };
+        this.logError = function (errorMsg) {
+            this.logInformation(errorMsg);
+        };
         this.tableName = tableName;
         this.keyName = keyName;
         this.keyType = keyType;
+        if (logInformation) {
+            this.logInformation = logInformation;
+        }
+        if (logError) {
+            this.logError = logError;
+        }
+        this.region = region;
         const config = {
             "apiVersions": {
                 dynamodb: '2012-08-10'
@@ -22,16 +35,23 @@ class DynamoDBService {
         };
         this.dynamoDB = new aws_sdk_1.DynamoDB(config);
     }
+    get TableName() {
+        return this.tableName;
+    }
+    get Region() {
+        return this.region;
+    }
     put(key, valueObj) {
         return __awaiter(this, void 0, void 0, function* () {
             const baseInfo = this.getBaseInfo(key, valueObj);
+            const thisObj = this;
             yield new Promise((resolve, reject) => {
                 this.dynamoDB.putItem(baseInfo, (err, putItemOutput) => {
                     if (err) {
-                        console.log(`dynamodb put action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
+                        thisObj.logError(`dynamodb put action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                         reject(err);
                     }
-                    console.log("dynamodb put is done");
+                    thisObj.logInformation("dynamodb put is done");
                     resolve();
                 });
             });
@@ -40,14 +60,15 @@ class DynamoDBService {
     get(key) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryInfo = this.getBaseInfo(key, null);
+            const thisObj = this;
             return yield new Promise((resolve, reject) => {
                 this.dynamoDB.getItem(queryInfo, (err, data) => {
                     if (err) {
-                        console.log(`dynamodb get action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
+                        thisObj.logError(`dynamodb get action is done with error, key: ${key}, DynamoDBRequestId: ${err.requestId}`);
                         reject(err);
                     }
                     const jsonObj = JSON.parse(data.Item.valueObj.S);
-                    console.log("dynamodb get is done");
+                    thisObj.logInformation("dynamodb get is done");
                     resolve(jsonObj);
                 });
             });
