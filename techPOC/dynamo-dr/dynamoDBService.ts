@@ -1,5 +1,6 @@
-import KeyValueStorage from "./KeyValueStorage";
+import KeyValueStorage from './KeyValueStorage';
 import { DynamoDB } from 'aws-sdk';
+import safeLoggerWrapper from './safeLoggerWrapper';
 
 
 class DynamoDBService<T> implements KeyValueStorage<T> {
@@ -34,11 +35,11 @@ class DynamoDBService<T> implements KeyValueStorage<T> {
         this.keyType = keyType;
 
         if (logInformation) {
-            this.logInformation = logInformation;
+            this.logInformation = safeLoggerWrapper(logInformation);
         }
 
         if (logError) {
-            this.logError = logError;
+            this.logError = safeLoggerWrapper(logError);
         }
 
         this.region = region;

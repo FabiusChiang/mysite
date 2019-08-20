@@ -1,4 +1,4 @@
-import Hello from "./hello"
+import Logger from "./Logger"
 import DynamoDBService from "./DynamoDBService";
 import UserStatusManager from "./UserStatusManager";
 import UserStatus from "./userStatus";

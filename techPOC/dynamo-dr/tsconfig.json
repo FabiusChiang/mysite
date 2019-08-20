@@ -13,9 +13,10 @@
         "Index.ts",
         "UserStatusManager.ts",
         "UserStatus.ts",
-        "hello.ts",
+        "Logger.ts",
         "KeyValueStorage.ts",
         "DynamoDBService.ts",
-        "MultiRegionDynamoDBService.ts"
+        "MultiRegionDynamoDBService.ts",
+        "safeLoggerWrapper.ts",
     ]
 }

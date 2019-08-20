@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const DynamoDBService_1 = require("./DynamoDBService");
+const safeLoggerWrapper_1 = require("./safeLoggerWrapper");
 class MultiRegionDynamoDBService {
     constructor(originalConfig, logInformation = null, logWarning = null, logError = null) {
         this.logInformation = function (inforMsg) {
@@ -21,23 +22,23 @@ class MultiRegionDynamoDBService {
             this.logWarning(errorMsg);
         };
         if (logInformation) {
-            this.logInformation = logInformation;
+            this.logInformation = safeLoggerWrapper_1.default(logInformation);
         }
         if (logWarning) {
-            this.logWarning = logWarning;
+            this.logWarning = safeLoggerWrapper_1.default(logWarning);
         }
         if (logError) {
-            this.logError = logError;
+            this.logError = safeLoggerWrapper_1.default(logError);
         }
         const config = this.validateConfig(originalConfig);
         this.keyName = config.keyName;
         this.keyType = config.keyType;
         const primaryConfig = config.regionConfigs.filter(c => c.primary == true)[0];
-        this.primaryDynamoDBService = new DynamoDBService_1.default(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType);
+        this.primaryDynamoDBService = new DynamoDBService_1.default(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType, this.logInformation, this.logError);
         const drConfigs = config.regionConfigs.filter(c => c.primary == false);
         this.drDynamoDBServices = new Array();
         drConfigs.forEach(drConfig => {
-            const drDynamoDDsvc = new DynamoDBService_1.default(drConfig.tableName, config.keyName, drConfig.region, config.keyType);
+            const drDynamoDDsvc = new DynamoDBService_1.default(drConfig.tableName, config.keyName, drConfig.region, config.keyType, this.logInformation, this.logError);
             this.drDynamoDBServices.push(drDynamoDDsvc);
         });
     }

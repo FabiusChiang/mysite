@@ -1,6 +1,7 @@
 import KeyValueStorage from "./KeyValueStorage";
 import IMultiRegionConfig from "./MultiRegionConfig";
 import DynamoDBService from "./DynamoDBService";
+import safeLoggerWrapper from './safeLoggerWrapper';
 
 class MultiRegionDynamoDBService<T> implements KeyValueStorage<T> {
     private primaryDynamoDBService: DynamoDBService<T>;
@@ -26,26 +27,26 @@ class MultiRegionDynamoDBService<T> implements KeyValueStorage<T> {
         logError: (errorMsg: string) => any = null) {
 
         if (logInformation) {
-            this.logInformation = logInformation;
+            this.logInformation = safeLoggerWrapper(logInformation);
         }
 
         if (logWarning) {
-            this.logWarning = logWarning;
+            this.logWarning = safeLoggerWrapper(logWarning);
         }
 
         if (logError) {
-            this.logError = logError;
+            this.logError = safeLoggerWrapper(logError);
         }
 
         const config = this.validateConfig(originalConfig);
         this.keyName = config.keyName;
         this.keyType = config.keyType;
         const primaryConfig = config.regionConfigs.filter(c => c.primary == true)[0];
-        this.primaryDynamoDBService = new DynamoDBService<T>(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType);
+        this.primaryDynamoDBService = new DynamoDBService<T>(primaryConfig.tableName, config.keyName, primaryConfig.region, config.keyType, this.logInformation, this.logError);
         const drConfigs = config.regionConfigs.filter(c => c.primary == false);
         this.drDynamoDBServices = new Array<DynamoDBService<T>>();
         drConfigs.forEach(drConfig => {
-            const drDynamoDDsvc = new DynamoDBService<T>(drConfig.tableName, config.keyName, drConfig.region, config.keyType);
+            const drDynamoDDsvc = new DynamoDBService<T>(drConfig.tableName, config.keyName, drConfig.region, config.keyType, this.logInformation, this.logError);
             this.drDynamoDBServices.push(drDynamoDDsvc);
         });
     }

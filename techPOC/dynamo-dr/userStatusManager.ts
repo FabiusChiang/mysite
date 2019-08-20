@@ -1,6 +1,7 @@
 import MultiRegionDynamoDBService from "./MultiRegionDynamoDBService";
 import KeyValueStorage from "./KeyValueStorage";
 import UserStatus from "./UserStatus";
+import Logger from "./Logger";
 
 class UserStatusManager {
     private dbService: KeyValueStorage<UserStatus>;
@@ -21,7 +22,8 @@ class UserStatusManager {
                 }
             ]
         };
-        this.dbService = new MultiRegionDynamoDBService(config);
+        const logger = new Logger();
+        this.dbService = new MultiRegionDynamoDBService(config, logger.getLogInfoFunc());
     }
     public async storeUserStatus(userStatus: UserStatus): Promise<void> {
         await this.dbService.put(userStatus.id, userStatus);

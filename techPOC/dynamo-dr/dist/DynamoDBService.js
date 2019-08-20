@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const aws_sdk_1 = require("aws-sdk");
+const safeLoggerWrapper_1 = require("./safeLoggerWrapper");
 class DynamoDBService {
     constructor(tableName, keyName, region, keyType = "S", logInformation = null, logError = null) {
         this.logInformation = function (inforMsg) {
@@ -21,10 +22,10 @@ class DynamoDBService {
         this.keyName = keyName;
         this.keyType = keyType;
         if (logInformation) {
-            this.logInformation = logInformation;
+            this.logInformation = safeLoggerWrapper_1.default(logInformation);
         }
         if (logError) {
-            this.logError = logError;
+            this.logError = safeLoggerWrapper_1.default(logError);
         }
         this.region = region;
         const config = {
