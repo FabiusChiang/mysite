@@ -1,0 +1,31 @@
+{
+  "name": "dynamo-dr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {
+    "aws-sdk": "^2.505.0"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.1",
+    "babel-jest": "^24.9.0",
+    "sinon": "^7.4.1",
+    "ts-jest": "^24.0.2",
+    "ts-mock-imports": "^1.2.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabius",
+  "license": "ISC",
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    }
+  }
+}
