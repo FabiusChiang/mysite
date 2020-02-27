@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+    TargetEnv:
+        Type: String
+        AllowedValues:
+            - dev2
+            - dev
+            - qa
+            - stg
+            - uat
+            - tp
+            - prod
+        Description: will create different resources depending on environments
+    AppName:
+        Type: String
+        Description: AppName
+    ComponentName:
+        Type: String
+        Description: The ComponentName
+Resources:
