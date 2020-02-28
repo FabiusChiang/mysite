@@ -27,6 +27,14 @@ Resources:
                     TextTransformation: "URL_DECODE"
                     FieldToMatch:
                         Type: "QUERY_STRING"
+                -
+                    TextTransformation: "HTML_ENTITY_DECODE"
+                    FieldToMatch:
+                        Type: "QUERY_STRING"
+                -
+                    TextTransformation: "URL_DECODE"
+                    FieldToMatch:
+                        Type: "BODY"
     ruleForXSS:
         Type: AWS::WAFRegional::Rule
         Properties: 
@@ -37,8 +45,53 @@ Resources:
                 DataId: !Ref xssMatchset
                 Negated: false
                 Type: XssMatch
+    whiteIPListMatchset:
+        Type: AWS::WAFRegional::IPSet
+        Properties: 
+            IPSetDescriptors: 
+                - 
+                    Type: IPV4
+                    Value: "52.162.1.1/16"
+            Name: debugWhiteList
+    ruleForIPWhiteList:
+        Type: AWS::WAFRegional::Rule
+        Properties: 
+            MetricName: "whiteListForDebug"
+            Name: "whiteListForDebug"
+            Predicates: 
+                - 
+                    DataId: !Ref whiteIPListMatchset
+                    Negated: false
+                    Type: IPMatch
+
+    geoNAMatch:
+        Type: AWS::WAFRegional::GeoMatchSet
+        Properties: 
+            Name: "trafficOutOfUs"
+            GeoMatchConstraints: 
+                -
+                    Type: Country
+                    Value: US
+                -
+                    Type: Country
+                    Value: CA    
+
+    ruleForDDoS:
+        DependsOn: geoNAMatch
+        Type: AWS::WAFRegional::RateBasedRule
+        Properties:
+            RateKey: IP
+            Name: "defendDDoS"
+            MetricName: "defendDDoS"
+            RateLimit: 2000
+            MatchPredicates:
+                -
+                    Negated: true
+                    Type: "GeoMatch"
+                    DataId: !Ref geoNAMatch
 
     wafUniversalMars:
+        DependsOn: ruleForDDoS
         Type: AWS::WAFRegional::WebACL
         Properties: 
             DefaultAction: 
@@ -46,8 +99,30 @@ Resources:
             MetricName: "WebappUniversalWaf"
             Name: "A WAF could be applied to all webapps"
             Rules: 
+                # -
+                #     Action:
+                #         Type: BLOCK
+                #     Priority: 10
+                #     # Type: "RATE_BASED"
+                #     # Type: Rate-based
+                #     RuleId: !Ref ruleForDDoS
+                #     #### Note you can only create rate-based rules using a CloudFormation template. To add the rate-based rules created through CloudFormation to a web ACL, use the AWS WAF console, API, or command line interface (CLI). For more information, see UpdateWebACL.
+                #     #### https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-wafregional-ratebasedrule.html
+                - 
+                    Action:
+                        Type: ALLOW
+                    Priority: 20
+                    # Type: REGULAR
+                    RuleId: !Ref ruleForIPWhiteList
                 - 
                     Action:
                         Type: BLOCK
-                    Priority: 1
+                    Priority: 30
+                    # Type: REGULAR
                     RuleId: !Ref ruleForXSS
+    
+    elbWebACLAssociation:
+        Type: "AWS::WAFRegional::WebACLAssociation"
+        Properties:
+            ResourceArn: "arn:aws:elasticloadbalancing:us-west-2:${AccountIdOfYourELB}:loadbalancer/app/${NameOfyourELB}/${IDofYourELB}"
+            WebACLId: !Ref wafUniversalMars
