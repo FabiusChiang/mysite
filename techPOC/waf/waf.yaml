@@ -18,24 +18,36 @@ Parameters:
         Type: String
         Description: The ComponentName
 Resources:
-    # ruleForXss:
-    #     Type: AWS::WAF::Rule
-    #     Properties: 
-    #       MetricName: "detectXSS"
-    #       Name: "DefendXSS"
-    #       Predicates: 
-    #         - 
-    #             OnePredicate
-    #             DataId: "noXss"
-    #             Negated: false
-    #             Type: XssMatch
+    xssMatchset:
+        Type: AWS::WAFRegional::XssMatchSet
+        Properties:
+            Name: "xssurl"
+            XssMatchTuples:
+                -
+                    TextTransformation: "URL_DECODE"
+                    FieldToMatch:
+                        Type: "QUERY_STRING"
+    ruleForXSS:
+        Type: AWS::WAFRegional::Rule
+        Properties: 
+          MetricName: "defendXSS"
+          Name: "DefendXSS"
+          Predicates: 
+            - 
+                DataId: !Ref xssMatchset
+                Negated: false
+                Type: XssMatch
 
     wafUniversalMars:
-        Type: AWS::WAF::WebACL
+        Type: AWS::WAFRegional::WebACL
         Properties: 
             DefaultAction: 
-                ALLOW
+                Type: ALLOW
             MetricName: "WebappUniversalWaf"
             Name: "A WAF could be applied to all webapps"
             Rules: 
-                - "detectXSS"
+                - 
+                    Action:
+                        Type: BLOCK
+                    Priority: 1
+                    RuleId: !Ref ruleForXSS
