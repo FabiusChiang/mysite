@@ -13,6 +13,6 @@
   "author": "Rubee's team",
   "license": "ISC",
   "dependencies": {
-    "fast-csv": "^2.4.1"
+    "fast-csv": "^4.3.6"
   }
 }
